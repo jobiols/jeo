@@ -1,0 +1,4 @@
+geopy==0.95.1
+BeautifulSoup
+pyOpenSSL
+suds

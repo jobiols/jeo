@@ -1,0 +1,3 @@
+odoo-argentina https://github.com/jobiols/odoo-argentina.git  8.0
+aeroo_reports https://github.com/aeroo/aeroo_reports.git  8.0
+bank-statement-import https://github.com/OCA/bank-statement-import.git 8.0
