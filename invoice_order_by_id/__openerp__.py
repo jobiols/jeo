@@ -24,6 +24,7 @@
     'description': """
 Ordena las facturas ultima arriba
 =================================
+Es el orden natural
 """,
     'author': 'jeo software',
     'depends': ['sale'],
