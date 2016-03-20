@@ -19,25 +19,28 @@
 ##############################################################################
 
 {
-    "name": "Product Pricelist Import",
-    "version": "1.0",
-    "description": """
-    This module allows to load product price list from a file.
-    The file format must have these colummns:
+    'name': 'Product Pricelist Import',
+    'version': '8.0.1.0',
+    'category': 'Tools',
+    'summary': 'Importa lista de precios y crea productos',
+    'description': """
+Importar listas
+---------------
+
+Este módulo permite importar una lista de precios desde un archivo que puede ser csv
+o xls el archivo tiene que tener las siguientes columnas:
 
     keys = ['code', 'info', 'price', 'discount_1', 'discount_2', 'retail',
     'pdv1', 'pdv2']
-    """,
-    "author": "OdooMRP team,"
-              "AvanzOSC,"
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza",
-    'website': "http://www.odoomrp.com",
-    "depends": ['purchase'],
-    "category": "Manufacturing",
-    "data": ['wizard/import_price_file_view.xml',
+
+""",
+    'author': 'jeo Software',
+    'website': 'http://www.jeo-soft.com.ar',
+    'depends': ['purchase'],
+    'data': ['wizard/import_price_file_view.xml',
              'views/product_pricelist_load_line_view.xml',
              'views/product_pricelist_load_view.xml',
              'security/ir.model.access.csv'
              ],
-    "installable": True
+    'installable': True
 }
