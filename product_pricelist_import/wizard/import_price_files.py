@@ -25,7 +25,6 @@ import cStringIO
 import tempfile
 import csv
 
-
 class ImportPriceFile(models.TransientModel):
     _name = 'import.price.file'
     _description = 'Import Price List File'
@@ -55,27 +54,18 @@ class ImportPriceFile(models.TransientModel):
             reader_info.extend(reader)
         except Exception:
             raise exceptions.Warning(_("Not a valid file!"))
-        # keys2 = reader_info[0]
+
         counter = 0
-        keys = ['code', 'info', 'price', 'discount_1', 'discount_2',
-                'retail', 'pdv1', 'pdv2']
-        if not isinstance(keys, list):
-            raise exceptions.Warning(_("Not a valid file!"))
+        keys = ['product_code','product_name','list_price','categ','sub_categ','discount']
+
         del reader_info[0]
         for i in range(len(reader_info)):
             field = reader_info[i]
             values = dict(zip(keys, field))
-            file_line_obj.create(
-                {'code': values['code'], 'info': values['info'],
-                 'price': values['price'].replace(',', '.'),
-                 'discount_1': float(values['discount_1'].replace(',', '.')),
-                 'discount_2': float(values['discount_2'].replace(',', '.')),
-                 'retail': float(values['retail'].replace(',', '.')),
-                 'pdv1': float(values['pdv1'].replace(',', '.')),
-                 'pdv2': float(values['pdv2'].replace(',', '.')),
-                 'fail': True, 'fail_reason': _('No Processed'),
-                 'file_load': load_id
-                 })
+            values['fail'] = True
+            values['fail_reason'] = _('No Processed')
+            values['file_load'] = load_id
+            file_line_obj.create(values)
             counter += 1
         return counter
 

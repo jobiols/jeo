@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  Sale order inherited form -->
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="state" position = "before">
+                    <button name="button_invoice_express" string="Facturar y Enviar" class="oe_highlight" type="object"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
-#
-#    Daniel Campos (danielcampos@avanzosc.es) Date: 15/09/2014
+#    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
+#    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -19,3 +19,4 @@
 ##############################################################################
 
 from . import product_pricelist_load
+from . import partner

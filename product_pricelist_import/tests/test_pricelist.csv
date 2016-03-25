@@ -1,3 +1,3 @@
-code,info,price,discount_1,discount_2,retail,pdv1,pdv2
-123,producto 1,12,13,213,213,213,213
-123,producto 2,12,13,213,213,213,213
+product_code,product_name,list-price,categ,sub_categ,discount
+123,producto uno,10,tornillos,cortos,-10
+456,producto dos,20,tuercas,planas,40

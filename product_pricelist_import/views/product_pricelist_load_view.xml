@@ -35,14 +35,12 @@
                     </group>
                     <field name="file_lines" nolabel="1">
                     <tree string="Import Lines" colors="red:fail==True;green:fail==False" editable="bottom">
-                        <field name="code" />
-                        <field name="info" />
-                        <field name="price"/>
-                        <field name="discount_1"/>
-                        <field name="discount_2"/>
-                        <field name="retail"/>
-                        <field name="pdv1"/>
-                        <field name="pdv2"/>
+                        <field name="product_code" />
+                        <field name="product_name" />
+                        <field name="list_price"/>
+                        <field name="categ"/>
+                        <field name="sub_categ"/>
+                        <field name="discount"/>
                         <field name="fail"/>
                         <field name="fail_reason" />
                     </tree>
