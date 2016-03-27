@@ -25,10 +25,16 @@
     'description': """
 Simplifica la facturación estilo TPV
 ====================================
-En el formulario de presupuesto ademas de los botones standard aparece un boton
-Facturar y Enviar que hace el movimiento de stock y luego genera una factura
+En el formulario de presupuesto/orden de venta ademas de los botones standard aparece un boton
+Facturar y Enviar que hace lo siguiente:
 
-
+- Confirma orden de venta
+- Crea factura
+- Valida factura
+- Paga la factura usando metodo de pago Caja, (debe existir un diario 'Caja', y un formulario de recibos 'Recibos', los busca con un like)
+- Fuerza la asignación de materiales, si no hay stock los mueve igual
+- Hace la transferencia de stock
+- Genera la factura y la baja en pdf, usa el documento por defecto
 """,
     'author': 'jeo software',
     'depends': ['sale'],

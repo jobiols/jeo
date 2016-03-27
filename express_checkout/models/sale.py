@@ -35,10 +35,39 @@ class sale_order(models.Model):
         print 'validar factura -->',res['res_id']
         invoice_obj = self.env['account.invoice']
         invoice = invoice_obj.browse([res['res_id']])
-        invoice.invoice_validate()
+        invoice.signal_workflow('invoice_open')
 
         print 'pagar factura---------------------------------------------------'
-        invoice.invoice_pay_customer()
+        res = invoice.invoice_pay_customer()
+        context = res['context']
+        account_voucher_obj = self.env['account.voucher']
+
+        # hacer configuración para modificar esto.
+        journal_obj = self.env['account.journal']
+        journal = journal_obj.search([('name','like','Caja')],limit=1)
+        partner = self.env['res.partner'].browse(context['default_partner_id'])
+
+        # hacer configuracion para modificar esto
+        receipt_obj = self.env['account.voucher.receiptbook']
+        receipt = receipt_obj.search([('name','like','Recibos')],limit=1)
+
+        voucher = account_voucher_obj.create({
+                'partner_id':context['default_partner_id'],
+                'journal_id':journal.id,
+                'account_id':partner.property_account_receivable.id,
+                'type':context['type'],
+                'amount':context['default_amount'],
+                'net_amount':context['default_amount'],
+                'receiptbook_id': receipt.id
+        })
+        voucher.signal_workflow('proforma_voucher')
+
+        print 'mover materiales------------------------------------------------'
+#        res = self.action_view_delivery()
+        picking_obj = self.env['stock.picking']
+        for rec in picking_obj.browse(self.ids):
+            rec.force_assign()
+            rec.do_transfer()
 
         print 'imprimir factura'
         datas = {
