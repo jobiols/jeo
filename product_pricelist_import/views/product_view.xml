@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="product_product_tree_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.tree.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                    <field name="lst_price" position="replace">
+                    </field>
+                    <field name="attribute_value_ids" position="replace">
+                    </field>
+                    <field name="ean13" position="replace">
+                    </field>
+            </field>
+        </record>
+    </data>
+</openerp>

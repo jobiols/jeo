@@ -25,7 +25,6 @@ class product_template(models.Model):
     _inherit = 'product.template'
 
     def _get_standard_price(self):
-        print '_get_standard_price ----------------------------------------------------'
         list_price = 0.0
         for seller in self.seller_ids:
             list_price = seller.list_price

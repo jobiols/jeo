@@ -38,15 +38,19 @@ class ProductPricelistLoad(models.Model):
     def check_category(self, line):
         print '-------------------------------------------------------------'
         supp_categ = self.supplier.categ_id
+        if not supp_categ:
+            raise exceptions.Warning(_("Supplier without category"))
+
         print 'supp categ', supp_categ.name
         res = supp_categ
 
         if line.categ:
+            supp_categ.update_discounts([])
             cat = supp_categ.child_id.search([('name', '=', line.categ)])
             if not cat:
                 cat = supp_categ.child_id.create(
                     {'name': line.categ, 'parent_id': supp_categ.id})
-                print 'creando', cat.name
+            cat.update_discounts(line.get_discounts())
             res = cat
 
         if line.sub_categ:
@@ -57,8 +61,7 @@ class ProductPricelistLoad(models.Model):
                 print 'creando', sub.name
             sub.update_discounts(line.get_discounts())
             res = sub
-        else:
-            cat.update_discounts(line.get_discounts())
+
         return res
 
     @api.multi
@@ -169,5 +172,3 @@ class ProductPricelistLoadLine(models.Model):
         ret.append(self.discount)
         return ret
 
-    def standard_price(self):
-        return self.list_price * (1 - self.discount)

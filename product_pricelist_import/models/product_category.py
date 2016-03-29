@@ -40,10 +40,15 @@ class product_category(models.Model):
         return ret
 
     def update_discounts(self, vals):
+        print 'update discounts ----------------', vals
         for disc in self.discounts:
+            print 'unlinking '
             disc.unlink()
 
         for val in vals:
-            self.discounts.create({'discount': val})
+            print 'creating ', val
+            self.discounts.create(
+                {'discount': val,
+                 'categ_id': self.id})
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -41,6 +41,7 @@ o xls el archivo tiene que tener las siguientes columnas:
              'views/product_pricelist_load_view.xml',
              'views/product_category_view.xml',
              'views/product_supplierinfo_view.xml',
+             'views/product_view.xml',
              'views/partner.xml',
              'security/ir.model.access.csv'
              ],
