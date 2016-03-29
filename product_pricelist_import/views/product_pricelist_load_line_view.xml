@@ -13,7 +13,12 @@
                     <field name="list_price"/>
                     <field name="categ"/>
                     <field name="sub_categ"/>
-                    <field name="discount"/>
+                    <field name="d1"/>
+                    <field name="d2"/>
+                    <field name="d3"/>
+                    <field name="d4"/>
+                    <field name="d5"/>
+                    <field name="d6"/>
                     <field name="fail"/>
                     <field name="fail_reason" />
                 </tree>
@@ -32,7 +37,12 @@
                         <field name="list_price"/>
                         <field name="categ"/>
                         <field name="sub_categ"/>
-                        <field name="discount"/>
+                        <field name="d1"/>
+                        <field name="d2"/>
+                        <field name="d3"/>
+                        <field name="d4"/>
+                        <field name="d5"/>
+                        <field name="d6"/>
                         <field name="fail"/>
                         <field name="fail_reason" />
                     </group>

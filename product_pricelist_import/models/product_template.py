@@ -29,15 +29,12 @@ class product_template(models.Model):
         for seller in self.seller_ids:
             list_price = seller.list_price
             break
-        print 'list price', list_price
 
         factor_discount = 1.0
         for categ in self.categ_id:
             factor_discount *= categ.get_discount()
 
-        print 'factor discount', factor_discount
         std_price = list_price * factor_discount
-        print 'std price',std_price
 
         if std_price <> self.standard_price_fake:
             self.standard_price_fake = std_price

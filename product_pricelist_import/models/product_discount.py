@@ -19,12 +19,12 @@
 #####################################################################################
 from openerp import models, fields
 
+
 class product_discount(models.Model):
     _name = 'product.discount'
 
     name = fields.Char()
     discount = fields.Float()
-    categ_id = fields.Many2one('product.category',ondelete='cascade')
-
+    categ_id = fields.Many2one('product.category', ondelete='cascade')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

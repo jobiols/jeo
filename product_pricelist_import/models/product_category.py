@@ -26,27 +26,20 @@ class product_category(models.Model):
     discounts = fields.One2many('product.discount', 'categ_id')
 
     def get_discount(self):
-        print '>> get_discount cat', self.name
         if self.parent_id:
             ret = self.parent_id.get_discount()
         else:
             ret = 1.0
-        print 'ret', ret
         for discount in self.discounts:
             ret *= (1 + discount.discount / 100)
-            print 'discount', discount.discount
 
-        print '<< get_discount cat', self.name, 'ret=', ret
         return ret
 
     def update_discounts(self, vals):
-        print 'update discounts ----------------', vals
         for disc in self.discounts:
-            print 'unlinking '
             disc.unlink()
 
         for val in vals:
-            print 'creating ', val
             self.discounts.create(
                 {'discount': val,
                  'categ_id': self.id})

@@ -56,7 +56,7 @@ class ImportPriceFile(models.TransientModel):
             raise exceptions.Warning(_("Not a valid file!"))
 
         counter = 0
-        keys = ['product_code','product_name','list_price','categ','sub_categ','discount']
+        keys = ['product_code','product_name','list_price','categ','sub_categ','d1','d2','d3','d4','d5','d6',]
 
         del reader_info[0]
         for i in range(len(reader_info)):
@@ -87,8 +87,7 @@ class ImportPriceFile(models.TransientModel):
         book = xlrd.open_workbook(fp_name)
         sheet = book.sheet_by_index(0)
         values = {}
-        keys = ['code', 'info', 'price', 'discount_1',
-                'discount_2', 'retail', 'pdv1', 'pdv2']
+        keys = ['product_code','product_name','list_price','categ','sub_categ','d1','d2','d3','d4','d5','d6',]
         # keys2 = sheet.row_values(0,0, end_colx=sheet.ncols)
         for counter in range(sheet.nrows - 1):
             # grab the current row
@@ -96,17 +95,10 @@ class ImportPriceFile(models.TransientModel):
                                          end_colx=sheet.ncols)
             row = map(lambda x: str(x), rowValues)
             values = dict(zip(keys, row))
-            file_line_obj.create(
-                {'code': values['code'], 'info': values['info'],
-                 'price': values['price'].replace(',', '.'),
-                 'discount_1': float(values['discount_1'].replace(',', '.')),
-                 'discount_2': float(values['discount_2'].replace(',', '.')),
-                 'retail': float(values['retail'].replace(',', '.')),
-                 'pdv1': float(values['pdv1'].replace(',', '.')),
-                 'pdv2': float(values['pdv2'].replace(',', '.')),
-                 'fail': True, 'fail_reason': _('No Processed'),
-                 'file_load': load_id
-                 })
+            values['fail'] = True
+            values['fail_reason'] = _('No Processed')
+            values['file_load'] = load_id
+            file_line_obj.create(values)
             counter += 1
         return counter
 

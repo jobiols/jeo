@@ -29,19 +29,17 @@ class ProductPricelistLoad(models.Model):
     date = fields.Date('Date:', readonly=True)
     file_name = fields.Char('File Name', readonly=True)
     file_lines = fields.One2many('product.pricelist.load.line', 'file_load',
-                                 'Product Price List Lines')
+                                 'Product Pricelist Lines')
     fails = fields.Integer('Fail Lines:', readonly=True)
     process = fields.Integer('Lines to Process:', readonly=True)
     supplier = fields.Many2one('res.partner')
 
     @api.multi
     def check_category(self, line):
-        print '-------------------------------------------------------------'
         supp_categ = self.supplier.categ_id
         if not supp_categ:
             raise exceptions.Warning(_("Supplier without category"))
 
-        print 'supp categ', supp_categ.name
         res = supp_categ
 
         if line.categ:
@@ -58,7 +56,6 @@ class ProductPricelistLoad(models.Model):
             sub = cat.child_id.search([('name', '=', line.sub_categ)])
             if not sub:
                 sub = cat.child_id.create({'name': line.sub_categ, 'parent_id': cat.id})
-                print 'creando', sub.name
             sub.update_discounts(line.get_discounts())
             res = sub
 
@@ -72,7 +69,6 @@ class ProductPricelistLoad(models.Model):
              ('name', '=', self.supplier.id)])
         if not suppinfo:
             # no existe, creamos el producto
-            print 'creando producto', line.product_code, line.product_name, self.supplier.categ_id.id
             prod = self.product_obj.create({
                 'default_code': line.product_code,
                 'name': line.product_name,
@@ -80,7 +76,6 @@ class ProductPricelistLoad(models.Model):
                 'categ_id': cat.id
             })
             # creamos el proveedor
-            print 'creando prodinfo', line.product_code, line.product_name, self.supplier, prod
             suppinfo = self.psupplinfo_obj.create({
                 'product_code': line.product_code,
                 'product_name': line.product_name,
@@ -143,7 +138,12 @@ class ProductPricelistLoadLine(models.Model):
     list_price = fields.Float('List Price', required=True)
     categ = fields.Char('Category')
     sub_categ = fields.Char('Sub Category')
-    discount = fields.Float('Discount %')
+    d1 = fields.Float('D1%')
+    d2 = fields.Float('D2%')
+    d3 = fields.Float('D3%')
+    d4 = fields.Float('D4%')
+    d5 = fields.Float('D5%')
+    d6 = fields.Float('D6%')
     fail = fields.Boolean('Fail')
     fail_reason = fields.Char('Fail Reason')
     file_load = fields.Many2one('product.pricelist.load', 'Load', required=True)
@@ -169,6 +169,18 @@ class ProductPricelistLoadLine(models.Model):
 
     def get_discounts(self):
         ret = []
-        ret.append(self.discount)
+        if self.d1 <> 0:
+            ret.append(self.d1)
+        if self.d2 <> 0:
+            ret.append(self.d2)
+        if self.d3 <> 0:
+            ret.append(self.d3)
+        if self.d4 <> 0:
+            ret.append(self.d4)
+        if self.d5 <> 0:
+            ret.append(self.d5)
+        if self.d6 <> 0:
+            ret.append(self.d6)
+
         return ret
 
