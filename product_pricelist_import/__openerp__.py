@@ -30,8 +30,7 @@ Importar listas de precios
 Este módulo permite importar una lista de precios desde un archivo que puede ser csv
 o xls el archivo tiene que tener las siguientes columnas:
 
-    keys = ['code', 'info', 'price', 'discount_1', 'discount_2', 'retail',
-    'pdv1', 'pdv2']
+    keys = ['product_code','product_name','list_price','categ','sub_categ','discount']
 
 """,
     'author': 'jeo Software',
@@ -40,6 +39,8 @@ o xls el archivo tiene que tener las siguientes columnas:
     'data': ['wizard/import_price_file_view.xml',
              'views/product_pricelist_load_line_view.xml',
              'views/product_pricelist_load_view.xml',
+             'views/product_category_view.xml',
+             'views/product_supplierinfo_view.xml',
              'views/partner.xml',
              'security/ir.model.access.csv'
              ],

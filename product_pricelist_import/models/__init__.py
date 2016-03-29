@@ -20,3 +20,7 @@
 
 from . import product_pricelist_load
 from . import partner
+from . import product_template
+from . import product_category
+from . import product_discount
+from . import product_supplierinfo
