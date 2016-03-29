@@ -1,3 +1,5 @@
 product_code,product_name,list-price,categ,sub_categ,discount
-123,producto uno,10,tornillos,cortos,-10
-456,producto dos,20,tuercas,planas,40
+001,producto uno,10,tornillos,cortos,-10
+002,producto dos,10,tornillos,largos,-15
+003,producto tres,20,tuercas,planas,-20
+004,producto cuatro,30,tuercas,planas,-20

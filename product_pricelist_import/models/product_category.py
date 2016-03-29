@@ -26,17 +26,24 @@ class product_category(models.Model):
     discounts = fields.One2many('product.discount', 'categ_id')
 
     def get_discount(self):
-        print '>> get_discount cat',self.name
+        print '>> get_discount cat', self.name
         if self.parent_id:
             ret = self.parent_id.get_discount()
         else:
             ret = 1.0
-        print 'ret',ret
+        print 'ret', ret
         for discount in self.discounts:
-            ret *= (1 - discount.discount / 100)
-            print 'discount',discount.discount
+            ret *= (1 + discount.discount / 100)
+            print 'discount', discount.discount
 
-        print '<< get_discount cat',self.name,'ret=',ret
+        print '<< get_discount cat', self.name, 'ret=', ret
         return ret
+
+    def update_discounts(self, vals):
+        for disc in self.discounts:
+            disc.unlink()
+
+        for val in vals:
+            self.discounts.create({'discount': val})
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
