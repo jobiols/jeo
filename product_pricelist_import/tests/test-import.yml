@@ -1,0 +1,31 @@
+-
+    In order to test import, we create a Product Pricelist Load register
+-
+    !record {model: product.pricelist.load, id: product_pricelist_load_1}:
+        name: Archivo de prueba
+        date: !eval time.strftime('%Y-%m-%d')
+        filename: /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
+
+    !python {model: product.pricelist.load}: |
+        file_load_obj = self.env['product.pricelist.load']
+        print file_load_obj
+
+        file_load = file_load_obj.browse(product_pricelist_load_1)
+        print file_load
+
+        date_hour = !eval time.strftime('%Y-%m-%d')
+        actual_date = !eval time.strftime('%Y-%m-%d')
+
+        filename = /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
+        f = open(filename, "r")
+        data = f.read()
+        print data
+        f.close()
+        encoded_data = base64.b64encode(data)
+        print encoded_data
+
+        self._import_csv(product_pricelist_load_1, encoded_data, ',')
+        file_load.write({'name': ('%s_%s') % (filename, actual_date),
+                         'date': date_hour, 'fails': 0,
+                         'file_name': filename, 'process': 0})
+-
