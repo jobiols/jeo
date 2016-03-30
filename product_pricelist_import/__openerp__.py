@@ -30,7 +30,7 @@ Importar listas de precios
 Este módulo permite importar una lista de precios desde un archivo que puede ser csv
 o xls el archivo tiene que tener las siguientes columnas:
 
-    keys = ['product_code','product_name','list_price','categ','sub_categ','discount']
+    keys = ['product_code','product_name','list_price','categ','sub_categ','d1','d2','d3','d4','d5','d6']
 
 """,
     'author': 'jeo Software',

@@ -82,8 +82,10 @@ class ImportPriceFile(models.TransientModel):
         file_line_obj = self.env['product.pricelist.load.line']
         file_1 = base64.decodestring(file_data)
         (fileno, fp_name) = tempfile.mkstemp('.xls', 'openerp_')
+        fp_name = '/etc/odoo/tst.xls'
         openfile = open(fp_name, "w")
         openfile.write(file_1)
+        openfile.close()
         book = xlrd.open_workbook(fp_name)
         sheet = book.sheet_by_index(0)
         values = {}
