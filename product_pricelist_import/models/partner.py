@@ -23,7 +23,7 @@ from openerp import models, fields
 class res_partner(models.Model):
     _inherit = 'res.partner'
 
-    categ_id = fields.Many2one('product.category', 'Internal Category', required=True,
+    categ_id = fields.Many2one('product.category', 'Internal Category', required=False,
                                help="Select category for the current supplier",
                                domain="[('type','=','normal')]")
 
