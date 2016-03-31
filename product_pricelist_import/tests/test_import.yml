@@ -9,14 +9,16 @@
     Reading test.xls file
 -
     !python {model: product.pricelist.load}: |
+        from datetime import datetime
+
         file_load_obj = self.env['product.pricelist.load']
         print file_load_obj
 
         file_load = file_load_obj.browse(product_pricelist_load_1)
         print file_load
 
-        date_hour = !eval time.strftime('%H:%M')
-        actual_date = !eval time.strftime('%Y-%m-%d')
+        date_hour = datetime.now().strftime('%H:%M')
+        actual_date = datetime.now().strftime('%Y-%m-%d')
 
         filename = /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
         f = open(filename, "r")
