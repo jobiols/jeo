@@ -448,3 +448,6 @@ msgstr "o"
 #, python-format
 msgid "xlrd python lib  not installed"
 msgstr "No está instalada la librería python xlrd"
+
+msgid "Supplier"
+msgstr "Categoria del proveedor"

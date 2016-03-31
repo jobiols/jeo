@@ -25,7 +25,7 @@
         encoded_data = base64.b64encode(data)
         print encoded_data
 
-        self._import_csv(product_pricelist_load_1, encoded_data, ',')
+        self._import_csv(ref("product_pricelist_load_1", encoded_data, ',')
         file_load.write({'name': ('%s_%s') % (filename, actual_date),
                          'date': date_hour, 'fails': 0,
                          'file_name': filename, 'process': 0})
