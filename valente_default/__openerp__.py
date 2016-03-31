@@ -17,13 +17,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################333###
 {
-    'name': 'Invoice Order by id',
+    'name': 'Herrajeria Valente',
     'version': '8.0.1.0',
     'category': 'Tools',
     'summary': 'Customización Herrajería Valente',
     'description': """
 Customización Herrajeria Valente
 ================================
+
+Instala los módulos:
+
+- product_pricelist_import
+- hide_product_variants
+- express_checkout
+- invoice_order_by_id
+
+Customiza algunas vistas
+
 """,
     'author': 'jeo software',
     'depends': ['product_pricelist_import',
