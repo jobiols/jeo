@@ -24,6 +24,11 @@ import openerp.addons.decimal_precision as dp
 class product_template(models.Model):
     _inherit = 'product.template'
 
+    supplier_categ = fields.Char(compute='_get_supplier_categ', string="Supplier")
+    standard_price_fake = fields.Float(digits_compute=dp.get_precision('Product Price'))
+    standard_price = fields.Float(compute='_get_standard_price',
+                                  digits_compute=dp.get_precision('Product Price'))
+
     def _get_standard_price(self):
         list_price = 0.0
         for seller in self.seller_ids:
@@ -41,8 +46,12 @@ class product_template(models.Model):
             self.standard_price = std_price
             self._set_standard_price(self._ids, std_price)
 
-    standard_price_fake = fields.Float(digits_compute=dp.get_precision('Product Price'))
-    standard_price = fields.Float(compute='_get_standard_price',
-                                  digits_compute=dp.get_precision('Product Price'))
+    def _get_supplier_categ(self):
+        print '--------------------------------------------'
+        ret = 'categoria del proveedor'
+        print ret
+        return ret
+
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

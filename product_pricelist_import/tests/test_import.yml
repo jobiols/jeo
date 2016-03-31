@@ -11,10 +11,7 @@
     !python {model: product.pricelist.load}: |
         from datetime import datetime
 
-        file_load_obj = self.env['product.pricelist.load']
-        print file_load_obj
-
-        file_load = file_load_obj.browse(product_pricelist_load_1)
+        file_load = self.browse(product_pricelist_load_1)
         print file_load
 
         date_hour = datetime.now().strftime('%H:%M')
