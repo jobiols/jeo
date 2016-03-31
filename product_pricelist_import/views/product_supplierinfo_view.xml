@@ -9,9 +9,11 @@
             <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
             <field name="arch" type="xml">
                 <data>
-                    <field name="delay" position="after">
+                    <field name="name" position="after">
                             <field name = "list_price"/>
                     </field>
+                    <field name="delay" position="replace"/>
+
                 </data>
             </field>
         </record>

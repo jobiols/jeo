@@ -24,10 +24,6 @@
             <field name="arch" type="xml">
                 <field name="ean13" position="replace"/>
                 <field name="lst_price" position="replace"/>
-
-                <field name="type" position="after">
-                    <field name="supplier_categ"/>
-                </field>
             </field>
         </record>
 

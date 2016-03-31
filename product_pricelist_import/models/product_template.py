@@ -47,7 +47,12 @@ class product_template(models.Model):
             self._set_standard_price(self._ids, std_price)
 
     def _get_supplier_categ(self):
-        self.supplier_categ = 'categoria del proveedor'
+        cat = 'Sin proveedor'
+        for supplier in self.seller_ids:
+            cat = supplier.name.name
+            break
+
+        self.supplier_categ = cat
 
 
 
