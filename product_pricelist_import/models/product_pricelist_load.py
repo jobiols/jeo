@@ -19,6 +19,7 @@
 ##############################################################################
 
 from openerp import models, fields, exceptions, api, _
+from datetime import time
 
 
 class ProductPricelistLoad(models.Model):
