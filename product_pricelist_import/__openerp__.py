@@ -45,6 +45,9 @@ o xls el archivo tiene que tener las siguientes columnas:
              'views/partner.xml',
              'security/ir.model.access.csv'
              ],
+    'test': [
+        'tests/test_import.yml'
+    ],
     'installable': True
 }
 

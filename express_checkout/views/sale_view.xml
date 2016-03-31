@@ -13,6 +13,11 @@
                             class="oe_highlight"
                             states="draft"
                             type="object"/>
+                    <button name="button_express"
+                            string="Enviar"
+                            class="oe_highlight"
+                            states="draft"
+                            type="object"/>
                 </field>
             </field>
         </record>

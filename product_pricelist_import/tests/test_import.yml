@@ -5,7 +5,9 @@
         name: Archivo de prueba
         date: !eval time.strftime('%Y-%m-%d')
         filename: /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
-
+-
+    Reading test.xls file
+-
     !python {model: product.pricelist.load}: |
         file_load_obj = self.env['product.pricelist.load']
         print file_load_obj
