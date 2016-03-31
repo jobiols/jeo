@@ -15,7 +15,7 @@
         file_load = file_load_obj.browse(product_pricelist_load_1)
         print file_load
 
-        date_hour = !eval time.strftime('%Y-%m-%d')
+        date_hour = !eval time.strftime('%H:%M')
         actual_date = !eval time.strftime('%Y-%m-%d')
 
         filename = /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
