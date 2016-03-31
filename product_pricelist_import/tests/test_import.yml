@@ -12,7 +12,7 @@
         from datetime import datetime
 
         file_load = self.browse(product_pricelist_load_1)
-        print file_load
+        print '--------------------------------->>>>>>>>>>>>>>>>>>>>'
 
         date_hour = datetime.now().strftime('%H:%M')
         actual_date = datetime.now().strftime('%Y-%m-%d')
@@ -26,4 +26,8 @@
         print encoded_data
 
         self._import_csv(ref("product_pricelist_load_1", encoded_data, ',')
+
+        file_load.write({'name': ('%s_%s') % (filename, actual_date),
+                         'date': date_hour, 'fails': 0,
+                         'file_name': filename, 'process': 0})
 
