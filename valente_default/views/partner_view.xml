@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_partner_form_valente" model="ir.ui.view">
+            <field name="name">base.view.partner.form.valente</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lang']" position="replace"/>
+                <xpath expr="//field[@name='date']" position="replace"/>
+                <xpath expr="//field[@name='user_id']" position="replace"/>
+                <!--                <xpath expr="//field[@name='opt_out']" position="replace"/> -->
+                <!--            <xpath expr="//field[@name='notify_email']" position="replace"/> -->
+
+
+            </field>
+        </record>
+    </data>
+</openerp>

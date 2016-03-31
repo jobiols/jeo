@@ -41,6 +41,8 @@ Customiza algunas vistas
                 'express_checkout',
                 'invoice_order_by_id'],
     'data': [
+        'views/product_view.xml',
+        'views/partner_view.xml'
     ],
     'test': [
     ],

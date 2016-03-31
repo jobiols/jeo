@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <record id="product_product_import_tree_view" model="ir.ui.view">
-            <field name="name">product.product.import.tree</field>
-            <field name="model">product.product</field>
-            <field name="inherit_id" ref="product.product_product_import_tree_view"/>
-            <field eval="7" name="priority"/>
-            <field name="arch" type="xml">
-
-
-            </field>
-        </record>
-
-        <record id="product_normal_form_import_view" model="ir.ui.view">
+        <record id="product_normal_form_import_view_valente" model="ir.ui.view">
             <field name="name">product.normal.form.import.view</field>
             <field name="model">product.product</field>
-            <field name="inherit_id" ref="product.product_normal_form_import_view"/>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
-
-
+                <xpath expr="//group[@string='Supply Chain Information']"
+                       position="replace"/>
+                <xpath expr="//group[@name='status']" position="replace"/>
+                <xpath expr="//group[@name='weight']" position="replace"/>
+                <xpath expr="//group[@name='store']" position="replace"/>
+                <xpath expr="//page[@string='Sales']" position="replace"/>
+                <xpath expr="//group[@string='Counter-Part Locations Properties']"
+                       position="replace"/>
             </field>
         </record>
-
 
     </data>
 </openerp>
