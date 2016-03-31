@@ -4,7 +4,7 @@
     !record {model: product.pricelist.load, id: product_pricelist_load_1}:
         name: Archivo de prueba
         date: !eval time.strftime('%Y-%m-%d')
-        filename: /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
+        file_name: /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
 -
     Reading test.xls file
 -
