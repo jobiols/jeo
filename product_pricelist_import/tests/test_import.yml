@@ -20,7 +20,7 @@
         date_hour = datetime.now().strftime('%H:%M')
         actual_date = datetime.now().strftime('%Y-%m-%d')
 
-        filename = /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
+        filename = '/mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls'
         f = open(filename, "r")
         data = f.read()
         print data
