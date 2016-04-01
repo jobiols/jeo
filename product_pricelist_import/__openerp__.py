@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
-#
-#    Daniel Campos (danielcampos@avanzosc.es) Date: 08/10/2014
+#    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
+#    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -24,14 +24,13 @@
     'category': 'Tools',
     'summary': 'Importa lista de precios y crea productos',
     'description': """
-Importar listas
----------------
+Importar listas de precios
+--------------------------
 
 Este módulo permite importar una lista de precios desde un archivo que puede ser csv
 o xls el archivo tiene que tener las siguientes columnas:
 
-    keys = ['code', 'info', 'price', 'discount_1', 'discount_2', 'retail',
-    'pdv1', 'pdv2']
+    keys = ['product_code','product_name','list_price','categ','sub_categ','d1','d2','d3','d4','d5','d6']
 
 """,
     'author': 'jeo Software',
@@ -40,7 +39,16 @@ o xls el archivo tiene que tener las siguientes columnas:
     'data': ['wizard/import_price_file_view.xml',
              'views/product_pricelist_load_line_view.xml',
              'views/product_pricelist_load_view.xml',
+             'views/product_category_view.xml',
+             'views/product_supplierinfo_view.xml',
+             'views/product_view.xml',
+             'views/partner.xml',
              'security/ir.model.access.csv'
              ],
+    'test': [
+        'tests/test_import.yml'
+    ],
     'installable': True
 }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

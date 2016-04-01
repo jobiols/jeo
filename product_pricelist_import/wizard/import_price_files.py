@@ -25,7 +25,6 @@ import cStringIO
 import tempfile
 import csv
 
-
 class ImportPriceFile(models.TransientModel):
     _name = 'import.price.file'
     _description = 'Import Price List File'
@@ -55,27 +54,18 @@ class ImportPriceFile(models.TransientModel):
             reader_info.extend(reader)
         except Exception:
             raise exceptions.Warning(_("Not a valid file!"))
-        # keys2 = reader_info[0]
+
         counter = 0
-        keys = ['code', 'info', 'price', 'discount_1', 'discount_2',
-                'retail', 'pdv1', 'pdv2']
-        if not isinstance(keys, list):
-            raise exceptions.Warning(_("Not a valid file!"))
+        keys = ['product_code','product_name','list_price','categ','sub_categ','d1','d2','d3','d4','d5','d6',]
+
         del reader_info[0]
         for i in range(len(reader_info)):
             field = reader_info[i]
             values = dict(zip(keys, field))
-            file_line_obj.create(
-                {'code': values['code'], 'info': values['info'],
-                 'price': values['price'].replace(',', '.'),
-                 'discount_1': float(values['discount_1'].replace(',', '.')),
-                 'discount_2': float(values['discount_2'].replace(',', '.')),
-                 'retail': float(values['retail'].replace(',', '.')),
-                 'pdv1': float(values['pdv1'].replace(',', '.')),
-                 'pdv2': float(values['pdv2'].replace(',', '.')),
-                 'fail': True, 'fail_reason': _('No Processed'),
-                 'file_load': load_id
-                 })
+            values['fail'] = True
+            values['fail_reason'] = _('No Processed')
+            values['file_load'] = load_id
+            file_line_obj.create(values)
             counter += 1
         return counter
 
@@ -92,13 +82,14 @@ class ImportPriceFile(models.TransientModel):
         file_line_obj = self.env['product.pricelist.load.line']
         file_1 = base64.decodestring(file_data)
         (fileno, fp_name) = tempfile.mkstemp('.xls', 'openerp_')
+        fp_name = '/etc/odoo/tst.xls'
         openfile = open(fp_name, "w")
         openfile.write(file_1)
+        openfile.close()
         book = xlrd.open_workbook(fp_name)
         sheet = book.sheet_by_index(0)
         values = {}
-        keys = ['code', 'info', 'price', 'discount_1',
-                'discount_2', 'retail', 'pdv1', 'pdv2']
+        keys = ['product_code','product_name','list_price','categ','sub_categ','d1','d2','d3','d4','d5','d6',]
         # keys2 = sheet.row_values(0,0, end_colx=sheet.ncols)
         for counter in range(sheet.nrows - 1):
             # grab the current row
@@ -106,17 +97,10 @@ class ImportPriceFile(models.TransientModel):
                                          end_colx=sheet.ncols)
             row = map(lambda x: str(x), rowValues)
             values = dict(zip(keys, row))
-            file_line_obj.create(
-                {'code': values['code'], 'info': values['info'],
-                 'price': values['price'].replace(',', '.'),
-                 'discount_1': float(values['discount_1'].replace(',', '.')),
-                 'discount_2': float(values['discount_2'].replace(',', '.')),
-                 'retail': float(values['retail'].replace(',', '.')),
-                 'pdv1': float(values['pdv1'].replace(',', '.')),
-                 'pdv2': float(values['pdv2'].replace(',', '.')),
-                 'fail': True, 'fail_reason': _('No Processed'),
-                 'file_load': load_id
-                 })
+            values['fail'] = True
+            values['fail_reason'] = _('No Processed')
+            values['file_load'] = load_id
+            file_line_obj.create(values)
             counter += 1
         return counter
 

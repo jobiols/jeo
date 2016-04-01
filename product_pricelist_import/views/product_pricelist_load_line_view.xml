@@ -8,14 +8,17 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="File Lines">
-                    <field name="code" />
-                    <field name="info" />
-                    <field name="price"/>
-                    <field name="discount_1"/>
-                    <field name="discount_2"/>
-                    <field name="retail"/>
-                    <field name="pdv1"/>
-                    <field name="pdv2"/>
+                    <field name="product_code" />
+                    <field name="product_name" />
+                    <field name="list_price"/>
+                    <field name="categ"/>
+                    <field name="sub_categ"/>
+                    <field name="d1"/>
+                    <field name="d2"/>
+                    <field name="d3"/>
+                    <field name="d4"/>
+                    <field name="d5"/>
+                    <field name="d6"/>
                     <field name="fail"/>
                     <field name="fail_reason" />
                 </tree>
@@ -29,14 +32,17 @@
             <field name="arch" type="xml">
                 <form string="File Load">
                     <group colspan="4">
-                        <field name="code" />
-                        <field name="info" />
-                        <field name="price"/>
-                        <field name="discount_1"/>
-                        <field name="discount_2"/>
-                        <field name="retail"/>
-                        <field name="pdv1"/>
-                        <field name="pdv2"/>
+                        <field name="product_code" />
+                        <field name="product_name" />
+                        <field name="list_price"/>
+                        <field name="categ"/>
+                        <field name="sub_categ"/>
+                        <field name="d1"/>
+                        <field name="d2"/>
+                        <field name="d3"/>
+                        <field name="d4"/>
+                        <field name="d5"/>
+                        <field name="d6"/>
                         <field name="fail"/>
                         <field name="fail_reason" />
                     </group>
