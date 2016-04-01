@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #####################################################################################
-from openerp import models, fields
+from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 
 
@@ -46,11 +46,11 @@ class product_template(models.Model):
             self.standard_price = std_price
             self._set_standard_price(self._ids, std_price)
 
+    @api.one
     def _get_supplier_categ(self):
         cat = 'Sin proveedor'
         for supplier in self.seller_ids:
             cat = supplier.name.name
-            break
 
         self.supplier_categ = cat
 
