@@ -25,18 +25,12 @@
 Customización Herrajeria Valente
 ================================
 
-Instala los módulos:
-
-- product_pricelist_import
-- hide_product_variants
-- express_checkout
-- invoice_order_by_id
-
-Customiza algunas vistas
-
 """,
     'author': 'jeo software',
-    'depends': ['product_pricelist_import',
+    'depends': ['l10n_ar_base',
+                'disable_openerp_online',
+                'account_cancel',
+                'product_pricelist_import',
                 'hide_product_variants',
                 'express_checkout',
                 'invoice_order_by_id'],
