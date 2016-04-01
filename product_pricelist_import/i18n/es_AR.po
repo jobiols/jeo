@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0-20160113\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-29 23:31+0000\n"
-"PO-Revision-Date: 2016-03-29 23:31+0000\n"
+"POT-Creation-Date: 2016-04-01 18:38+0000\n"
+"PO-Revision-Date: 2016-04-01 18:38+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -89,7 +89,7 @@ msgstr "D6%"
 #. module: product_pricelist_import
 #: field:product.pricelist.load,date:0
 msgid "Date:"
-msgstr "Date:"
+msgstr "Fecha:"
 
 #. module: product_pricelist_import
 #: help:import.price.file,delimeter:0
@@ -209,7 +209,7 @@ msgstr "Importar archivo lista de precios"
 #. module: product_pricelist_import
 #: model:ir.model,name:product_pricelist_import.model_product_supplierinfo
 msgid "Information about a product supplier"
-msgstr "Información sobre el proveedor del producto"
+msgstr "Información de un proveedor de producto"
 
 #. module: product_pricelist_import
 #: field:res.partner,categ_id:0
@@ -262,34 +262,39 @@ msgstr "Carga"
 #: model:ir.ui.menu,name:product_pricelist_import.menu_file_load
 #: view:product.pricelist.load:product_pricelist_import.product_pricelist_load_form_view
 msgid "Load File"
-msgstr "Cargar archivo"
+msgstr "Importar lista precios"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:166
+#: model:ir.actions.act_window,name:product_pricelist_import.action_file_price_load
+msgid "Load customer pricelist"
+msgstr "Cargar lista de precio del proveedor"
+
+#. module: product_pricelist_import
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:165
 #, python-format
 msgid "Missing category"
 msgstr "Falta categoría"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:160
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:159
 #, python-format
 msgid "Missing list price"
 msgstr "Falta precio de lista"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:163
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:162
 #, python-format
 msgid "Missing product"
 msgstr "Falta producto"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:157
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:156
 #, python-format
 msgid "Missing product code"
 msgstr "Falta código de producto"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:154
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:153
 #, python-format
 msgid "Missing product name"
 msgstr "Falta nombre de producto"
@@ -301,13 +306,13 @@ msgstr "Nombre"
 
 #. module: product_pricelist_import
 #: code:addons/product_pricelist_import/wizard/import_price_files.py:66
-#: code:addons/product_pricelist_import/wizard/import_price_files.py:108
+#: code:addons/product_pricelist_import/wizard/import_price_files.py:101
 #, python-format
 msgid "No Processed"
 msgstr "No Procesado"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/wizard/import_price_files.py:133
+#: code:addons/product_pricelist_import/wizard/import_price_files.py:127
 #, python-format
 msgid "Not a .csv/.xls file found"
 msgstr "No es un archivo .csv/.xls"
@@ -316,7 +321,7 @@ msgstr "No es un archivo .csv/.xls"
 #: code:addons/product_pricelist_import/wizard/import_price_files.py:56
 #, python-format
 msgid "Not a valid file!"
-msgstr "No es un archivo válido!"
+msgstr "Not a valid file!"
 
 #. module: product_pricelist_import
 #: model:ir.model,name:product_pricelist_import.model_res_partner
@@ -329,15 +334,10 @@ msgid "Proccess"
 msgstr "Procesar"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:121
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:120
 #, python-format
 msgid "Processed Ok"
 msgstr "Procesado Ok"
-
-#. module: product_pricelist_import
-#: model:ir.model,name:product_pricelist_import.model_product_product
-msgid "Product"
-msgstr "Producto"
 
 #. module: product_pricelist_import
 #: model:ir.model,name:product_pricelist_import.model_product_category
@@ -405,13 +405,13 @@ msgid "Supplier discount"
 msgstr "Descuento de proveedor"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:41
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:40
 #, python-format
 msgid "Supplier without category"
 msgstr "Proveedor sin categoría"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:112
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:111
 #, python-format
 msgid "There must be one line at least to process"
 msgstr "Al menos tiene que haber una linea para procesar!"
@@ -422,21 +422,16 @@ msgid "XLS"
 msgstr "XLS"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:105
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:104
 #, python-format
 msgid "You must select a Supplier"
 msgstr "Tiene que seleccionar un proveedor!"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/wizard/import_price_files.py:124
+#: code:addons/product_pricelist_import/wizard/import_price_files.py:118
 #, python-format
 msgid "You need to select a file!"
 msgstr "Tiene que seleccionar un archivo!"
-
-#. module: product_pricelist_import
-#: model:ir.actions.act_window,name:product_pricelist_import.action_file_price_load
-msgid "action_file_price_load"
-msgstr "action_file_price_load"
 
 #. module: product_pricelist_import
 #: view:import.price.file:product_pricelist_import.view_import_file
@@ -449,5 +444,3 @@ msgstr "o"
 msgid "xlrd python lib  not installed"
 msgstr "No está instalada la librería python xlrd"
 
-msgid "Supplier"
-msgstr "Categoria del proveedor"
