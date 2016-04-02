@@ -29,18 +29,25 @@ class product_template(models.Model):
     standard_price = fields.Float(compute='_get_standard_price',
                                   digits_compute=dp.get_precision('Product Price'))
 
+    @api.one
     def _get_standard_price(self):
+        # si no hay proveedor el precio de lista del proveedor es cero.
         list_price = 0.0
+
+        # obtener el precio de lista del proveedor
         for seller in self.seller_ids:
             list_price = seller.list_price
-            break
 
+        # calcular el factor de descuento = (1 + descuento)
+        # la categoria trae el producto de todas las categorias de la rama
         factor_discount = 1.0
         for categ in self.categ_id:
             factor_discount *= categ.get_discount()
 
+        # calcular el precio de costo
         std_price = list_price * factor_discount
 
+        # si cambió el precio, cambiarlo y almacenarlo en el histórico.
         if std_price <> self.standard_price_fake:
             self.standard_price_fake = std_price
             self.standard_price = std_price
@@ -48,9 +55,11 @@ class product_template(models.Model):
 
     @api.one
     def _get_supplier_categ(self):
+        # si no hay proveedor avisar
         cat = 'Sin proveedor'
-        for supplier in self.seller_ids:
-            cat = supplier.name.name
+        # traer el nombre de la categoria del proveedor
+        for supplierinfo in self.seller_ids:
+            cat = supplierinfo.name.categ_id.name
 
         self.supplier_categ = cat
 

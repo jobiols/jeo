@@ -9,11 +9,22 @@
                 <xpath expr="//field[@name='lang']" position="replace"/>
                 <xpath expr="//field[@name='date']" position="replace"/>
                 <xpath expr="//field[@name='user_id']" position="replace"/>
-                <!--                <xpath expr="//field[@name='opt_out']" position="replace"/> -->
+                <!--            <xpath expr="//field[@name='opt_out']" position="replace"/>      -->
                 <!--            <xpath expr="//field[@name='notify_email']" position="replace"/> -->
+            </field>
+        </record>
 
+        <record id="product_template_kanban_view_valente" model="ir.ui.view">
+            <field name="name">Product.template.product.kanban.valente</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='lst_price']" position="replace"/>
+                <xpath expr="//field[@name='is_product_variant']" position="replace"/>
 
             </field>
         </record>
+
     </data>
 </openerp>

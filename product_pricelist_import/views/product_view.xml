@@ -14,6 +14,9 @@
                 <field name="name" position="after">
                     <field name="supplier_categ"/>
                 </field>
+                <field name="name" position="after">
+                    <field name="standard_price"/>
+                </field>
             </field>
         </record>
 

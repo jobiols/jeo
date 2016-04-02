@@ -30,7 +30,7 @@ class ProductPricelistLoad(models.Model):
                                  'Product Pricelist Lines')
     fails = fields.Integer('Fail Lines:', readonly=True)
     process = fields.Integer('Lines to Process:', readonly=True)
-    supplier = fields.Many2one('res.partner')
+    supplier = fields.Many2one('res.partner', 'Supplier')
 
     @api.multi
     def check_category(self, line):

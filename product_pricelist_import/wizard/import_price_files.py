@@ -86,7 +86,6 @@ class ImportPriceFile(models.TransientModel):
         openfile = open(fp_name, "w")
         openfile.write(file_1)
         openfile.close()
-        print '--------------------------------'
         book = xlrd.open_workbook(fp_name)
         sheet = book.sheet_by_index(0)
         values = {}
@@ -95,21 +94,21 @@ class ImportPriceFile(models.TransientModel):
         for counter in range(sheet.nrows - 1):
             # grab the current row
             rowValues = sheet.row_values(counter + 1, 0, end_colx=sheet.ncols)
-            print rowValues
-
             rowResults = []
-            for cell in rowValues:
+            if isinstance(rowValues[0],float):
+                rowResults.append(str(int(rowValues[0])))
+            else:
+                rowResults.append(rowValues[0])
+            print rowResults[0]
+
+            for cell in rowValues[1:]:
                 if isinstance(cell, basestring):
                     rcell = cell.encode('ascii', 'ignore')
                 else:
                     rcell = str(cell)
                 rowResults.append(rcell)
-
             row = rowResults
-            #            row = map(lambda x: str(x).encode('ascii', 'ignore'), rowValues)
-            print 'coded row ----- ', row
             values = dict(zip(keys, row))
-            print values
             values['fail'] = True
             values['fail_reason'] = _('No Processed')
             values['file_load'] = load_id
