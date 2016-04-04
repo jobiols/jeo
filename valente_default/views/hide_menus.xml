@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <!-- eliminar menu categorias de las unidades de medida
+        <delete model="ir.ui.menu" search="[('id','=',ref('product.menu_product_uom_categ_form_action'))]"/>
+-->
+        <!-- eliminar menu atributos
+        <delete model="ir.ui.menu" search="[('id','=',ref('product.menu_attribute_action'))]"/>
+-->
+        <!-- eliminar menu valores de atributo
+        <delete model="ir.ui.menu" search="[('id','=',ref('product.menu_variants_action'))]"/>
+-->
+
+        <!-- eliminar menu valores de mensajes
+        <delete model="ir.ui.menu" search="[('id','=',ref('mail.mail_feeds_main'))]"/>
+        <delete model="ir.ui.menu" search="[('id','=',ref('mail.mail_feeds'))]"/>
+-->
+
+
+    </data>
+</openerp>

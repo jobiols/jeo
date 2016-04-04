@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <!--
         <record id="product_normal_form_import_view_valente" model="ir.ui.view">
             <field name="name">product.normal.form.import.view</field>
             <field name="model">product.product</field>
@@ -16,6 +17,6 @@
                        position="replace"/>
             </field>
         </record>
-
+-->
     </data>
 </openerp>

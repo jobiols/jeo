@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0-20160113\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 18:38+0000\n"
-"PO-Revision-Date: 2016-04-01 18:38+0000\n"
+"POT-Creation-Date: 2016-04-02 18:10+0000\n"
+"PO-Revision-Date: 2016-04-02 18:10+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -270,31 +270,31 @@ msgid "Load customer pricelist"
 msgstr "Cargar lista de precio del proveedor"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:165
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:164
 #, python-format
 msgid "Missing category"
 msgstr "Falta categoría"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:159
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:158
 #, python-format
 msgid "Missing list price"
 msgstr "Falta precio de lista"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:162
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:161
 #, python-format
 msgid "Missing product"
 msgstr "Falta producto"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:156
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:155
 #, python-format
 msgid "Missing product code"
 msgstr "Falta código de producto"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:153
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:152
 #, python-format
 msgid "Missing product name"
 msgstr "Falta nombre de producto"
@@ -306,13 +306,13 @@ msgstr "Nombre"
 
 #. module: product_pricelist_import
 #: code:addons/product_pricelist_import/wizard/import_price_files.py:66
-#: code:addons/product_pricelist_import/wizard/import_price_files.py:101
+#: code:addons/product_pricelist_import/wizard/import_price_files.py:113
 #, python-format
 msgid "No Processed"
 msgstr "No Procesado"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/wizard/import_price_files.py:127
+#: code:addons/product_pricelist_import/wizard/import_price_files.py:139
 #, python-format
 msgid "Not a .csv/.xls file found"
 msgstr "No es un archivo .csv/.xls"
@@ -334,7 +334,7 @@ msgid "Proccess"
 msgstr "Procesar"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:120
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:119
 #, python-format
 msgid "Processed Ok"
 msgstr "Procesado Ok"
@@ -405,13 +405,13 @@ msgid "Supplier discount"
 msgstr "Descuento de proveedor"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:40
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:39
 #, python-format
 msgid "Supplier without category"
 msgstr "Proveedor sin categoría"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:111
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:110
 #, python-format
 msgid "There must be one line at least to process"
 msgstr "Al menos tiene que haber una linea para procesar!"
@@ -422,13 +422,13 @@ msgid "XLS"
 msgstr "XLS"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/models/product_pricelist_load.py:104
+#: code:addons/product_pricelist_import/models/product_pricelist_load.py:103
 #, python-format
 msgid "You must select a Supplier"
 msgstr "Tiene que seleccionar un proveedor!"
 
 #. module: product_pricelist_import
-#: code:addons/product_pricelist_import/wizard/import_price_files.py:118
+#: code:addons/product_pricelist_import/wizard/import_price_files.py:130
 #, python-format
 msgid "You need to select a file!"
 msgstr "Tiene que seleccionar un archivo!"

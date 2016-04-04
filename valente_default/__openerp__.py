@@ -17,17 +17,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################333###
 {
-    'name': 'Herrajeria Valente',
+    'name': 'Herrajes Valente',
     'version': '8.0.1.0',
     'category': 'Tools',
-    'summary': 'Customización Herrajería Valente',
+    'summary': 'Customización Herrajes Valente',
     'description': """
-Customización Herrajeria Valente
+Customización Herrajes Valente
 ================================
 
 """,
     'author': 'jeo software',
-    'depends': ['l10n_ar_base',
+    'depends': [
+        'l10n_ar_base',
                 'disable_openerp_online',
                 'account_cancel',
                 'product_pricelist_import',
@@ -35,14 +36,16 @@ Customización Herrajeria Valente
                 'express_checkout',
                 'invoice_order_by_id'],
     'data': [
+        'security/security_groups.xml',
         'views/product_view.xml',
-        'views/partner_view.xml'
-    ],
+        'views/partner_view.xml',
+        'views/hide_menus.xml', ],
     'test': [
     ],
     'installable': True,
     'application': True,
     'auto_install': False,
     'images': [],
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
