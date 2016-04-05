@@ -16,7 +16,24 @@
         <delete model="ir.ui.menu" search="[('id','=',ref('mail.mail_feeds_main'))]"/>
         <delete model="ir.ui.menu" search="[('id','=',ref('mail.mail_feeds'))]"/>
 -->
-
-
+        <!-- Esto no funciona, estoy tratando de desaparecer este menu ...
+        <record id="purchase.purchase_line_form_action2" model="ir.actions.act_window">
+            <field name="name">On Purchase Order Lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="domain">[('order_id.invoice_method','=','manual'), ('state','in',('confirmed','done')), ('invoiced', '=', False)]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="purchase.purchase_order_line_search"/>
+            <field name="help" type="html">
+              <p>
+                Here you can track all the lines of purchase orders where the
+                invoicing is "Based on Purchase Order Lines", and for which you
+                have not received a supplier invoice yet. You can generate a
+                draft supplier invoice based on the lines from this list.
+              </p>
+            </field>
+        </record>
+-->
     </data>
 </openerp>

@@ -43,7 +43,8 @@ o xls el archivo tiene que tener las siguientes columnas:
              'views/product_supplierinfo_view.xml',
              'views/product_view.xml',
              'views/partner.xml',
-             'security/ir.model.access.csv'
+             'security/ir.model.access.csv',
+             'security/security_groups.xml'
              ],
     'test': [
         'tests/test_import.yml'

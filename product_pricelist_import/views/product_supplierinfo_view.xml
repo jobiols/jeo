@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <!--  Category inherited form -->
+        <!--  Category inherited form agregar precio de lista del proveedor -->
 
         <record id="product_supplierinfo_form_view_inherited" model="ir.ui.view">
             <field name="name">product.supplierinfo.form.view.inherit</field>
@@ -16,6 +16,8 @@
                 </data>
             </field>
         </record>
+
+        <!-- Category inherited tree agregar precio de lista del proveedor -->
 
         <record id="product_supplierinfo_tree_view_inherited" model="ir.ui.view">
             <field name="name">product.supplierinfo.tree.view.inherit</field>

@@ -85,6 +85,6 @@
             id="act_fail_lines"/>
 
     <menuitem action="action_file_price_load"
-     id="menu_file_load" name="Load File" parent="purchase.menu_purchase_config_purchase" sequence="30"/>
+        id="menu_file_load" name="Load File" parent="purchase.menu_purchase_config_purchase" sequence="30"/>
     </data>
 </openerp>

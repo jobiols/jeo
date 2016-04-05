@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <!--  Category inherited form -->
+        <!--  Category inherited form agregar edicion para descuentos  -->
 
         <record id="view_category_discounts" model="ir.ui.view">
             <field name="name">product.category.discount.inherit</field>

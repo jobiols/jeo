@@ -5,33 +5,45 @@
         <record id="product.product_template_action" model="ir.actions.act_window">
             <field name="name">Products</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">product.template</field>
+            <field name="res_model">product.product</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
             <field name="view_id" ref="product.product_template_kanban_view"/>
             <field name="context">{"search_default_filter_to_sell":1}</field>
         </record>
 
-        <record id="product_template_tree_view_import" model="ir.ui.view">
-            <field name="name">product.template.product.tree.import</field>
-            <field name="model">product.template</field>
-            <field name="inherit_id" ref="product.product_template_tree_view"/>
+
+        <!-- product tree inherited eliminar y agregar algunos campos -->
+
+        <record id="product_product_tree_view_import" model="ir.ui.view">
+            <field name="name">product.product.tree.import</field>
+            <field name="model">product.product</field>
+            <field eval="7" name="priority"/>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position="before">
-                    <field name="default_code" string="cod"/>
-                </xpath>
-                <xpath expr="//field[@name='type']" position="replace"/>
+                <field name="name" position="after">
+                    <field name="categ_id"/>
+                    <field name="standard_price"/>
+                </field>
+                <field name="uom_id" position="replace"/>
+                <field name="attribute_value_ids" position="replace"/>
+                <field name="ean13" position="replace"/>
+                <field name="lst_price" position="replace"/>
+
             </field>
         </record>
 
-        <!-- eliminar ean13 y lst_price -->
-        <record id="product_normal_form_import_view" model="ir.ui.view">
-            <field name="name">product.normal.form.import.view</field>
+
+        <!-- product tree inherited eliminar campo virtual available -->
+
+        <record id="view_stock_product_tree_import" model="ir.ui.view">
+            <field name="name">product.stock.tree.inherit.import</field>
             <field name="model">product.product</field>
-            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="inherit_id" ref="stock.view_stock_product_tree"/>
             <field name="arch" type="xml">
-                <field name="ean13" position="replace"/>
-                <field name="lst_price" position="replace"/>
+                <field name="virtual_available" position="replace">
+                    <field name="virtual_available" invisible="1"/>
+                </field>
             </field>
         </record>
 

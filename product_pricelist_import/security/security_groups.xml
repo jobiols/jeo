@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+
+    <data noupdate="0">
+        <!-- crea un grupo para el modulo product_pricelist_import
+                <record id="product_pricelist_import_group" model="res.groups">
+                    <field name="name">Importacion de listas de precio</field>
+                    <field name="category_id" ref="base.module_category_purchase_management"/> < ! - - aplicacion - - >
+                    <field name="users" eval="[(4, ref('base.user_root'))]"/>        < ! - - agrega administrador - - >
+                    <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/> < ! - - agrega grupo empleado - - >
+                    <field name="implied_ids" eval="[(4, ref('base.group_partner_manager'))]"/> < ! - - agrega grupo creacion de contactos - - >
+                    <field name="implied_ids" eval="[(4, ref('base.group_sale_salesman'))]"/> < ! - - agrega grupo mostrar las iniciativas propias - - >
+                    <field name="comment">grupo para importar listas de precios.</field>
+                </record>
+    -->
+    </data>
+
+</openerp>
