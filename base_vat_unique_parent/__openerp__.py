@@ -1,7 +1,8 @@
-# -*- encoding: utf-8 -*-
-##################################################################################
-#    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
-#    All Rights Reserved.
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -16,22 +17,21 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+##############################################################################
+
 
 {
-    'name': 'Base VAT Unique - To check Unique VAT number',
-    'version': '8.0.1.0',
-    'category': 'Generic Modules/Base',
-    'description': """
-    This module check the unique vat numbers to avoid duplicate vat numbers
-    """,
-    'author': 'jeo Software',
-    'depends': ['base_vat'],
-    "data": [
-        "views/res_partner_view.xml",
-    ],
-    'website': 'http://jeo-soft.com.ar',
-    'auto_install': False,
+    'name': 'Base VAT Unique Parent',
+    'version': '8.0.0.2',
+    'category': 'Base',
+    'description': """""",
+    'author': 'Sistemas ADHOC',
+    'website': 'http://www.sistemasadhoc.com.ar',
+    'depends': ['base', 'base_vat'],
+    'init_xml': [],
+    'update_xml': [],
+    'demo_xml': [],
+    'test': [],
     'installable': True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

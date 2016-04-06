@@ -18,20 +18,21 @@
 #
 ##################################################################################
 
-{
-    'name': 'Base VAT Unique - To check Unique VAT number',
-    'version': '8.0.1.0',
-    'category': 'Generic Modules/Base',
-    'description': """
-    This module check the unique vat numbers to avoid duplicate vat numbers
-    """,
-    'author': 'jeo Software',
-    'depends': ['base_vat'],
-    "data": [
-        "views/res_partner_view.xml",
-    ],
-    'website': 'http://jeo-soft.com.ar',
-    'auto_install': False,
-    'installable': True,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+from openerp.osv import osv
+
+
+class res_partner(osv.osv):
+    def _check_unique_vat(self, cr, uid, ids, context=None):
+        for partner in self.browse(cr, uid, ids, context=context):
+            if partner.document_type_id.name == 'CUIT':
+                #            if partner.is_company:
+                cr.execute("select vat from res_partner where upper(vat)=%s",
+                           (partner.vat.upper(),))
+                if len(cr.fetchall()) > 1:
+                    return False
+        return True
+
+    _inherit = 'res.partner'
+    _constraints = [
+        (_check_unique_vat, 'The VAT Number must be unique', ['vat', 'is_company']),
+    ]

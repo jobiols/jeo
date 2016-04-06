@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##################################################################################
 #    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
 #    All Rights Reserved.
@@ -17,21 +17,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##################################################################################
+import res_company
+import res_partner
 
-{
-    'name': 'Base VAT Unique - To check Unique VAT number',
-    'version': '8.0.1.0',
-    'category': 'Generic Modules/Base',
-    'description': """
-    This module check the unique vat numbers to avoid duplicate vat numbers
-    """,
-    'author': 'jeo Software',
-    'depends': ['base_vat'],
-    "data": [
-        "views/res_partner_view.xml",
-    ],
-    'website': 'http://jeo-soft.com.ar',
-    'auto_install': False,
-    'installable': True,
-}
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
