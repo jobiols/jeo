@@ -23,12 +23,14 @@
     'version': '8.0.1.0',
     'category': 'Base',
     'description': """
-    Description
-    ===========
-    Dependencies
-    ============
-    - base_vat
-    This module check the unique vat numbers to avoid duplicate vat numbers
+Description
+===========
+This module check the unique vat numbers to avoid duplicate vat numbers
+
+Dependencies
+============
+- base_vat
+
     """,
     'author': 'jeo Software',
     'depends': ['base_vat'],

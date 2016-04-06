@@ -34,5 +34,5 @@ class res_partner(osv.osv):
 
     _inherit = 'res.partner'
     _constraints = [
-        (_check_unique_vat, 'The VAT Number must be unique', ['vat', 'is_company']),
+        (_check_unique_vat, u'El CUIT ya está ingresado', ['vat', 'is_company']),
     ]
