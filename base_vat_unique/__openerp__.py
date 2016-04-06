@@ -21,8 +21,13 @@
 {
     'name': 'Base VAT Unique - To check Unique VAT number',
     'version': '8.0.1.0',
-    'category': 'Generic Modules/Base',
+    'category': 'Base',
     'description': """
+    Description
+    ===========
+    Dependencies
+    ============
+    - base_vat
     This module check the unique vat numbers to avoid duplicate vat numbers
     """,
     'author': 'jeo Software',

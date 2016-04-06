@@ -24,9 +24,29 @@
     'name': 'Base VAT Unique Parent',
     'version': '8.0.0.2',
     'category': 'Base',
-    'description': """""",
-    'author': 'Sistemas ADHOC',
-    'website': 'http://www.sistemasadhoc.com.ar',
+    'description': """
+
+Descripción
+===========
+Los CUIT (VAT) deberán ser únicos para cada partner, solo podrán tener igual CUIT (VAT)
+aquellos Partners que tengan una relación padre/hijo.
+Al querer guardar un cliente con CUIT (VAT) existente se muestra una advertencia:
+“ya existe un partner (nombre_partner) con ese número de CUIT. Para poder usar el mismo
+CUIT (VAT) este partner debe ser hijo de (nombre_partner)”
+
+Dependencias
+============
+- base
+- base_vat
+
+Observaciones
+=============
+No se modifican campos de objetos, solo hay que modificar sql_constraints del archivo
+base_vat_unique.py para que valide de la manera que se detalla en la descripción.
+
+    """,
+    'author': 'jeo Software',
+    'website': 'http://jeo-soft.com.ar',
     'depends': ['base', 'base_vat'],
     'init_xml': [],
     'update_xml': [],
