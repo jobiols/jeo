@@ -25,7 +25,9 @@
     'version': '8.0.0.2',
     'category': 'Base',
     'description': """
-
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 Descripción
 ===========
 Los CUIT (VAT) deberán ser únicos para cada partner, solo podrán tener igual CUIT (VAT)

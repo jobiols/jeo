@@ -23,6 +23,9 @@
     'category': 'Tools',
     'summary': 'Facturación simplificada',
     'description': """
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 Simplifica la facturación estilo TPV
 ====================================
 En el formulario de presupuesto/orden de venta ademas de los botones standard aparece un boton

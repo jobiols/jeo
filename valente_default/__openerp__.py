@@ -22,20 +22,23 @@
     'category': 'Tools',
     'summary': 'Customización Herrajes Valente',
     'description': """
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 Customización Herrajes Valente
 ================================
-
 """,
     'author': 'jeo software',
     'depends': [
         'l10n_ar_base',
-                'disable_openerp_online',
-                'account_cancel',
-                'product_pricelist_import',
-                'hide_product_variants',
-                'express_checkout',
+        'base_vat_unique',
+        'disable_openerp_online',
+        'account_cancel',
+        'product_pricelist_import',
+        'hide_product_variants',
+        'express_checkout',
         'invoice_order_by_id',
-        'base_vat_unique'],
+    ],
     'data': [
         'security/security_groups.xml',
         'views/product_view.xml',

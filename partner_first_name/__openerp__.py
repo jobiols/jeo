@@ -25,6 +25,9 @@
     'category': 'Tools',
     'summary': 'Agrega nombre de pila',
     'description': """
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 Agrega nombre de pila en el modelo partner
 ==========================================
 Fue creado para tener el nombre de pila disponible cuando se envia correo masivo
