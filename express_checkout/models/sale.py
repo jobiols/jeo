@@ -22,71 +22,35 @@ from openerp import models, fields, exceptions, api, _
 class sale_order(models.Model):
     _inherit = "sale.order"
 
-    @api.multi
-    def button_express(self):
-        print '---------------------------- button_invoice_express'
+    #    @api.multi
+    #    def button_express(self):
+    #        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button_invoice_express'
+    #        print 'quie paasa'
+    #        print '>> confirmar orden de venta'
+    #        self.action_button_confirm()
 
-        print '>> confirmar orden de venta'
-        self.action_button_confirm()
-
-        #        print '>> crear factura'
-        #        res = self.manual_invoice()
-
-        #        print 'validar factura -->',res['res_id']
-        #        invoice_obj = self.env['account.invoice']
-        #        invoice = invoice_obj.browse([res['res_id']])
-        #        invoice.signal_workflow('invoice_open')
-
-        #        print 'pagar factura---------------------------------------------------'
-        #        res = invoice.invoice_pay_customer()
-        #        context = res['context']
-        #        account_voucher_obj = self.env['account.voucher']
-
-        # hacer configuración para modificar esto.
-        #        journal_obj = self.env['account.journal']
-        #        journal = journal_obj.search([('name','like','Caja')],limit=1)
-        #        partner = self.env['res.partner'].browse(context['default_partner_id'])
-
-        # hacer configuracion para modificar esto
-        #        receipt_obj = self.env['account.voucher.receiptbook']
-        #        receipt = receipt_obj.search([('name','like','Recibos')],limit=1)
-
-        #        voucher = account_voucher_obj.create({
-        #                'partner_id':context['default_partner_id'],
-        #                'journal_id':journal.id,
-        #                'account_id':partner.property_account_receivable.id,
-        #                'type':context['type'],
-        #                'amount':context['default_amount'],
-        #                'net_amount':context['default_amount'],
-        #                'receiptbook_id': receipt.id
-        #        })
-        #        voucher.signal_workflow('proforma_voucher')
-
-        print 'mover materiales------------------------------------------------'
-        picking_obj = self.env['stock.picking']
-        for rec in picking_obj.browse(self.ids):
-            rec.force_assign()
-            rec.do_transfer()
-
-
-
+    #        print '--------------------------------------------------------- mover materiales'
+    #        picking_obj = self.env['stock.picking']
+    #        for rec in picking_obj.browse(self.ids):
+    #            rec.force_assign()
+    #            rec.do_transfer()
 
     @api.multi
     def button_invoice_express(self):
-        print '---------------------------- button_invoice_express'
+        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button invoice express'
 
-        print '>> confirmar orden de venta'
+        print '------------------------------------------------- confirmar orden de venta'
         self.action_button_confirm()
 
-        print '>> crear factura'
+        print '------------------------------------------------------------ crear factura'
         res = self.manual_invoice()
 
-        print 'validar factura -->',res['res_id']
+        print '---------------------------------------------------------- validar factura'
         invoice_obj = self.env['account.invoice']
         invoice = invoice_obj.browse([res['res_id']])
         invoice.signal_workflow('invoice_open')
 
-        print 'pagar factura---------------------------------------------------'
+        print '------------------------------------------------------------ pagar factura'
         res = invoice.invoice_pay_customer()
         context = res['context']
         account_voucher_obj = self.env['account.voucher']
@@ -111,23 +75,25 @@ class sale_order(models.Model):
         })
         voucher.signal_workflow('proforma_voucher')
 
-        print 'mover materiales------------------------------------------------'
-#        res = self.action_view_delivery()
+        print '--------------------------------------------------------- mover materiales'
         picking_obj = self.env['stock.picking']
         for rec in picking_obj.browse(self.ids):
-            rec.force_assign()
-            rec.do_transfer()
+            print 'force assign', rec.force_assign()
+            print 'do transfer', rec.do_transfer()
 
-        print 'imprimir factura'
+        print '--------------------------------------------------------- imprimir factura'
         datas = {
                 'ids': invoice.ids,
                 'model': 'account.report_invoice',
                 'form': invoice.read()
             }
+        # print 'datas',datas
+        print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< button invoice express'
         return {
             'type': 'ir.actions.report.xml',
-            'report_name': 'account.report_invoice',
+            'report_name': 'l10n_ar_aeroo_einvoice.action_aeroo_report_ar_einvoice',
             'datas': datas,
         }
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
