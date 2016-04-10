@@ -18,39 +18,54 @@
 #
 ################################################################################
 from openerp import models, fields, exceptions, api, _
+from openerp.exceptions import except_orm, Warning, RedirectWarning
 
 class sale_order(models.Model):
     _inherit = "sale.order"
 
-    #    @api.multi
-    #    def button_express(self):
-    #        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button_invoice_express'
-    #        print 'quie paasa'
-    #        print '>> confirmar orden de venta'
-    #        self.action_button_confirm()
-
-    #        print '--------------------------------------------------------- mover materiales'
-    #        picking_obj = self.env['stock.picking']
-    #        for rec in picking_obj.browse(self.ids):
-    #            rec.force_assign()
-    #            rec.do_transfer()
-
     @api.multi
     def button_invoice_express(self):
         print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button invoice express'
+        # verificar que solo haya productos en la orden, sino no se puede transferir.
+        lines = self.order_line.search([('order_id', '=', self.id)])
+        for line in lines:
+            if line.product_id.type != 'product':
+                raise except_orm(
+                    'Solo puede facturar productos con la facturación express!',
+                    "El item '%s' en la orden de venta no es de tipo producto!" % (
+                    line.name))
 
         print '------------------------------------------------- confirmar orden de venta'
-        self.action_button_confirm()
+        # confirmar la orden de venta
+        print '>', self.action_button_confirm()
+
+        print '--------------------------------------------------------- mover materiales'
+        # mover el stock
+        picking_obj = self.env['stock.picking']
+        # encontrar los pickings que corresponden a la orden de venta
+        for rec in picking_obj.search([('origin', '=', 'SO{:03.0f}'.format(self.id))]):
+            # forzar para que funcione aunque no haya stock
+            if not rec.force_assign():
+                raise except_orm('No se pudo asignar el producto para la transferencia',
+                                 'Error desconocido')
+            # hacer finalmente la transferencia
+            if not rec.do_transfer():
+                raise except_orm('No se pudo transferir el material',
+                                 'Error desconocido')
 
         print '------------------------------------------------------------ crear factura'
+        # crear la factura
         res = self.manual_invoice()
+        print '>', res
 
         print '---------------------------------------------------------- validar factura'
+        # validar la factura
         invoice_obj = self.env['account.invoice']
         invoice = invoice_obj.browse([res['res_id']])
         invoice.signal_workflow('invoice_open')
 
         print '------------------------------------------------------------ pagar factura'
+        # pagar la factura
         res = invoice.invoice_pay_customer()
         context = res['context']
         account_voucher_obj = self.env['account.voucher']
@@ -75,13 +90,6 @@ class sale_order(models.Model):
         })
         voucher.signal_workflow('proforma_voucher')
 
-        print '--------------------------------------------------------- mover materiales'
-        picking_obj = self.env['stock.picking']
-        print 'self ids', self.ids
-        for rec in picking_obj.browse(self.ids):
-            print 'force assign', rec.force_assign()
-            print 'do transfer', rec.do_transfer()
-
         print '--------------------------------------------------------- imprimir factura'
         datas = {
                 'ids': invoice.ids,
@@ -92,7 +100,7 @@ class sale_order(models.Model):
         print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< button invoice express'
         return {
             'type': 'ir.actions.report.xml',
-            'report_name': 'account.report_invoice',
+            'report_name': 'aeroo_report_ar_einvoice',
             'datas': datas,
         }
 
