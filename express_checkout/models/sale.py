@@ -77,6 +77,7 @@ class sale_order(models.Model):
 
         print '--------------------------------------------------------- mover materiales'
         picking_obj = self.env['stock.picking']
+        print 'self ids', self.ids
         for rec in picking_obj.browse(self.ids):
             print 'force assign', rec.force_assign()
             print 'do transfer', rec.do_transfer()
@@ -91,7 +92,7 @@ class sale_order(models.Model):
         print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< button invoice express'
         return {
             'type': 'ir.actions.report.xml',
-            'report_name': 'l10n_ar_aeroo_einvoice.action_aeroo_report_ar_einvoice',
+            'report_name': 'account.report_invoice',
             'datas': datas,
         }
 
