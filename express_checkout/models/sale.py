@@ -79,72 +79,46 @@ class sale_order(models.Model):
         account_move = account_move_obj.search([], limit=4)
 
         # pagar la factura
-        if True:
-            invoice.pay_and_reconcile(
-                context['default_amount'],  # pay_amount
-                journal.default_debit_account_id.id,  # pay_account_id,
-                period.id,  # period_id,
-                journal.id,  # pay_journal_id,
-                journal.default_debit_account_id.id,  # writeoff_acc_id,
-                period.id,  # writeoff_period_id,
-                journal.id)  # writeoff_journal_id,
-
         # hacer configuracion para modificar esto
         receipt_obj = self.env['account.voucher.receiptbook']
         receipt = receipt_obj.search([('name','like','Recibos')],limit=1)
-        if False:
-            account_voucher_obj = self.env['account.voucher']
-            voucher = account_voucher_obj.create({
-                'partner_id': context['default_partner_id'],
-                'journal_id': journal.id,
-                'account_id': journal.default_debit_account_id.id,
-                'type': context['type'],
-                'amount': context['default_amount'],
-                'net_amount': context['default_amount'],
-                'receiptbook_id': receipt.id
-            })
-            voucher.signal_workflow('proforma_voucher')
 
-        print '---------------------------------|'
-        #        print 'invoice number', invoice.document_number
-        #        print 'voucher number', voucher.document_number
-        for rec in account_move:
-            print '> {:10} {:10} dn={:10}'.format(rec, rec.journal_id.name,
-                                                  rec.afip_document_number)
-            for re in rec.line_id:
-                print ' >> {:10} na={:17} d={:10} c={:10} dn={:10}'.format(
-                    re, re.name, re.debit, re.credit, re.document_number)
-        print '---------------------------------|'
+        account_voucher_obj = self.env['account.voucher']
+        voucher = account_voucher_obj.create({
+            'partner_id': context['default_partner_id'],
+            'journal_id': journal.id,
+            'account_id': journal.default_debit_account_id.id,
+            'type': context['type'],
+            'amount': context['default_amount'],
+            'net_amount': context['default_amount'],
+            'receiptbook_id': receipt.id
+        })
+        voucher.signal_workflow('proforma_voucher')
 
         account_move_line_obj = self.env['account.move.line']
 
+        # obtener un recordser vacio
+        lines2rec = account_move_line_obj.browse()
+
+        # obtener las lineas a conciliar de facturas
         account_move_line = account_move_line_obj.search(
             [('document_number', '=', invoice.document_number)])
-        print '---------------------------------|'
-        print 'invoice number', invoice.document_number
         for re in account_move_line:
-            print ' >> {:10} na={:17} d={:10} c={:10} dn={:10}'.format(
-                re, re.name, re.debit, re.credit, re.document_number)
+            if re.account_id.reconcile:
+                lines2rec += re
 
-        #        account_move_line = account_move_line_obj.search([('document_number','=',voucher.document_number)])
-        #        print 'voucher number', voucher.document_number
+        # obtener las lineas a conciliar de pagos
+        account_move_line = account_move_line_obj.search(
+            [('document_number', '=', voucher.document_number)])
         for re in account_move_line:
-            print ' >> {:10} na={:17} d={:10} c={:10} dn={:10}'.format(
-                re, re.name, re.debit, re.credit, re.document_number)
-        print '---------------------------------|'
+            if re.account_id.reconcile:
+                lines2rec += re
 
-
-
-
-        # reconciliar las lineas
-
-        #        lines = self.env['account.move.line'].browse([r[0] for r in self._cr.fetchall()])
-        #        lines2rec = lines.browse()
-        #        lines2rec.reconcile('manual',
-        #                            journal.default_debit_account_id.id,    #writeoff_acc_id
-        #                            period.id,                              # writeoff_period_id,
-        #                            journal.id)                             # writeoff_journal_id)
-
+        # reconciliar las lineas de factura con pagos
+        lines2rec.reconcile('manual',
+                            journal.default_debit_account_id.id,  # writeoff_acc_id
+                            period.id,  # writeoff_period_id,
+                            journal.id)  # writeoff_journal_id)
 
 
         print '--------------------------------------------------------- imprimir factura'
