@@ -65,30 +65,87 @@ class sale_order(models.Model):
         invoice.signal_workflow('invoice_open')
 
         print '------------------------------------------------------------ pagar factura'
-        # pagar la factura
         res = invoice.invoice_pay_customer()
         context = res['context']
-        account_voucher_obj = self.env['account.voucher']
 
         # hacer configuración para modificar esto.
         journal_obj = self.env['account.journal']
-        journal = journal_obj.search([('name','like','Caja')],limit=1)
-        partner = self.env['res.partner'].browse(context['default_partner_id'])
+        journal = journal_obj.search([('name', 'like', 'Caja')], limit=1)
+
+        period_obj = self.env['account.period']
+        period = period_obj.find()
+
+        account_move_obj = self.env['account.move']
+        account_move = account_move_obj.search([], limit=4)
+
+        # pagar la factura
+        if True:
+            invoice.pay_and_reconcile(
+                context['default_amount'],  # pay_amount
+                journal.default_debit_account_id.id,  # pay_account_id,
+                period.id,  # period_id,
+                journal.id,  # pay_journal_id,
+                journal.default_debit_account_id.id,  # writeoff_acc_id,
+                period.id,  # writeoff_period_id,
+                journal.id)  # writeoff_journal_id,
 
         # hacer configuracion para modificar esto
         receipt_obj = self.env['account.voucher.receiptbook']
         receipt = receipt_obj.search([('name','like','Recibos')],limit=1)
-
-        voucher = account_voucher_obj.create({
-                'partner_id':context['default_partner_id'],
-                'journal_id':journal.id,
-                'account_id':partner.property_account_receivable.id,
-                'type':context['type'],
-                'amount':context['default_amount'],
-                'net_amount':context['default_amount'],
+        if False:
+            account_voucher_obj = self.env['account.voucher']
+            voucher = account_voucher_obj.create({
+                'partner_id': context['default_partner_id'],
+                'journal_id': journal.id,
+                'account_id': journal.default_debit_account_id.id,
+                'type': context['type'],
+                'amount': context['default_amount'],
+                'net_amount': context['default_amount'],
                 'receiptbook_id': receipt.id
-        })
-        voucher.signal_workflow('proforma_voucher')
+            })
+            voucher.signal_workflow('proforma_voucher')
+
+        print '---------------------------------|'
+        #        print 'invoice number', invoice.document_number
+        #        print 'voucher number', voucher.document_number
+        for rec in account_move:
+            print '> {:10} {:10} dn={:10}'.format(rec, rec.journal_id.name,
+                                                  rec.afip_document_number)
+            for re in rec.line_id:
+                print ' >> {:10} na={:17} d={:10} c={:10} dn={:10}'.format(
+                    re, re.name, re.debit, re.credit, re.document_number)
+        print '---------------------------------|'
+
+        account_move_line_obj = self.env['account.move.line']
+
+        account_move_line = account_move_line_obj.search(
+            [('document_number', '=', invoice.document_number)])
+        print '---------------------------------|'
+        print 'invoice number', invoice.document_number
+        for re in account_move_line:
+            print ' >> {:10} na={:17} d={:10} c={:10} dn={:10}'.format(
+                re, re.name, re.debit, re.credit, re.document_number)
+
+        #        account_move_line = account_move_line_obj.search([('document_number','=',voucher.document_number)])
+        #        print 'voucher number', voucher.document_number
+        for re in account_move_line:
+            print ' >> {:10} na={:17} d={:10} c={:10} dn={:10}'.format(
+                re, re.name, re.debit, re.credit, re.document_number)
+        print '---------------------------------|'
+
+
+
+
+        # reconciliar las lineas
+
+        #        lines = self.env['account.move.line'].browse([r[0] for r in self._cr.fetchall()])
+        #        lines2rec = lines.browse()
+        #        lines2rec.reconcile('manual',
+        #                            journal.default_debit_account_id.id,    #writeoff_acc_id
+        #                            period.id,                              # writeoff_period_id,
+        #                            journal.id)                             # writeoff_journal_id)
+
+
 
         print '--------------------------------------------------------- imprimir factura'
         datas = {
@@ -96,7 +153,6 @@ class sale_order(models.Model):
                 'model': 'account.report_invoice',
                 'form': invoice.read()
             }
-        # print 'datas',datas
         print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< button invoice express'
         return {
             'type': 'ir.actions.report.xml',
