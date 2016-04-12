@@ -12,12 +12,12 @@
             <field name="arch" type="xml">
                 <field name="state" position = "before">
                     <button name="button_invoice_express"
-                            string="Facturar y Enviar"
+                            string="Facturar"
                             class="oe_highlight"
                             states="draft"
                             type="object"/>
                     <button name="button_express"
-                            string="Enviar"
+                            string="Borrador"
                             class="oe_highlight"
                             states="draft"
                             type="object"/>
