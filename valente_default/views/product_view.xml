@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+
+        <record id="view_res_partner_form_valente" model="ir.ui.view">
+            <field name="name">res.partner.form.valente</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="l10n_ar_invoice.view_res_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='other_afip_document_class_ids']"
+                       position="replace"/>
+            </field>
+        </record>
+
         <!--
         <record id="product_normal_form_import_view_valente" model="ir.ui.view">
             <field name="name">product.normal.form.import.view</field>
