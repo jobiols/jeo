@@ -43,6 +43,14 @@
                 <!-- agrega grupo Facturación y Pagos -->
                 <!-- agrega grupo Comras / Responsable -->
                 <!-- agrega grupo Deposito Usuario  -->
+
             </record>
+
+            <!-- hace aparecer el menu de categorias -->
+            <menuitem id="prod_config_main1"
+                      parent="base.menu_product"
+                      action="product.product_category_action_form"
+                      name="Categorias de productos"
+                      sequence="770"/>
         </data>
 </openerp>
