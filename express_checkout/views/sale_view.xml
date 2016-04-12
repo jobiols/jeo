@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <!--  Sale order inherited form -->
+
+        <!--  Agregar botones para facturar y enviar -->
+        <!-- Agregar campo medios de pago en la orden de compra -->
+
         <record id="view_order_form_inherit" model="ir.ui.view">
             <field name="name">sale.order.form.inherit</field>
             <field name="model">sale.order</field>
@@ -19,7 +22,13 @@
                             states="draft"
                             type="object"/>
                 </field>
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <field name="journal_id" domain="[('type','in',['bank','cash'])]"/>
+                </xpath>
+
             </field>
         </record>
+
+
     </data>
 </openerp>

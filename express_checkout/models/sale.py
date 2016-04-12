@@ -23,6 +23,7 @@ from openerp.exceptions import except_orm, Warning, RedirectWarning
 class sale_order(models.Model):
     _inherit = "sale.order"
 
+    journal_id = fields.Many2one('account.journal', u'Método de pago', required='True')
     @api.multi
     def button_invoice_express(self):
         print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button invoice express'
@@ -68,9 +69,7 @@ class sale_order(models.Model):
         res = invoice.invoice_pay_customer()
         context = res['context']
 
-        # hacer configuración para modificar esto.
-        journal_obj = self.env['account.journal']
-        journal = journal_obj.search([('name', 'like', 'Caja')], limit=1)
+        journal = self.journal_id
 
         period_obj = self.env['account.period']
         period = period_obj.find()
