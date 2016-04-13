@@ -74,6 +74,7 @@ class ImportPriceFile(models.TransientModel):
         @param file_data: Input data to load
         @return: Imported file number
         """
+        print '-----------------------------------------------------------------'
         try:
             import xlrd
         except ImportError:
@@ -99,11 +100,10 @@ class ImportPriceFile(models.TransientModel):
                 rowResults.append(str(int(rowValues[0])))
             else:
                 rowResults.append(rowValues[0])
-            print rowResults[0]
 
             for cell in rowValues[1:]:
                 if isinstance(cell, basestring):
-                    rcell = cell.encode('ascii', 'ignore')
+                    rcell = cell.encode('utf-8')
                 else:
                     rcell = str(cell)
                 rowResults.append(rcell)
