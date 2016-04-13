@@ -28,7 +28,7 @@
                     <group col="6">
                         <field name="name"/>
                         <field name="file_name"/>
-                        <field name="date"/>
+                        <field name="mode" />
                         <field name="process"/>
                         <field name="fails" />
                         <field name="supplier"  domain="[('supplier', '=', True)]"/>

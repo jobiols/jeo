@@ -1,20 +1,19 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
-#
-#    Avanzosc - Avanced Open Source Consulting
-#    Copyright (C) 2011 - 2012 Avanzosc <http://www.avanzosc.com>
+#    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
+#    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#    GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
+#    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see http://www.gnu.org/licenses/.
 #
 ##############################################################################
@@ -34,7 +33,7 @@ class ImportPriceFile(models.TransientModel):
     delimeter = fields.Char('Delimeter', default=',',
                             help='Default delimeter is ","')
     file_type = fields.Selection([('csv', 'CSV'), ('xls', 'XLS')], 'File Type',
-                                 required=True, default='csv')
+                                 required=True, default='xls')
 
     def _import_csv(self, load_id, file_data, delimeter=';'):
         """ Imports data from a CSV file in defined object.
@@ -79,6 +78,7 @@ class ImportPriceFile(models.TransientModel):
             import xlrd
         except ImportError:
             exceptions.Warning(_("xlrd python lib  not installed"))
+
         file_line_obj = self.env['product.pricelist.load.line']
         file_1 = base64.decodestring(file_data)
         (fileno, fp_name) = tempfile.mkstemp('.xls', 'openerp_')
@@ -120,11 +120,14 @@ class ImportPriceFile(models.TransientModel):
     def action_import(self):
         file_load_obj = self.env['product.pricelist.load']
         context = self._context
+
         if 'active_id' in context:
             load_id = context['active_id']
             file_load = file_load_obj.browse(load_id)
+
         for line in file_load.file_lines:
             line.unlink()
+
         for wiz in self:
             if not wiz.data:
                 raise exceptions.Warning(_("You need to select a file!"))

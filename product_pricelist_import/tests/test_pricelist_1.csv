@@ -1,0 +1,4 @@
+product_code,product_name,list-price,categ,sub_categ,d1,d2,d3,d4,d5,d6
+001,"producto uno",10,,,-10,-2,-2,-2,,
+002,"producto dos",10,tornillos,,-15,-2,-2,-2,-2,-2
+003,"producto tres",20,tuercas,hierro,-20,-2,-2,-2,-2,-2

@@ -1,34 +1,45 @@
 -
-    In order to test import, we create a Product Pricelist Load register
+    creo una categoria para el proveedor
+-
+    !record {model: product.category, id: category_1}:
+        name: proov1
+-
+    creo un proveedor
+-
+    !record {model: res.partner, id: supplier_1}:
+        name: proveedor uno
+        categ_id: category_1
+-
+    creo el product pricelist
 -
     !record {model: product.pricelist.load, id: product_pricelist_load_1}:
         name: Archivo de prueba
         date: !eval time.strftime('%Y-%m-%d')
         file_name: /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
+        supplier: supplier_1
+        mode: 'append'
 -
     Reading test.xls file
 -
     !python {model: product.pricelist.load}: |
         from datetime import datetime
+        import base64
 
-        file_load = self.browse(product_pricelist_load_1)
-        print '--------------------------------->>>>>>>>>>>>>>>>>>>>'
+        product_pricelist_load = self.pool['product.pricelist.load'].browse(cr,uid,ref('product_pricelist_load_1'))
+        print product_pricelist_load.file_name
 
-        date_hour = datetime.now().strftime('%H:%M')
-        actual_date = datetime.now().strftime('%Y-%m-%d')
+        import_file = self.pool['import.price.file']
+        import_file.create(cr,uid,{'data':'1'})
+        context['active_id'] = ref('product_pricelist_load_1')
+        import_file.action_import(cr,uid,[ref('product_pricelist_load_1')],context)
 
-        filename = '/mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls'
-        f = open(filename, "r")
-        data = f.read()
-        print data
-        f.close()
-        encoded_data = base64.b64encode(data)
-        print encoded_data
 
-        self._import_csv(ref("product_pricelist_load_1", encoded_data, ',')
-        file_load.write({})
 
-        file_load.write({'name': ('%s_%s') % (filename, actual_date),
-                         'date': date_hour, 'fails': 0,
-                         'file_name': filename, 'process': 0})
+
+
+
+
+
+
+
 

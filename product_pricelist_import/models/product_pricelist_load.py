@@ -24,13 +24,22 @@ class ProductPricelistLoad(models.Model):
     _description = 'Product Price List Load'
 
     name = fields.Char('Load')
-    date = fields.Date('Date:', readonly=True)
-    file_name = fields.Char('File Name', readonly=True)
+    date = fields.Date('Date:', readonly=True, help='Fecha del archivo')
+    file_name = fields.Char('File Name', readonly=True, help='nombre del archivo')
     file_lines = fields.One2many('product.pricelist.load.line', 'file_load',
                                  'Product Pricelist Lines')
-    fails = fields.Integer('Fail Lines:', readonly=True)
-    process = fields.Integer('Lines to Process:', readonly=True)
+    fails = fields.Integer('Fail Lines:', readonly=True, help='Lineas sin procesar')
+    process = fields.Integer('Lines to Process:', readonly=True,
+                             help='Lineas pendientes de proceso')
     supplier = fields.Many2one('res.partner', 'Supplier')
+    mode = fields.Selection([('no_append', 'No agregar productos nuevos'),
+                             ('append', 'Agregar productos nuevos')
+                             ], help='define el modo en el que se procesa la lista de \
+                             precios, si el modo es "No agregar productos nuevos", el \
+                             proceso solo actualizará los precios y descuentos de los\
+                             productos existentes. Si el modo es "Agregar productos nuevos"\
+                             entonces si no encuentra un producto lo agrega y si lo \
+                             encuentra, lo actualiza')
 
     @api.multi
     def check_category(self, line):
@@ -60,69 +69,77 @@ class ProductPricelistLoad(models.Model):
         return res
 
     @api.multi
-    def check_supplier(self, line, cat):
+    def process_line(self, line):
+
         # buscar en suppinfo proveedor y codigo
         suppinfo = self.psupplinfo_obj.search(
             [('product_code', '=', line.product_code),
              ('name', '=', self.supplier.id)])
-        if not suppinfo:
-            # no existe, creamos el producto
+
+        if not suppinfo and self.mode == 'append':
+            # crear o actualizar categorias
+            cat = self.check_category(line)
+
+            # crear el producto
             prod = self.product_obj.create({
                 'default_code': line.product_code,
                 'name': line.product_name,
                 'type': 'product',
                 'categ_id': cat.id
             })
-            # creamos el proveedor
+
+            # crear información del proveedor
             suppinfo = self.psupplinfo_obj.create({
                 'product_code': line.product_code,
                 'product_name': line.product_name,
                 'name': self.supplier.id,
                 'product_tmpl_id': prod.id
             })
+            # actualizar precio de lista
+            suppinfo.list_price = line.list_price
+            line.write({'fail': False, 'fail_reason': 'Importado'})
 
-        # finalmente actualizamos el precio
-        suppinfo.list_price = line.list_price
+            return
 
-        return True
+        if suppinfo:
+            # crear o actualizar categorias
+            cat = self.check_category(line)
 
-    @api.multi
-    def process_line(self, line):
-        # procesar una linea del archivo
-        cat = self.check_category(line)
-        if self.check_supplier(line,cat):
-            return True
-        return False
+            # actualizar producto
+            suppinfo.list_price = line.list_price
+            line.write({'fail': False, 'fail_reason': 'Actualizado'})
+        else:
+            line.fail_reaseon = 'No actualizado'
 
     @api.multi
     def process_lines(self):
-        # ponerle a la instancia de la clase el nombre file_load
-        for file_load in self:
-            # si no le puse proveedor abortar
-            if not file_load.supplier:
-                raise exceptions.Warning(_("You must select a Supplier"))
-            self.product_obj = self.env['product.template']
-            self.psupplinfo_obj = self.env['product.supplierinfo']
-            self.pricepinfo_obj = self.env['pricelist.partnerinfo']
-            self.category_obj = self.env['product.category']
+        # si no le puse proveedor abortar
+        if not self.supplier:
+            raise exceptions.Warning(_("You must select a Supplier"))
 
-            if not file_load.file_lines:
-                raise exceptions.Warning(_("There must be one line at least to"
-                                           " process"))
-            # procesar cada linea de file_load
-            for line in file_load.file_lines:
-                # procesar las lineas que estan en fail
-                if line.fail and line.check():
-                    if self.process_line(line):
-                        line.write({
-                            'fail': False,
-                            'fail_reason': _('Processed Ok')})
+        # si no le puse proveedor abortar
+        if not self.supplier:
+            raise exceptions.Warning(_("You must select a Supplier"))
 
-            count = 0
-            for line in file_load.file_lines:
-                if line.fail:
-                    count += 1
-            file_load.fails = count
+        self.product_obj = self.env['product.template']
+        self.psupplinfo_obj = self.env['product.supplierinfo']
+        self.pricepinfo_obj = self.env['pricelist.partnerinfo']
+        self.category_obj = self.env['product.category']
+
+        if not self.file_lines:
+            raise exceptions.Warning(_("There must be one line at least to process"))
+
+        # procesar cada linea
+        for line in self.file_lines:
+            # procesar las lineas que estan en fail
+            if line.fail and line.check():
+                self.process_line(line)
+
+        count = 0
+        for line in self.file_lines:
+            if line.fail:
+                count += 1
+        self.fails = count
 
         return True
 
