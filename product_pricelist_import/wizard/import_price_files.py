@@ -74,7 +74,6 @@ class ImportPriceFile(models.TransientModel):
         @param file_data: Input data to load
         @return: Imported file number
         """
-        print '-----------------------------------------------------------------'
         try:
             import xlrd
         except ImportError:

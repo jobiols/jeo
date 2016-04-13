@@ -46,15 +46,6 @@ class AccountBankStatementImport(models.TransientModel):
             else:
                 data_list = file_data.split('\n')
 
-            aaa = csv.DictReader(data_list)
-            print '------------- csv'
-            for iii in aaa:
-                print iii['Fecha']
-                print iii['Descripcion']
-                print iii['Sucursal']
-                print self._get_monto(iii['Monto'])
-            print '------------- csv'
-
         except:
             raise #UserError(_('Could not decipher the Frances file.'))
 
