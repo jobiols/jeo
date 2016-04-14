@@ -33,6 +33,9 @@
                         <field name="fails" />
                         <field name="supplier"  domain="[('supplier', '=', True)]"/>
                     </group>
+                    <group col="2">
+                        <field name="description" nolabel="1"/>
+                    </group>
                     <field name="file_lines" nolabel="1">
                     <tree string="Import Lines" colors="red:fail==True;green:fail==False" editable="bottom">
                         <field name="product_code" />

@@ -23,6 +23,33 @@ class ProductPricelistLoad(models.Model):
     _name = 'product.pricelist.load'
     _description = 'Product Price List Load'
 
+    def _discount_modes(self):
+        if not self.keys:
+            return
+
+        keys = self.keys.split(',')
+
+        supplier_discounts = []
+        for i, disc in enumerate(keys):
+            if disc[0:2] == 'dp':
+                supplier_discounts.append('D'+str(i-4)+'%')
+
+        categ_discounts = []
+        for i, disc in enumerate(keys):
+            if disc[0:2] == 'dc':
+                categ_discounts.append('D'+str(i-4)+'%')
+
+        subcateg_discounts = []
+        for i, disc in enumerate(keys):
+            if disc[0:2] == 'ds':
+                subcateg_discounts.append('D'+str(i-4)+'%')
+
+        self.description = 'Descuentos sobre precio de lista: (Producto {})   (Categoria {})   (Sub categoria {})'.\
+            format(', '.join(supplier_discounts),
+                   ', '.join(categ_discounts),
+                   ', '.join(subcateg_discounts))
+
+
     name = fields.Char('Load')
     date = fields.Date('Date:', readonly=True, help='Fecha del archivo')
     file_name = fields.Char('File Name', readonly=True, help='nombre del archivo')
@@ -31,7 +58,7 @@ class ProductPricelistLoad(models.Model):
     fails = fields.Integer('Fail Lines:', readonly=True, help='Lineas sin procesar')
     process = fields.Integer('Lines to Process:', readonly=True,
                              help='Lineas pendientes de proceso')
-    supplier = fields.Many2one('res.partner', 'Supplier')
+    supplier = fields.Many2one('res.partner', 'Supplier',required=True)
     mode = fields.Selection([('no_append', 'No agregar productos nuevos'),
                              ('append', 'Agregar productos nuevos')
                              ], help='define el modo en el que se procesa la lista de \
@@ -39,7 +66,11 @@ class ProductPricelistLoad(models.Model):
                              proceso solo actualizará los precios y descuentos de los\
                              productos existentes. Si el modo es "Agregar productos nuevos"\
                              entonces si no encuentra un producto lo agrega y si lo \
-                             encuentra, lo actualiza')
+                             encuentra, lo actualiza',
+                            required=True,
+                            default='no_append')
+    keys = fields.Char('keys')
+    description = fields.Char(compute="_discount_modes")
 
     @api.multi
     def check_category(self, line):
@@ -48,35 +79,35 @@ class ProductPricelistLoad(models.Model):
             raise exceptions.Warning(_("Supplier without category"))
 
         res = supp_categ
+        supp_categ.update_discounts(line.get_discounts('dp')) #cargar los descuentos
 
         if line.categ:
-            supp_categ.update_discounts([])
             cat = supp_categ.child_id.search([('name', '=', line.categ)])
             if not cat:
                 cat = supp_categ.child_id.create(
                     {'name': line.categ, 'parent_id': supp_categ.id})
-            cat.update_discounts(line.get_discounts())
+            cat.update_discounts(line.get_discounts('dc'))
             res = cat
 
-        if line.sub_categ:
-            cat.update_discounts([])
-            sub = cat.child_id.search([('name', '=', line.sub_categ)])
-            if not sub:
-                sub = cat.child_id.create({'name': line.sub_categ, 'parent_id': cat.id})
-            sub.update_discounts(line.get_discounts())
-            res = sub
+            if line.sub_categ:
+                sub = cat.child_id.search([('name', '=', line.sub_categ)])
+                if not sub:
+                    sub = cat.child_id.create({'name': line.sub_categ, 'parent_id': cat.id})
+                sub.update_discounts(line.get_discounts('ds'))
+                res = sub
 
         return res
 
     @api.multi
     def process_line(self, line):
-
+        print 'process line -------------------------------------------------------'
         # buscar en suppinfo proveedor y codigo
         suppinfo = self.psupplinfo_obj.search(
             [('product_code', '=', line.product_code),
              ('name', '=', self.supplier.id)])
 
         if not suppinfo and self.mode == 'append':
+            print 'crear o producto -------------------------------------'
             # crear o actualizar categorias
             cat = self.check_category(line)
 
@@ -102,6 +133,7 @@ class ProductPricelistLoad(models.Model):
             return
 
         if suppinfo:
+            print 'actualizar producto ------------------------'
             # crear o actualizar categorias
             cat = self.check_category(line)
 
@@ -113,10 +145,6 @@ class ProductPricelistLoad(models.Model):
 
     @api.multi
     def process_lines(self):
-        # si no le puse proveedor abortar
-        if not self.supplier:
-            raise exceptions.Warning(_("You must select a Supplier"))
-
         # si no le puse proveedor abortar
         if not self.supplier:
             raise exceptions.Warning(_("You must select a Supplier"))
@@ -162,6 +190,7 @@ class ProductPricelistLoadLine(models.Model):
     fail = fields.Boolean('Fail')
     fail_reason = fields.Char('Fail Reason')
     file_load = fields.Many2one('product.pricelist.load', 'Load', required=True)
+    keys = fields.Char(related='file_load.keys')
 
     def check(self):
         # check product, must exist code and name
@@ -182,19 +211,27 @@ class ProductPricelistLoadLine(models.Model):
             return False
         return True
 
-    def get_discounts(self):
+    def get_discounts(self,categ):
+        keys = self.keys.split(',')
+        print 'get discount >>>',categ, keys[5][:2], keys
         ret = []
-        if self.d1 <> 0:
+        if self.d1 <> 0 and keys[5][:2]==categ:
+            print 1
             ret.append(self.d1)
-        if self.d2 <> 0:
+        if self.d2 <> 0 and keys[6][:2]==categ:
+            print 2
             ret.append(self.d2)
-        if self.d3 <> 0:
+        if self.d3 <> 0 and keys[7][:2]==categ:
+            print 3
             ret.append(self.d3)
-        if self.d4 <> 0:
+        if self.d4 <> 0 and keys[8][:2]==categ:
+            print 4
             ret.append(self.d4)
-        if self.d5 <> 0:
+        if self.d5 <> 0 and keys[9][:2]==categ:
+            print 5
             ret.append(self.d5)
-        if self.d6 <> 0:
+        if self.d6 <> 0 and keys[10][:2]==categ:
+            print 6
             ret.append(self.d6)
 
         return ret

@@ -1,0 +1,4 @@
+test pricelist 1
+P01,"producto uno",10,,,-10,-2,-2,-2,,
+P02,"producto dos",10,tornillos,,-15,-2,-2,-2,-2,-2
+P03,"producto tres",20,tuercas,hierro,-20,-2,-2,-2,-2,-2

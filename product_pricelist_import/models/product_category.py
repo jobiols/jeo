@@ -19,7 +19,6 @@
 #####################################################################################
 from openerp import models, fields
 
-
 class product_category(models.Model):
     _inherit = 'product.category'
 

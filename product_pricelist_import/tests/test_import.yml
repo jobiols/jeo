@@ -15,7 +15,7 @@
     !record {model: product.pricelist.load, id: product_pricelist_load_1}:
         name: Archivo de prueba
         date: !eval time.strftime('%Y-%m-%d')
-        file_name: /mnt/extra-addons/jeo/product_pricelist_import/tests/test.xls
+        file_name: /mnt/extra-addons/jeo/product_pricelist_import/tests/test_pricelist_1.csv
         supplier: supplier_1
         mode: 'append'
 -
@@ -24,22 +24,41 @@
     !python {model: product.pricelist.load}: |
         from datetime import datetime
         import base64
+        import csv
 
         product_pricelist_load = self.pool['product.pricelist.load'].browse(cr,uid,ref('product_pricelist_load_1'))
-        print product_pricelist_load.file_name
+        file_line_obj = self.pool['product.pricelist.load.line']
 
-        import_file = self.pool['import.price.file']
-        import_file.create(cr,uid,{'data':'1'})
-        context['active_id'] = ref('product_pricelist_load_1')
-        import_file.action_import(cr,uid,[ref('product_pricelist_load_1')],context)
+        CSVFILE = product_pricelist_load.file_name
+        reader = csv.reader(open(CSVFILE, 'rb'), delimiter=',',lineterminator='\r\n')
 
+        reader_info = []
+        reader_info.extend(reader)
 
+        keys = ['product_code','product_name','list_price','categ','sub_categ','d1','d2','d3','d4','d5','d6',]
+        del reader_info[0]
+        for i in range(len(reader_info)):
+            field = reader_info[i]
+            values = dict(zip(keys, field))
+            values['fail'] = True
+            values['fail_reason'] = 'No Processed'
+            values['file_load'] = ref('product_pricelist_load_1')
+            file_line_obj.create(cr,uid,values)
 
+        product_pricelist_load.process_lines()
+-
+    Check loaded products
+-
+    !python {model: product.product}: |
+        ids = self.search(cr,uid,[('default_code','=','P01')],context=context)
+        print ids
+        for rec in self.browse(cr,uid,ids):
+            print rec.default_code,rec.name
 
-
-
-
-
+        for rec in self.browse(cr,uid,ids):
+            standard_price = rec.standard_price
+            print 'asserting', rec.standard_price
+            assert standard_price == 10.0, "no calcula bien el precio"
 
 
 
