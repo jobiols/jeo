@@ -18,8 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
-from osv import fields
-from osv import osv
+from openerp.osv import osv
 
 
 class res_partner(osv.osv):
@@ -153,7 +152,5 @@ class res_partner(osv.osv):
 
         return visited_children
 
-
-res_partner()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
