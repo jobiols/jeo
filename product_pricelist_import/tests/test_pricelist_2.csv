@@ -1,8 +1,5 @@
 product_code,product_name,list-price,categ,sub_categ,dp,dc1,dc2,ds1,ds2,ds3
-P01,"producto uno",11,,,-10,-2,-2,-2,-2,-2
-P02,"producto dos",12,tornillos,,-15,-2,-4,-2,-2,-2
-P03,"producto tres",21,tuercas,hierro,-20,-2,-2,-4,-4,-2
-P04,"producto cuatro",32,tuercas,bronce,-20,-2,-2,-2,-2,-2
-P05,"producto cuatro",30,tuercas,bronce,-20,-2,-2,-2,-2,-2
-P06,"producto cuatro",30,tuercas,bronce,-20,-2,-2,-2,-2,-2
-P07,"producto cuatro",30,tuercas,bronce,-20,-2,-2,-2,-2,-2
+P01,"producto uno",10,,,-12,,,,,
+P02,"producto dos",20,tornillos,,-12,-2,-6,,,
+P03,"producto tres",30,tuercas,hierro,-12,-2,-3,-2,-7,-2
+P04,"producto cuatro",50,tuercas,bronce,-12,-1,-1,-1,-1,-1

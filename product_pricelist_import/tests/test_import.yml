@@ -13,13 +13,13 @@
     creo el product pricelist
 -
     !record {model: product.pricelist.load, id: product_pricelist_load_1}:
-        name: Archivo de prueba
+        name: Archivo de prueba 1
         date: !eval time.strftime('%Y-%m-%d')
         file_name: /mnt/extra-addons/jeo/product_pricelist_import/tests/test_pricelist_1.csv
         supplier: supplier_1
         mode: 'append'
 -
-    Reading test.xls file
+    cargamos la lista de precios 1
 -
     !python {model: product.pricelist.load}: |
         from datetime import datetime
@@ -27,38 +27,106 @@
         import csv
 
         product_pricelist_load = self.pool['product.pricelist.load'].browse(cr,uid,ref('product_pricelist_load_1'))
-        file_line_obj = self.pool['product.pricelist.load.line']
 
+        # leer el archivo
         CSVFILE = product_pricelist_load.file_name
         reader = csv.reader(open(CSVFILE, 'rb'), delimiter=',',lineterminator='\r\n')
 
         reader_info = []
         reader_info.extend(reader)
 
-        keys = ['product_code','product_name','list_price','categ','sub_categ','d1','d2','d3','d4','d5','d6',]
-        del reader_info[0]
-        for i in range(len(reader_info)):
-            field = reader_info[i]
-            values = dict(zip(keys, field))
-            values['fail'] = True
-            values['fail_reason'] = 'No Processed'
-            values['file_load'] = ref('product_pricelist_load_1')
-            file_line_obj.create(cr,uid,values)
+        import_price_file_obj = self.pool['import.price.file']
+        ids = import_price_file_obj.create(cr,uid,{'data':'a'})
+        import_price_file = import_price_file_obj.browse(cr,uid,ids)
+
+        # importar las lineas
+        keys, counter = import_price_file.append_file_lines(reader_info, ref('product_pricelist_load_1'))
+        product_pricelist_load.write({'name': 'test',
+                                      'fails': counter,
+                                      'process': counter,
+                                      'keys': keys})
 
         product_pricelist_load.process_lines()
 -
-    Check loaded products
+        Chequeamos los precios de los productos 1
 -
     !python {model: product.product}: |
+        print 'primera lista'
         ids = self.search(cr,uid,[('default_code','=','P01')],context=context)
-        print ids
+        print 'P01',
         for rec in self.browse(cr,uid,ids):
-            print rec.default_code,rec.name
+            print rec.standard_price
+            assert rec.standard_price == 9.0, "falla calculo de precio de compra debe ser 9.0"
 
+        ids = self.search(cr,uid,[('default_code','=','P02')],context=context)
+        print 'P02',
         for rec in self.browse(cr,uid,ids):
-            standard_price = rec.standard_price
-            print 'asserting', rec.standard_price
-            assert standard_price == 10.0, "no calcula bien el precio"
+            print rec.standard_price
+            assert rec.standard_price == 17.29, "falla calculo de precio de compra debe ser 17.29"
 
+        ids = self.search(cr,uid,[('default_code','=','P03')],context=context)
+        print 'P03',
+        for rec in self.browse(cr,uid,ids):
+            print rec.standard_price
+            assert rec.standard_price == 24.16, "falla calculo de precio de compra debe ser 24.16"
+-
+    Vamos a importar la segunda lista
+-
+    !record {model: product.pricelist.load, id: product_pricelist_load_2}:
+        name: Archivo de prueba 2
+        date: !eval time.strftime('%Y-%m-%d')
+        file_name: /mnt/extra-addons/jeo/product_pricelist_import/tests/test_pricelist_2.csv
+        supplier: supplier_1
+        mode: 'no_append'
+-
+    cargamos la lista de precios 2
+-
+    !python {model: product.pricelist.load}: |
+        from datetime import datetime
+        import base64
+        import csv
 
+        product_pricelist_load = self.pool['product.pricelist.load'].browse(cr,uid,ref('product_pricelist_load_2'))
 
+        # leer el archivo
+        CSVFILE = product_pricelist_load.file_name
+        reader = csv.reader(open(CSVFILE, 'rb'), delimiter=',',lineterminator='\r\n')
+
+        reader_info = []
+        reader_info.extend(reader)
+
+        import_price_file_obj = self.pool['import.price.file']
+        ids = import_price_file_obj.create(cr,uid,{'data':'a'})
+        import_price_file = import_price_file_obj.browse(cr,uid,ids)
+
+        # importar las lineas
+        keys, counter = import_price_file.append_file_lines(reader_info, ref('product_pricelist_load_2'))
+        product_pricelist_load.write({'name': 'test',
+                                      'fails': counter,
+                                      'process': counter,
+                                      'keys': keys})
+
+        product_pricelist_load.process_lines()
+
+-
+        Chequeamos los precios de los productos 2
+-
+    !python {model: product.product}: |
+        print 'segunda lista'
+        ids = self.search(cr,uid,[('default_code','=','P01')],context=context)
+        print 'P01',
+        for rec in self.browse(cr,uid,ids):
+            print rec.standard_price
+            assert rec.standard_price == 8.80, "falla calculo de precio de compra debe ser 8.80"
+
+        ids = self.search(cr,uid,[('default_code','=','P02')],context=context)
+        print 'P02',
+        for rec in self.browse(cr,uid,ids):
+            print rec.standard_price
+            assert rec.standard_price == 16.21, "falla calculo de precio de compra debe ser 16.21"
+
+        ids = self.search(cr,uid,[('default_code','=','P03')],context=context)
+        print 'P03',
+        for rec in self.browse(cr,uid,ids):
+            print rec.standard_price
+            assert rec.standard_price == 22.41, "falla calculo de precio de compra debe ser 22.41"

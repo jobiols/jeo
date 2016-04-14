@@ -39,8 +39,6 @@ class ImportPriceFile(models.TransientModel):
 
     def append_file_lines(self, reader_info, load_id):
         file_line_obj = self.env['product.pricelist.load.line']
-        keys = ['product_code', 'product_name', 'list_price', 'categ', 'sub_categ', 'dp1',
-                'dc1', 'dc2', 'ds1', 'ds2', 'ds3']
         keys1 = ['product_code', 'product_name', 'list_price', 'categ', 'sub_categ', 'd1',
                  'd2', 'd3', 'd4', 'd5', 'd6']
         keys = reader_info[0]

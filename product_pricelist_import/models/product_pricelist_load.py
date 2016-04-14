@@ -100,14 +100,12 @@ class ProductPricelistLoad(models.Model):
 
     @api.multi
     def process_line(self, line):
-        print 'process line -------------------------------------------------------'
         # buscar en suppinfo proveedor y codigo
         suppinfo = self.psupplinfo_obj.search(
             [('product_code', '=', line.product_code),
              ('name', '=', self.supplier.id)])
 
         if not suppinfo and self.mode == 'append':
-            print 'crear o producto -------------------------------------'
             # crear o actualizar categorias
             cat = self.check_category(line)
 
@@ -133,7 +131,6 @@ class ProductPricelistLoad(models.Model):
             return
 
         if suppinfo:
-            print 'actualizar producto ------------------------'
             # crear o actualizar categorias
             cat = self.check_category(line)
 
@@ -213,25 +210,18 @@ class ProductPricelistLoadLine(models.Model):
 
     def get_discounts(self,categ):
         keys = self.keys.split(',')
-        print 'get discount >>>',categ, keys[5][:2], keys
         ret = []
         if self.d1 <> 0 and keys[5][:2]==categ:
-            print 1
             ret.append(self.d1)
         if self.d2 <> 0 and keys[6][:2]==categ:
-            print 2
             ret.append(self.d2)
         if self.d3 <> 0 and keys[7][:2]==categ:
-            print 3
             ret.append(self.d3)
         if self.d4 <> 0 and keys[8][:2]==categ:
-            print 4
             ret.append(self.d4)
         if self.d5 <> 0 and keys[9][:2]==categ:
-            print 5
             ret.append(self.d5)
         if self.d6 <> 0 and keys[10][:2]==categ:
-            print 6
             ret.append(self.d6)
 
         return ret
