@@ -23,62 +23,20 @@ from openerp.osv import osv
 class sale_order(osv.osv):
     _inherit = "sale.order"
 
+    # hace lo mismo que la original salvo que no muestra el cartel de que no se
+    # actualizan los precios.
     def onchange_pricelist_id(self, cr, uid, ids, pricelist_id, order_lines,
                               context=None):
-        print 'on change pricelist --------------------------------------------'
         context = context or {}
         if not pricelist_id:
-            print 'not pricelist id'
             return {}
 
         value = {
-            'currency_id': self.pool.get('product.pricelist').browse(cr, uid,
-                                                                     pricelist_id,
-                                                                     context=context).currency_id.id
+            'currency_id': self.pool.get('product.pricelist'). \
+                browse(cr, uid, pricelist_id, context=context).currency_id.id
         }
         if not order_lines or order_lines == [(6, 0, [])]:
-            print 'not order lines'
             return {'value': value}
-
-        #########################
-        print 'changed pricelist !!!!!!!!!!!!11'
-
-        print 'pricelist id', pricelist_id
-        print 'order lines', order_lines
-        print context
-        print '----------------------------------------------'
-
-        sale_order_line_obj = self.pool['sale.order.line']
-        sale_order_line = sale_order_line_obj.browse(cr, uid, order_lines[0][2])
-
-        list_of_orderline = []
-        for line in sale_order_line:
-            line = {
-                'order_id': line.order_id.id,
-                'name': line.name,
-                #                'product_id':line.product_id,
-                #                'price_unit':line.price_unit,
-                #                'tax_id':line.tax_id,
-                #                'product_uom_qty':line.product_uom_qty,
-            }
-            list_of_orderline.append(line)
-            print 'getting line ', line
-
-        for line in sale_order_line:
-            line.name = 9999
-            print line.name
-
-
-        #        print 'para borrar', order_lines[0][2]
-        #        for id in order_lines[0][2]:
-        #            sale_order_line_obj.unlink(cr, uid, id, context=context)
-
-        print 'para crear'
-        #        for values in list_of_orderline:
-        #            print 'creando'
-        #    sale_order_line_obj.create(cr,uid,values)
-
-        #########################
 
         return {'value': value}
 
