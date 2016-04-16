@@ -38,6 +38,7 @@ Customización Herrajes Valente
         'hide_product_variants',
         'express_checkout',
         'invoice_order_by_id',
+        'account_invoice_tax_wizard'
     ],
     'data': [
         'security/security_groups.xml',
