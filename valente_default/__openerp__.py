@@ -45,7 +45,9 @@ Customización Herrajes Valente
         'security/security_groups.xml',
         'views/product_view.xml',
         'views/partner_view.xml',
-        'views/hide_menus.xml', ],
+        'views/default_values.xml',
+        'views/report_purchase_order.xml',
+    ],
     'test': [
     ],
     'installable': True,
