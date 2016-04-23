@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="product_template_tree_consult_view" model="ir.ui.view">
+            <field name="name">product.template.tree.consult.view</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <form string="Product" create="false">
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="categ_id"/>
+                    <field name="list_price"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_consult_price" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="product_template_tree_consult_view"/>
+            <field name="context">{"search_default_filter_to_sell":1}</field>
+        </record>
+
+        <menuitem action="action_consult_price"
+                  id="menu_consult_price" name="Consulta Precio"
+                  parent="base.menu_product" sequence="1"/>
+
+    </data>
+</openerp>
+
+
+
+

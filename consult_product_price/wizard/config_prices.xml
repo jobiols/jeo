@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_config_consult_prices" model="ir.ui.view">
+            <field name="name">Configuracion de la consulta de precios</field>
+            <field name="model">config.consult.product</field>
+            <field name="arch" type="xml">
+                <form string="Configuración de la consulta de precios">
+                    <group>
+                        <label string="Seleccione la lista de precios"/>
+                    </group>
+
+                    <group>
+                        <field name="pricelist_id"/>
+                    </group>
+
+                    <footer>
+                        <button name="button_save_config" string="Confirmar"
+                                type="object"
+                                class="oe_highlight"/>
+                        o
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_config_consult_product" model="ir.actions.act_window">
+            <field name="name">Configuración de la consulta de precios</field>
+            <field name="res_model">config.consult.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Configuración consulta"
+                  id="menu_action_config_consult_product" parent="base.menu_product"
+                  sequence="2"
+                  action="action_config_consult_product"/>
+
+    </data>
+</openerp>
+
