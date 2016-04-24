@@ -24,9 +24,10 @@ class sale_order(models.Model):
     _inherit = "sale.order"
 
     journal_id = fields.Many2one('account.journal', u'Método de pago', required='True')
+
     @api.multi
-    def button_invoice_express(self):
-        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button invoice express'
+    def button_express(self):
+        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button express'
         # verificar que solo haya productos en la orden, sino no se puede transferir.
         lines = self.order_line.search([('order_id', '=', self.id)])
         for line in lines:
@@ -34,7 +35,7 @@ class sale_order(models.Model):
                 raise except_orm(
                     'Solo puede facturar productos con la facturación express!',
                     "El item '%s' en la orden de venta no es de tipo producto!" % (
-                    line.name))
+                        line.name))
 
         print '------------------------------------------------- confirmar orden de venta'
         # confirmar la orden de venta
@@ -53,6 +54,12 @@ class sale_order(models.Model):
             if not rec.do_transfer():
                 raise except_orm('No se pudo transferir el material',
                                  'Error desconocido')
+        print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< button express'
+
+    @api.multi
+    def button_invoice_express(self):
+        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button invoice express'
+        self.button_express()
 
         print '------------------------------------------------------------ crear factura'
         # crear la factura
