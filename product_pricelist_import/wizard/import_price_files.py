@@ -22,9 +22,8 @@ import base64
 import cStringIO
 import tempfile
 import csv
-
-from openerp import fields, models, api, exceptions, _
-
+from openerp import fields, models, api, _
+from openerp.exceptions import Warning
 
 class ImportPriceFile(models.TransientModel):
     _name = 'import.price.file'
@@ -106,9 +105,11 @@ class ImportPriceFile(models.TransientModel):
             # grab the current row
             rowValues = sheet.row_values(counter, 0, end_colx=sheet.ncols)
             if counter != 0:
-                rowValues[0] = str(int(rowValues[0]))
+                if isinstance(rowValues[0], float):
+                    rowValues[0] = str(int(rowValues[0]))
 
-            reader_info.append(rowValues)
+            if rowValues[0]:
+                reader_info.append(rowValues)
 
             if False:
                 rowResults = []
