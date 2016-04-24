@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
+
+        <!-- hace que salga la orden de compra sin precios -->
+
         <record id="l10n_ar_aeroo_purchase.action_aeroo_report_ar_purchase_order"
                 model="ir.actions.report.xml">
             <!--

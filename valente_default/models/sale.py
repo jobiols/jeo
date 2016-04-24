@@ -23,6 +23,7 @@ from openerp.osv import osv
 class sale_order(osv.osv):
     _inherit = "sale.order"
 
+    # cuando cambia la lista de precios,
     # hace lo mismo que la original salvo que no muestra el cartel de que no se
     # actualizan los precios.
     def onchange_pricelist_id(self, cr, uid, ids, pricelist_id, order_lines,
