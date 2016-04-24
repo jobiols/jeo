@@ -31,6 +31,7 @@
                 <!-- aplicacion -->
                 <field name="implied_ids"
                        eval="[  (4, ref('group_valente_user')),
+                                (4, ref('account.group_account_user')),
                                 (4, ref('account.group_account_invoice')),
                                 (4, ref('stock.group_locations')),
                                 (4, ref('purchase.group_purchase_manager')),
@@ -47,6 +48,7 @@
             </record>
 
             <!-- hace aparecer el menu de categorias -->
+
             <menuitem id="prod_config_main1"
                       parent="base.menu_product"
                       action="product.product_category_action_form"
