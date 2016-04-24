@@ -32,7 +32,7 @@ Customización Herrajes Valente
     'depends': [
         'l10n_ar_base',  # modulo base para localización argentina
         'base_vat_unique',  # evita que duplique cuit
-        #        'base_vat_unique_parent',           # evita que duplique cuit en multicompañia
+        #        'base_vat_unique_parent',  # evita que duplique cuit en multicompañia
         'disable_openerp_online',  # elimina referencias a odoo online
         'account_cancel',  # Muestra el check en los diarios que permite cancelar asientos
         'product_pricelist_import',  # Importa lista de precios y carga productos
@@ -40,10 +40,11 @@ Customización Herrajes Valente
         'express_checkout',  # Facturación express
         'invoice_order_by_id',  # ordena facturas ultima arriba
         'account_invoice_tax_wizard',  # agrega menu add_taxes para cargar percepciones
-        'sale_order_recalculate_prices'  # agrega boton para recalcular precios
-        #        'account_journal_sequence'          # agrega un campo de secuencia en el diario para elegirlos
-        #        'account_statement_move_import'     # agrega boton de importar aputnes en extractos bancarios
-        #        'account_invoice_tax_wizard'        # agrega boton add_taxes para cargar percepciones
+        'sale_order_recalculate_prices',  # agrega boton para recalcular precios
+        'consult_product_price',  # consulta de precios
+        #        'account_journal_sequence'         # agrega un campo de secuencia en el diario para elegirlos
+        #        'account_statement_move_import'    # agrega boton de importar aputnes en extractos bancarios
+        #        'account_invoice_tax_wizard'       # agrega boton add_taxes para cargar percepciones
     ],
     'data': [
         'security/security_groups.xml',
