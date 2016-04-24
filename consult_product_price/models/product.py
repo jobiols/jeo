@@ -25,7 +25,7 @@ class product_template(models.Model):
 
     @api.one
     def calculate_price(self):
-        print 'calculate prices ---------------------------------------',
+        print 'calculate prices ---------------------- pricelist=',
         wzrd = self.env['config.consult.product'].search([])
 
         # obtener el ultimo ID
@@ -34,10 +34,24 @@ class product_template(models.Model):
             rec = r
 
         if rec:
-            print rec.pricelist_id.name
+            print rec.pricelist_id.name,
+            pricelist = rec.pricelist_id.id
+            print pricelist
+        else:
+            # TODO poner un default
+            pricelist = 1
+            print 'using default'
 
-        self.calculated_price = 10.0
+        product = self.id
+
+        price = self.pool.get('product.pricelist').price_get(
+            self.env.cr, self.env.uid, [pricelist], product, 1.0,
+            context=None)[pricelist]
+
+        self.calculated_price = price
+        self.calculated_pricelist = rec.pricelist_id
 
     calculated_price = fields.Float(compute='calculate_price')
+    calculated_pricelist = fields.Many2one('product.pricelist')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

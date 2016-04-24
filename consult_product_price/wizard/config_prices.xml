@@ -13,6 +13,7 @@
 
                     <group>
                         <field name="pricelist_id"/>
+                        <field name="taxes"/>
                     </group>
 
                     <footer>

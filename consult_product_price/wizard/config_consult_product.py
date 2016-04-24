@@ -19,12 +19,14 @@
 ####################################################################################
 from openerp import models, fields, api
 
+# Crea wizard para configurar consulta de precios
 
 class config_consult_product(models.TransientModel):
     _name = "config.consult.product"
     _description = "Configuracion de la consulta de precios"
 
     pricelist_id = fields.Many2one('product.pricelist', domain=[('type', '=', 'sale')])
+    taxes = fields.Boolean('Con impuestos', default=True)
 
     @api.one
     def button_save_config(self):
