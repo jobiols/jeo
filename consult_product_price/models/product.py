@@ -21,11 +21,10 @@ from openerp import models, api, fields
 
 
 class product_template(models.Model):
-    _inherit = 'product.template'
+    _inherit = 'product.product'
 
     @api.one
     def calculate_price(self):
-        print 'calculate prices ---------------------- pricelist=',
         wzrd = self.env['config.consult.product'].search([])
 
         # obtener el ultimo ID
@@ -34,24 +33,31 @@ class product_template(models.Model):
             rec = r
 
         if rec:
-            print rec.pricelist_id.name,
             pricelist = rec.pricelist_id.id
-            print pricelist
         else:
-            # TODO poner un default
             pricelist = 1
-            print 'using default'
+            pricelist_obj = self.env['product.pricelist']
+            for pl in pricelist_obj.browse():
+                pricelist = pl.id
 
         product = self.id
-
         price = self.pool.get('product.pricelist').price_get(
             self.env.cr, self.env.uid, [pricelist], product, 1.0,
             context=None)[pricelist]
 
+        for tax in self.taxes_id:
+            if rec.taxes:
+                price = price * (1 + tax.amount)
+
         self.calculated_price = price
-        self.calculated_pricelist = rec.pricelist_id
+        self.calculated_pricelist = pricelist
+
+    @api.one
+    def calculate_stock(self):
+        self.stock = self.qty_available
 
     calculated_price = fields.Float(compute='calculate_price')
     calculated_pricelist = fields.Many2one('product.pricelist')
+    stock = fields.Integer(compute='calculate_stock')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

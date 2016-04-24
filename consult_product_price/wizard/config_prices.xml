@@ -8,11 +8,12 @@
             <field name="arch" type="xml">
                 <form string="Configuración de la consulta de precios">
                     <group>
-                        <label string="Seleccione la lista de precios"/>
+                        <label string="Seleccione la lista de precios y si el precio
+                        debe calcularse con impuestos"/>
                     </group>
 
                     <group>
-                        <field name="pricelist_id"/>
+                        <field name="pricelist_id" string="Lista de precios"/>
                         <field name="taxes"/>
                     </group>
 
