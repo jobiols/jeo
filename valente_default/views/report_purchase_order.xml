@@ -2,29 +2,22 @@
 <openerp>
     <data noupdate="1">
 
-        <!-- hace que salga la orden de compra sin precios -->
+        <!-- Orden de compra sin precios, saca el odt de valente_default -->
 
         <record id="l10n_ar_aeroo_purchase.action_aeroo_report_ar_purchase_order"
                 model="ir.actions.report.xml">
 
             <field name="name">Argentinian Aeroo Purchase Order</field>
-                        <field name="type">ir.actions.report.xml</field>
-                        <field name="model">purchase.order</field>
-                        <field name="sequence" eval="7"/>
-                        <field name="report_name">aeroo_report_ar_purchase_order</field>
-                        <field name="report_type">aeroo</field>
-                        <field name="in_format">oo-odt</field>
-                        <field name="parser_loc">l10n_ar_aeroo_base/parser.py</field>
-                        <field name="parser_state">loc</field>
-
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">purchase.order</field>
+            <field name="sequence" eval="7"/>
+            <field name="report_name">aeroo_report_ar_purchase_order</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-odt</field>
+            <field name="parser_loc">l10n_ar_aeroo_base/parser.py</field>
+            <field name="parser_state">loc</field>
             <field name="report_rml">valente_default/purchase_order_sp.odt</field>
-            <!--
-                        <field name="tml_source">file</field>
-                        <field name="print_logo">company_logo</field> < ! - - Or 'company_logo' or ''  - - >
-                        <field name="background_image" type="base64" file="valente_default/purchase_order_sp.png"/>
-                        <field name="use_background_image" eval="True"/>
-                        <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
-            -->
+
         </record>
     </data>
 </openerp>
