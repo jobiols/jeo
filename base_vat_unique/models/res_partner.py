@@ -18,21 +18,19 @@
 #
 #################################################################################
 
-from openerp.osv import osv
+from openerp import models, api
+from openerp.exceptions import ValidationError
 
 
-class res_partner(osv.osv):
-    def _check_unique_vat(self, cr, uid, ids, context=None):
-        for partner in self.browse(cr, uid, ids, context=context):
+class res_partner(models.Model):
+    @api.one
+    @api.constrains('vat')
+    def _check_unique_vat(self):
+        for partner in self:
             if partner.document_type_id.name == 'CUIT':
-                #            if partner.is_company:
-                cr.execute("select vat from res_partner where upper(vat)=%s",
-                           (partner.vat.upper(),))
-                if len(cr.fetchall()) > 1:
-                    return False
-        return True
+                recordset = self.search([('vat', '=', partner.vat)])
+                if len(recordset) > 1:
+                    raise ValidationError('El CUIT {}-{}-{} ya está ingresado'.format(
+                        partner.vat[2:4], partner.vat[4:12], partner.vat[12:13]))
 
     _inherit = 'res.partner'
-    _constraints = [
-        (_check_unique_vat, u'El CUIT ya está ingresado', ['vat', 'is_company']),
-    ]

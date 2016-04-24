@@ -26,20 +26,20 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
+
 Description
 ===========
-This module check the unique vat numbers to avoid duplicate vat numbers
+Este modulo chequea que el CUIT sea único, si no lo es no deja dar alta al partner generando
+una excepción "El CUIT xx-xxxxxxxx-x ya está ingresado"
 
 Dependencies
 ============
 - base_vat
 
     """,
-    'author': 'jeo Software',
+    'author': 'Cubic ERP, jeo Software',
     'depends': ['base_vat'],
-    "data": [
-        "views/res_partner_view.xml",
-    ],
+    "data": [],
     'website': 'http://jeo-soft.com.ar',
     'auto_install': False,
     'installable': True,

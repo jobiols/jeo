@@ -1,2 +1,0 @@
-msgid "The VAT Number must be unique"
-msgstr "El CUIT ya está ingresado"
