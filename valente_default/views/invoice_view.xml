@@ -2,6 +2,8 @@
 <openerp>
     <data>
 
+        <!-- saca el campo incoterm -->
+
         <record id="view_invoice_form" model="ir.ui.view">
             <field name="name">l10n_ar.invoice.form</field>
             <field name="model">account.invoice</field>
