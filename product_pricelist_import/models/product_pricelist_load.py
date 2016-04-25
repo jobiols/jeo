@@ -19,6 +19,7 @@
 ##############################################################################
 from openerp import models, fields, exceptions, api, _
 
+
 class ProductPricelistLoad(models.Model):
     _name = 'product.pricelist.load'
     _description = 'Product Price List Load'
@@ -32,23 +33,22 @@ class ProductPricelistLoad(models.Model):
         supplier_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'dp':
-                supplier_discounts.append('D'+str(i-4)+'%')
+                supplier_discounts.append('D' + str(i - 4) + '%')
 
         categ_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'dc':
-                categ_discounts.append('D'+str(i-4)+'%')
+                categ_discounts.append('D' + str(i - 4) + '%')
 
         subcateg_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'ds':
-                subcateg_discounts.append('D'+str(i-4)+'%')
+                subcateg_discounts.append('D' + str(i - 4) + '%')
 
-        self.description = 'Descuentos sobre precio de lista: (Producto {})   (Categoria {})   (Sub categoria {})'.\
+        self.description = 'Descuentos sobre precio de lista: (Producto {})   (Categoria {})   (Sub categoria {})'. \
             format(', '.join(supplier_discounts),
                    ', '.join(categ_discounts),
                    ', '.join(subcateg_discounts))
-
 
     name = fields.Char('Load')
     date = fields.Date('Date:', readonly=True, help='Fecha del archivo')
@@ -58,7 +58,7 @@ class ProductPricelistLoad(models.Model):
     fails = fields.Integer('Fail Lines:', readonly=True, help='Lineas sin procesar')
     process = fields.Integer('Lines to Process:', readonly=True,
                              help='Lineas pendientes de proceso')
-    supplier = fields.Many2one('res.partner', 'Supplier',required=True)
+    supplier = fields.Many2one('res.partner', 'Supplier', required=True)
     mode = fields.Selection([('no_append', 'No agregar productos nuevos'),
                              ('append', 'Agregar productos nuevos')
                              ], help='define el modo en el que se procesa la lista de \
@@ -79,7 +79,7 @@ class ProductPricelistLoad(models.Model):
             raise exceptions.Warning(_("Supplier without category"))
 
         res = supp_categ
-        supp_categ.update_discounts(line.get_discounts('dp')) #cargar los descuentos
+        supp_categ.update_discounts(line.get_discounts('dp'))  # cargar los descuentos
 
         if line.categ:
             cat = supp_categ.child_id.search([('name', '=', line.categ)])
@@ -92,7 +92,8 @@ class ProductPricelistLoad(models.Model):
             if line.sub_categ:
                 sub = cat.child_id.search([('name', '=', line.sub_categ)])
                 if not sub:
-                    sub = cat.child_id.create({'name': line.sub_categ, 'parent_id': cat.id})
+                    sub = cat.child_id.create(
+                        {'name': line.sub_categ, 'parent_id': cat.id})
                 sub.update_discounts(line.get_discounts('ds'))
                 res = sub
 
@@ -208,20 +209,20 @@ class ProductPricelistLoadLine(models.Model):
             return False
         return True
 
-    def get_discounts(self,categ):
+    def get_discounts(self, categ):
         keys = self.keys.split(',')
         ret = []
-        if self.d1 <> 0 and keys[5][:2]==categ:
+        if self.d1 <> 0 and keys[5][:2] == categ:
             ret.append(self.d1)
-        if self.d2 <> 0 and keys[6][:2]==categ:
+        if self.d2 <> 0 and keys[6][:2] == categ:
             ret.append(self.d2)
-        if self.d3 <> 0 and keys[7][:2]==categ:
+        if self.d3 <> 0 and keys[7][:2] == categ:
             ret.append(self.d3)
-        if self.d4 <> 0 and keys[8][:2]==categ:
+        if self.d4 <> 0 and keys[8][:2] == categ:
             ret.append(self.d4)
-        if self.d5 <> 0 and keys[9][:2]==categ:
+        if self.d5 <> 0 and keys[9][:2] == categ:
             ret.append(self.d5)
-        if self.d6 <> 0 and keys[10][:2]==categ:
+        if self.d6 <> 0 and keys[10][:2] == categ:
             ret.append(self.d6)
 
         return ret
