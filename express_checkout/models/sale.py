@@ -17,17 +17,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
-from openerp import models, fields, exceptions, api, _
-from openerp.exceptions import except_orm, Warning, RedirectWarning
+from openerp import models, fields, api
+from openerp.exceptions import except_orm
+
 
 class sale_order(models.Model):
     _inherit = "sale.order"
 
     journal_id = fields.Many2one('account.journal', u'Método de pago', required='True')
 
-    @api.multi
-    def button_express(self):
-        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button express'
+    def _stock_move(self):
         # verificar que solo haya productos en la orden, sino no se puede transferir.
         lines = self.order_line.search([('order_id', '=', self.id)])
         for line in lines:
@@ -39,27 +38,119 @@ class sale_order(models.Model):
 
         print '------------------------------------------------- confirmar orden de venta'
         # confirmar la orden de venta
-        print '>', self.action_button_confirm()
+        self.action_button_confirm()
 
         print '--------------------------------------------------------- mover materiales'
         # mover el stock
         picking_obj = self.env['stock.picking']
         # encontrar los pickings que corresponden a la orden de venta
+
         for rec in picking_obj.search([('origin', '=', 'SO{:03.0f}'.format(self.id))]):
+
             # forzar para que funcione aunque no haya stock
             if not rec.force_assign():
                 raise except_orm('No se pudo asignar el producto para la transferencia',
                                  'Error desconocido')
+
+
+            # crear el Picking wizard
+            self = self.with_context(active_model='stock.picking',
+                                     active_ids=[rec.id])
+            stock_transfer_picking_obj = self.env['stock.transfer_details']
+            stock_transfer_picking = stock_transfer_picking_obj.create({})
+            print stock_transfer_picking._context
+            stock_transfer_picking.picking_id = rec.id
+
+            print 'sl', stock_transfer_picking.picking_source_location_id
+            print 'dl', stock_transfer_picking.picking_destination_location_id
+            print 'items', stock_transfer_picking.item_ids
+            stock_transfer_picking.do_detailed_transfer()
+
+
             # hacer finalmente la transferencia
+            print 'antes de transferencia ---'
             if not rec.do_transfer():
                 raise except_orm('No se pudo transferir el material',
                                  'Error desconocido')
-        print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< button express'
+
+            if False:
+                book_obj = self.env['stock.book']
+                book = book_obj.browse([1])
+                rec.assign_numbers(1, book)
+                pick = rec.do_print_voucher()
+
+            print '---------------------------------------////////////////'
+            self = self.with_context(active_id=rec.id)
+            print_voucher_obj = self.env['stock.print_stock_voucher']
+            voucher = print_voucher_obj.create({})
+            voucher.book_id = 1
+            print voucher.picking_id
+            print voucher.book_id
+
+            voucher = voucher.with_context(
+                active_id=rec.id,
+                active_ids=[rec.id],
+                uid=1,
+                active_model='stock.picking',
+                params={'action': 389},
+                search_disable_custom_filters=True,
+                contact_display='partner_address',
+            )
+            voucher.get_estimated_number_of_pages()  # recalcular nro de paginas.
+
+            pick = voucher.do_print_and_assign()
+
+            # prepara la impresión del remito
+            datas = {
+                'ids': pick['context']['active_ids'],
+                'model': 'stock.picking',
+                'form': rec.read()
+            }
+            pick['datas'] = datas
+
+            # imprrime el remito
+            return pick
+
+            """ Todo bien
+            {'lang': 'es_AR', 'tz': 'America/Argentina/Buenos_Aires',
+             'uid': 1,
+             'active_model': 'stock.picking',
+             'params': {'action': 389},
+             'search_disable_custom_filters': True,
+             'contact_display': 'partner_address',
+             'active_ids': [17],
+             'active_id': 17
+             }
+            """
+
+            """ tratando
+            {'lang': 'es_AR', 'tz': 'America/Argentina/Buenos_Aires',
+             'uid': 1,
+             'active_model': 'stock.picking',
+             'params': {'action': 389},
+             'search_disable_custom_filters': True,
+             'contact_display': 'partner_address',
+             'active_ids': [25],
+             'active_id': 25}
+
+             'search_default_my_sale_orders_filter': 1,
+            """
+
+            """ Todo mal
+            {'lang': 'es_AR', 'tz': 'America/Argentina/Buenos_Aires',
+             'search_default_my_sale_orders_filter': 1,
+             'params': {'action': 389}, 'uid': 1}
+            """
+
+
+
+    @api.multi
+    def button_express(self):
+        return self._stock_move()
 
     @api.multi
     def button_invoice_express(self):
-        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> button invoice express'
-        self.button_express()
+        self._stock_move()
 
         print '------------------------------------------------------------ crear factura'
         # crear la factura
@@ -87,7 +178,7 @@ class sale_order(models.Model):
         # pagar la factura
         # hacer configuracion para modificar esto
         receipt_obj = self.env['account.voucher.receiptbook']
-        receipt = receipt_obj.search([('name','like','Recibos')],limit=1)
+        receipt = receipt_obj.search([('name', 'like', 'Recibos')], limit=1)
 
         account_voucher_obj = self.env['account.voucher']
         voucher = account_voucher_obj.create({
@@ -126,19 +217,13 @@ class sale_order(models.Model):
                             period.id,  # writeoff_period_id,
                             journal.id)  # writeoff_journal_id)
 
-
-        print '--------------------------------------------------------- imprimir factura'
         datas = {
-                'ids': invoice.ids,
-                'model': 'account.report_invoice',
-                'form': invoice.read()
-            }
-        print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< button invoice express'
+            'ids': invoice.ids,
+            'model': 'account.report_invoice',
+            'form': invoice.read()
+        }
         return {
             'type': 'ir.actions.report.xml',
             'report_name': 'aeroo_report_ar_einvoice',
             'datas': datas,
-        }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        }  # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
