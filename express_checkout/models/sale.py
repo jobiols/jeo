@@ -36,11 +36,9 @@ class sale_order(models.Model):
                     "El item '%s' en la orden de venta no es de tipo producto!" % (
                         line.name))
 
-        print '------------------------------------------------- confirmar orden de venta'
         # confirmar la orden de venta
         self.action_button_confirm()
 
-        print '--------------------------------------------------------- mover materiales'
         # mover el stock
         picking_obj = self.env['stock.picking']
         # encontrar los pickings que corresponden a la orden de venta
@@ -52,50 +50,19 @@ class sale_order(models.Model):
                 raise except_orm('No se pudo asignar el producto para la transferencia',
                                  'Error desconocido')
 
-
             # crear el Picking wizard
             self = self.with_context(active_model='stock.picking',
                                      active_ids=[rec.id])
             stock_transfer_picking_obj = self.env['stock.transfer_details']
             stock_transfer_picking = stock_transfer_picking_obj.create({})
-            print stock_transfer_picking._context
             stock_transfer_picking.picking_id = rec.id
-
-            print 'sl', stock_transfer_picking.picking_source_location_id
-            print 'dl', stock_transfer_picking.picking_destination_location_id
-            print 'items', stock_transfer_picking.item_ids
             stock_transfer_picking.do_detailed_transfer()
 
-
-            # hacer finalmente la transferencia
-            print 'antes de transferencia ---'
-            if not rec.do_transfer():
-                raise except_orm('No se pudo transferir el material',
-                                 'Error desconocido')
-
-            if False:
-                book_obj = self.env['stock.book']
-                book = book_obj.browse([1])
-                rec.assign_numbers(1, book)
-                pick = rec.do_print_voucher()
-
-            print '---------------------------------------////////////////'
             self = self.with_context(active_id=rec.id)
             print_voucher_obj = self.env['stock.print_stock_voucher']
             voucher = print_voucher_obj.create({})
             voucher.book_id = 1
-            print voucher.picking_id
-            print voucher.book_id
 
-            voucher = voucher.with_context(
-                active_id=rec.id,
-                active_ids=[rec.id],
-                uid=1,
-                active_model='stock.picking',
-                params={'action': 389},
-                search_disable_custom_filters=True,
-                contact_display='partner_address',
-            )
             voucher.get_estimated_number_of_pages()  # recalcular nro de paginas.
 
             pick = voucher.do_print_and_assign()
@@ -111,39 +78,6 @@ class sale_order(models.Model):
             # imprrime el remito
             return pick
 
-            """ Todo bien
-            {'lang': 'es_AR', 'tz': 'America/Argentina/Buenos_Aires',
-             'uid': 1,
-             'active_model': 'stock.picking',
-             'params': {'action': 389},
-             'search_disable_custom_filters': True,
-             'contact_display': 'partner_address',
-             'active_ids': [17],
-             'active_id': 17
-             }
-            """
-
-            """ tratando
-            {'lang': 'es_AR', 'tz': 'America/Argentina/Buenos_Aires',
-             'uid': 1,
-             'active_model': 'stock.picking',
-             'params': {'action': 389},
-             'search_disable_custom_filters': True,
-             'contact_display': 'partner_address',
-             'active_ids': [25],
-             'active_id': 25}
-
-             'search_default_my_sale_orders_filter': 1,
-            """
-
-            """ Todo mal
-            {'lang': 'es_AR', 'tz': 'America/Argentina/Buenos_Aires',
-             'search_default_my_sale_orders_filter': 1,
-             'params': {'action': 389}, 'uid': 1}
-            """
-
-
-
     @api.multi
     def button_express(self):
         return self._stock_move()
@@ -152,18 +86,15 @@ class sale_order(models.Model):
     def button_invoice_express(self):
         self._stock_move()
 
-        print '------------------------------------------------------------ crear factura'
         # crear la factura
         res = self.manual_invoice()
-        print '>', res
 
-        print '---------------------------------------------------------- validar factura'
         # validar la factura
         invoice_obj = self.env['account.invoice']
         invoice = invoice_obj.browse([res['res_id']])
         invoice.signal_workflow('invoice_open')
 
-        print '------------------------------------------------------------ pagar factura'
+
         res = invoice.invoice_pay_customer()
         context = res['context']
 
@@ -188,7 +119,8 @@ class sale_order(models.Model):
             'type': context['type'],
             'amount': context['default_amount'],
             'net_amount': context['default_amount'],
-            'receiptbook_id': receipt.id
+            'receiptbook_id': receipt.id,
+            'company_id': self.env.user.id
         })
         voucher.signal_workflow('proforma_voucher')
 
