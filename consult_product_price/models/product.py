@@ -46,8 +46,7 @@ class product_template(models.Model):
             context=None)[pricelist]
 
         for tax in self.taxes_id:
-            if rec.taxes:
-                price = price * (1 + tax.amount)
+            price = price * (1 + tax.amount)
 
         self.calculated_price = price
         self.calculated_pricelist = pricelist
