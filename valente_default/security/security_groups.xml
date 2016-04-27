@@ -13,7 +13,8 @@
                                 (4, ref('base.group_mono_salesteams')),
                                 (4, ref('base.group_user')),
                                 (4, ref('base.group_sale_salesman')),
-                                (4, ref('product.group_sale_pricelist'))
+                                (4, ref('product.group_sale_pricelist')),
+                                (4, ref('l10n_ar_invoice_sale.sale_price_unit_with_tax'))
                                 ]"/>
                 <!-- agrega grupo empleado -->
                 <!-- agrega grupo creacion de contactos -->
