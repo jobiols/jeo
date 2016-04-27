@@ -2,15 +2,13 @@
 <openerp>
     <data>
 
-        <!-- Eliminar kanban de los productos -->
-        <record id="base.action_partner_form" model="ir.actions.act_window">
-            <field name="view_mode">tree,form</field>
-        </record>
+        <!-- Poner predeterminado lista en partners -->
+
         <record id="base.action_partner_customer_form" model="ir.actions.act_window">
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,kanban,form</field>
         </record>
         <record id="base.action_partner_supplier_form" model="ir.actions.act_window">
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,kanban,form</field>
         </record>
 
     </data>
