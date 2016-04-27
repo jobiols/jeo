@@ -25,11 +25,20 @@ class config_consult_product(models.TransientModel):
     _name = "config.consult.product"
     _description = "Configuracion de la consulta de precios"
 
-    pricelist_id = fields.Many2one('product.pricelist', domain=[('type', '=', 'sale')])
-    taxes = fields.Boolean('Con impuestos', default=True)
+    pricelist_id = fields.Many2one(
+        'product.pricelist', domain=[('type', '=', 'sale'), ], default=1)
+
+    taxes = fields.Boolean(
+        'Con impuestos', default=True)
 
     @api.one
     def button_save_config(self):
         return True
+
+    def get_data(self):
+        return {
+            'pricelist': self.pricelist_id.id,
+            'taxes': self.taxes
+        }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

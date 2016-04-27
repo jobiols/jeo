@@ -25,31 +25,23 @@ class product_template(models.Model):
 
     @api.one
     def calculate_price(self):
-        wzrd = self.env['config.consult.product'].search([])
+        # obtener la ultima instancia del wizard
+        wzrd = self.env['config.consult.product'].search([], limit=1, order='id desc')
 
-        # obtener el ultimo ID
-        rec = False
-        for r in wzrd:
-            rec = r
+        for rec in wzrd:
+            data = rec.get_data()
 
-        if rec:
-            pricelist = rec.pricelist_id.id
-        else:
-            pricelist = 1
-            pricelist_obj = self.env['product.pricelist']
-            for pl in pricelist_obj.browse():
-                pricelist = pl.id
+            # calcular el precio basado en la lista de precios
+            price = self.pool.get('product.pricelist').price_get(
+                self.env.cr, self.env.uid, [data['pricelist']], self.id, 1.0,
+                context=None)[data['pricelist']]
 
-        product = self.id
-        price = self.pool.get('product.pricelist').price_get(
-            self.env.cr, self.env.uid, [pricelist], product, 1.0,
-            context=None)[pricelist]
+            if data['taxes']:
+                for tax in self.taxes_id:
+                    price = price * (1 + tax.amount)
 
-        for tax in self.taxes_id:
-            price = price * (1 + tax.amount)
-
-        self.calculated_price = price
-        self.calculated_pricelist = pricelist
+            self.calculated_price = price
+            self.calculated_pricelist = data['pricelist']
 
     @api.one
     def calculate_stock(self):
