@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Orden de compra sin precios, saca el odt de valente_default -->
+
+        <record id="l10n_ar_aeroo_purchase.action_aeroo_report_ar_purchase_order"
+                model="ir.actions.report.xml">
+            <field name="report_rml">valente_default/purchase_order_sp.odt</field>
+        </record>
+
+        <!-- presupuesto con precios iva incluido, saca el odt de valente_default -->
+
+        <record id="l10n_ar_aeroo_sale.action_aeroo_report_ar_sale_order"
+                model="ir.actions.report.xml">
+            <field name="report_rml">valente_default/sale_order_ivainc.odt</field>
+        </record>
+
+    </data>
+</openerp>

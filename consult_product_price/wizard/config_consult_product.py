@@ -26,7 +26,7 @@ class config_consult_product(models.TransientModel):
     _description = "Configuracion de la consulta de precios"
 
     pricelist_id = fields.Many2one(
-        'product.pricelist', domain=[('type', '=', 'sale'), ], default=1)
+        'product.pricelist', domain=[('type', '=', 'sale'), ], default=3)
 
     taxes = fields.Boolean(
         'Con impuestos', default=True)

@@ -9,12 +9,11 @@
             <field name="arch" type="xml">
                 <tree create="false">
                     <field name="calculated_pricelist" string="Lista"/>
-                    <field name="calculated_price" string="Precio"/>
-                    <!--                    <field name="standard_price" string="Costo"/> -->
                     <field name="default_code" string="Referencia"/>
                     <field name="name" string="Producto"/>
-                    <field name="categ_id" string="Categoria"/>
+                    <field name="calculated_price" string="Precio"/>
                     <field name="stock"/>
+                    <field name="categ_id" string="Categoria"/>
                 </tree>
             </field>
         </record>
