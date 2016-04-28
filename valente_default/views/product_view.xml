@@ -16,16 +16,6 @@
 
         <!-- Poner predeterminado lista en los productos -->
 
-        <record id="base.action_partner_form" model="ir.actions.act_window">
-            <field name="view_mode">tree,kanban,form</field>
-        </record>
-        <record id="base.action_partner_customer_form" model="ir.actions.act_window">
-            <field name="view_mode">tree,kanban,form</field>
-        </record>
-        <record id="base.action_partner_supplier_form" model="ir.actions.act_window">
-            <field name="view_mode">tree,kanban,form</field>
-        </record>
-
         <!--
         <record id="product_normal_form_import_view_valente" model="ir.ui.view">
             <field name="name">product.normal.form.import.view</field>
