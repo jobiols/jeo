@@ -41,8 +41,8 @@ class sale_order(models.Model):
 
         # mover el stock
         picking_obj = self.env['stock.picking']
-        # encontrar los pickings que corresponden a la orden de venta
 
+        # encontrar los pickings que corresponden a la orden de venta
         for rec in picking_obj.search([('origin', '=', 'SO{:03.0f}'.format(self.id))]):
 
             # forzar para que funcione aunque no haya stock
@@ -64,7 +64,6 @@ class sale_order(models.Model):
             voucher.book_id = 1
 
             voucher.get_estimated_number_of_pages()  # recalcular nro de paginas.
-
             pick = voucher.do_print_and_assign()
 
             # prepara la impresión del remito
@@ -80,10 +79,14 @@ class sale_order(models.Model):
 
     @api.multi
     def button_express(self):
+        """ Hace el movimiento de stock solamente
+        """
         return self._stock_move()
 
     @api.multi
-    def button_invoice_express(self):
+    def button_invoice(self):
+        """ Hace el movimiento de stock, crea la factura, valida la factura
+        """
         self._stock_move()
 
         # crear la factura
@@ -94,22 +97,25 @@ class sale_order(models.Model):
         invoice = invoice_obj.browse([res['res_id']])
         invoice.signal_workflow('invoice_open')
 
+        return invoice
 
-        res = invoice.invoice_pay_customer()
-        context = res['context']
 
-        journal = self.journal_id
-
-        period_obj = self.env['account.period']
-        period = period_obj.find()
-
-        account_move_obj = self.env['account.move']
-        account_move = account_move_obj.search([], limit=4)
+    @api.multi
+    def button_invoice_express(self):
+        """ Hace el movimiento de stock, crea la factura, valida la factura, paga la
+            factura, concilia la factura con el pago, imprime la factura.
+        """
+        self._stock_move()
+        invoice = self.button_invoice()
 
         # pagar la factura
         # hacer configuracion para modificar esto
         receipt_obj = self.env['account.voucher.receiptbook']
         receipt = receipt_obj.search([('name', 'like', 'Recibos')], limit=1)
+
+        journal = self.journal_id
+        res = invoice.invoice_pay_customer()
+        context = res['context']
 
         account_voucher_obj = self.env['account.voucher']
         voucher = account_voucher_obj.create({
@@ -143,6 +149,9 @@ class sale_order(models.Model):
             if re.account_id.reconcile:
                 lines2rec += re
 
+        period_obj = self.env['account.period']
+        period = period_obj.find()
+
         # reconciliar las lineas de factura con pagos
         lines2rec.reconcile('manual',
                             journal.default_debit_account_id.id,  # writeoff_acc_id
@@ -158,4 +167,8 @@ class sale_order(models.Model):
             'type': 'ir.actions.report.xml',
             'report_name': 'aeroo_report_ar_einvoice',
             'datas': datas,
-        }  # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        }
+
+
+
+        # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
