@@ -45,6 +45,8 @@ Customización Herrajes Valente
         #        'account_journal_sequence'         # agrega un campo de secuencia en el diario para elegirlos
         #        'account_statement_move_import'    # agrega boton de importar aputnes en extractos bancarios
         #        'account_invoice_tax_wizard'       # agrega boton add_taxes para cargar percepciones
+        'l10n_ar_aeroo_sale',  # dependencia requerida
+        'l10n_ar_aeroo_purchase',  # dependencia requerida
     ],
     'data': [
         'security/security_groups.xml',
