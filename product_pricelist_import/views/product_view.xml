@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+
         <!-- predefinir vista lista -->
         <record id="product.product_template_action" model="ir.actions.act_window">
-            <field name="name">Products</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">product.product</field>
+            <!--
+                        <field name="name">Products</field>
+                        <field name="type">ir.actions.act_window</field>
+                        <field name="res_model">product.product</field>
+            -->
             <field name="view_mode">tree,kanban,form</field>
-            <field name="view_type">form</field>
-            <field name="view_id" ref="product.product_template_kanban_view"/>
-            <field name="context">{"search_default_filter_to_sell":1}</field>
+            <!--
+                        <field name="view_type">form</field>
+                        <field name="view_id" ref="product.product_template_kanban_view"/>
+                        <field name="context">{"search_default_filter_to_sell":1}</field>
+            -->
         </record>
 
 
