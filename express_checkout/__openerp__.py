@@ -75,6 +75,7 @@ Fac/Cob/Ent (Facturación Cobro y Entrega)
         'views/sale_view.xml'
     ],
     'test': [
+        'tests/test_express_checkout'
     ],
     'installable': True,
     'application': True,
