@@ -18,22 +18,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from openerp import models, fields, api
 
-class res_partner(osv.osv):
+
+class res_partner(models.Model):
     _inherit = "res.partner"
 
-    def _get_first_name(self, cr, uid, ids, fields, args, context=None):
-        res = {}
-        for partner in self.browse(cr, uid, ids, context=context):
-            res[partner.id] = partner.name.split(' ', 1)[0]
-        return res
+    @api.one
+    def _get_first_name(self):
+        self.first_name = self.name.split(' ', 1)[0]
 
-    _columns = {
-        'first_name': fields.function(
-            _get_first_name, fnct_search=None, string='First Name',
-            method=True, store=True,
-            type='char'),
-    }
+    first_name = fields.Char(compute='_get_first_name', string='First Name')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

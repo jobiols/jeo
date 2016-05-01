@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# ####################################################################################
+#####################################################################################
 #    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
 #    All Rights Reserved.
 #
@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# ###################################################################################
+####################################################################################
 {
     'name': 'Express Checkout',
     'version': '8.0.1.0',
@@ -65,7 +65,8 @@ Fac/Cob/Ent (Facturación Cobro y Entrega)
 - Crea la factura
 - Valida la factura
 
-- Paga la factura usando metodo de pago Caja, (debe existir un diario 'Caja', y un formulario de recibos 'Recibos', los busca con un like)
+- Paga la factura usando metodo de pago Caja, (debe existir un diario 'Caja',
+  y un formulario de recibos 'Recibos', los busca con un like)
 - Concilia el pago con la factura
 - Genera la factura y la baja en pdf, usa el documento por defecto.
 """,
@@ -77,7 +78,7 @@ Fac/Cob/Ent (Facturación Cobro y Entrega)
     'test': [
 
     ],
-    'installable': False,
+    'installable': True,
     'application': True,
     'auto_install': False,
     'images': [],
