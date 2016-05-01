@@ -38,6 +38,7 @@ Fue creado para tener el nombre de pila disponible cuando se envia correo masivo
     'data': [
     ],
     'test': [
+        'tests/test_first_name'
     ],
     'installable': True,
     'application': True,

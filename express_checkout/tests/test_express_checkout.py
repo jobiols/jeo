@@ -26,6 +26,9 @@ class TestOne(TransactionCase):
 
     def setUp(self):
         super(TestOne, self).setUp()
+        # cargar un cliente
+        # cargar un producto
+
 
     def test1(self):
         print 'TestOne.test1 --------------------------------------------------------'
