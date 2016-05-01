@@ -15,7 +15,7 @@
     !record {model: product.pricelist.load, id: product_pricelist_load_1}:
         name: Archivo de prueba 1
         date: !eval time.strftime('%Y-%m-%d')
-        file_name: /mnt/extra-addons/jeo/product_pricelist_import/tests/test_pricelist_1.csv
+        file_name: product_pricelist_import/tests/test_pricelist_1.csv
         supplier: supplier_1
         mode: 'append'
 -
@@ -75,7 +75,7 @@
     !record {model: product.pricelist.load, id: product_pricelist_load_2}:
         name: Archivo de prueba 2
         date: !eval time.strftime('%Y-%m-%d')
-        file_name: /mnt/extra-addons/jeo/product_pricelist_import/tests/test_pricelist_2.csv
+        file_name: product_pricelist_import/tests/test_pricelist_2.csv
         supplier: supplier_1
         mode: 'no_append'
 -

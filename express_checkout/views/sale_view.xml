@@ -11,17 +11,17 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <field name="state" position = "before">
-                    <button name="button_express"
+                    <button name="button_ent"
                             string="Ent"
                             class="oe_highlight"
                             states="draft,sent"
                             type="object"/>
-                    <button name="button_invoice"
+                    <button name="button_fac_ent"
                             string="Fac/Ent"
                             class="oe_highlight"
                             states="draft,sent"
                             type="object"/>
-                    <button name="button_invoice_express"
+                    <button name="button_fac_cob_ent"
                             string="Fac/Cob/Ent"
                             class="oe_highlight"
                             states="draft,sent"

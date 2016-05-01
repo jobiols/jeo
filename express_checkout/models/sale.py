@@ -78,14 +78,22 @@ class sale_order(models.Model):
             return pick
 
     @api.multi
-    def button_express(self):
-        """ Hace el movimiento de stock solamente
+    def button_ent(self):
+        """
+        - Verifica que solo haya productos, no servicios ni consumibles
+        - Confirma orden de venta
+        - Fuerza la asignación de materiales, si no hay stock los mueve igual
+        - Hace la transferencia de stock
+        - Genera el remito y lo baja en pdf
         """
         return self._stock_move()
 
     @api.multi
-    def button_invoice(self):
-        """ Hace el movimiento de stock, crea la factura, valida la factura
+    def button_fac_ent(self):
+        """
+        - hace button_ent (sin imprimir)
+        - Crea la factura
+        - Valida la factura
         """
         self._stock_move()
 
@@ -101,12 +109,12 @@ class sale_order(models.Model):
 
 
     @api.multi
-    def button_invoice_express(self):
+    def button_fac_cob_ent(self):
         """ Hace el movimiento de stock, crea la factura, valida la factura, paga la
             factura, concilia la factura con el pago, imprime la factura.
         """
         self._stock_move()
-        invoice = self.button_invoice()
+        invoice = self.button_fac_ent()
 
         # pagar la factura
         # hacer configuracion para modificar esto
