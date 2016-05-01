@@ -21,7 +21,7 @@
 
 {
     'name': "Hide product variants",
-    'version': '1.0',
+    'version': '8.0.1.0',
     'category': 'Products',
     'description': """
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
@@ -30,8 +30,8 @@
 
 Hide by default product variants menu
     """,
-    'author': 'Comunitea',
-    'website': 'www.comunitea.com',
+    'author': 'Comunitea, jeo Software',
+    'website': 'jeo-soft.com.ar',
     "depends": ['stock', 'product', 'purchase'],
     "data": ['security/hide_variants_groups.xml',
              'product_view.xml'],

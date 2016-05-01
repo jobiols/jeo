@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-########################################################################333###
+#
 #    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
 #    All Rights Reserved.
 #
@@ -15,30 +15,19 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-########################################################################333###
-{
-    'name': 'Invoice Order by id',
-    'version': '8.0.1.0',
-    'category': 'Tools',
-    'summary': 'Ordena las facturas ultima arriba',
-    'description': """
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   :alt: License: AGPL-3
-   
-Ordena las facturas ultima arriba
-=================================
-Es el orden natural
-""",
-    'author': 'jeo software',
-    'depends': ['sale'],
-    'data': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'application': True,
-    'auto_install': False,
-    'images': [],
-}
+#
+#####################################################################################
+
+from openerp.tests.common import TransactionCase
+
+
+class TestQuotedQty(TransactionCase):
+    """Test the computation of the quoted quantity"""
+
+    def setUp(self):
+        super(TestQuotedQty, self).setUp()
+
+        #  Get a product
+        self.product = self.browse_ref('product.product_product_10')
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

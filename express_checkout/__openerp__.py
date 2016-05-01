@@ -23,22 +23,29 @@
     'category': 'Tools',
     'summary': 'Facturación simplificada',
     'description': """
+
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
+
 Simplifica la facturación estilo TPV
 ====================================
-En el formulario de presupuesto/orden de venta ademas de los botones standard aparecen
-tres botones Ent, Fac/Ent y Fac/Cob/Ent:
 
-#Ent (Entrega)
+En el formulario de presupuesto/orden de venta ademas de los botones standard aparecen
+tres botones **Ent**, **Fac/Ent** y **Fac/Cob/Ent**:
+
+Ent (Entrega)
+-------------
+
 - Verifica que solo haya productos, no servicios ni consumibles
 - Confirma orden de venta
 - Fuerza la asignación de materiales, si no hay stock los mueve igual
 - Hace la transferencia de stock
 - Genera el remito y lo baja en pdf
 
-#Fac/Ent (Facturación y Entrega)
+Fac/Ent (Facturación y Entrega)
+-------------------------------
+
 - Verifica que solo haya productos, no servicios ni consumibles
 - Confirma orden de venta
 - Fuerza la asignación de materiales, si no hay stock los mueve igual
@@ -47,7 +54,9 @@ tres botones Ent, Fac/Ent y Fac/Cob/Ent:
 - Crea la factura
 - Valida la factura
 
-#Fac/Cob/Ent (Facturación Cobro y Entrega)
+Fac/Cob/Ent (Facturación Cobro y Entrega)
+-----------------------------------------
+
 - Verifica que solo haya productos, no servicios ni consumibles
 - Confirma orden de venta
 - Fuerza la asignación de materiales, si no hay stock los mueve igual
@@ -72,7 +81,5 @@ tres botones Ent, Fac/Ent y Fac/Cob/Ent:
     'auto_install': False,
     'images': [],
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

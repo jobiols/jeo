@@ -27,8 +27,9 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
+
 Importar listas de precios
---------------------------
+==========================
 
 Este módulo permite importar una lista de precios desde un archivo que puede ser csv
 o xls, el archivo tiene que tener las siguientes columnas:
