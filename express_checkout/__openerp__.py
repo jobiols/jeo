@@ -77,7 +77,7 @@ Fac/Cob/Ent (Facturación Cobro y Entrega)
     'test': [
 
     ],
-    'installable': True,
+    'installable': False,
     'application': True,
     'auto_install': False,
     'images': [],
