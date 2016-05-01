@@ -28,8 +28,8 @@
    :alt: License: AGPL-3
 Simplifica la facturación estilo TPV
 ====================================
-En el formulario de presupuesto/orden de venta ademas de los botones standard aparece un boton
-Facturar y Enviar que hace lo siguiente:
+En el formulario de presupuesto/orden de venta ademas de los botones standard aparecen
+tres botones Ent Fac/Ent Fac/Cob/Ent:
 
 - Confirma orden de venta
 - Crea factura
