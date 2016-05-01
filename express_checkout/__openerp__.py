@@ -29,14 +29,28 @@
 Simplifica la facturación estilo TPV
 ====================================
 En el formulario de presupuesto/orden de venta ademas de los botones standard aparecen
-tres botones Ent Fac/Ent Fac/Cob/Ent:
+tres botones Ent, Fac/Ent y Fac/Cob/Ent:
 
+#Ent (Entrega)
 - Confirma orden de venta
-- Crea factura
-- Valida factura
-- Paga la factura usando metodo de pago Caja, (debe existir un diario 'Caja', y un formulario de recibos 'Recibos', los busca con un like)
 - Fuerza la asignación de materiales, si no hay stock los mueve igual
 - Hace la transferencia de stock
+- Genera el remito y lo baja en pdf
+
+#Fac/Ent (Facturación y Entrega)
+- Confirma orden de venta
+- Fuerza la asignación de materiales, si no hay stock los mueve igual
+- Hace la transferencia de stock
+- Crea la factura
+- Valida la factura
+
+#Fac/Cob/Ent (Facturación Cobro y Entrega)
+- Confirma orden de venta
+- Fuerza la asignación de materiales, si no hay stock los mueve igual
+- Hace la transferencia de stock
+- Crea la factura
+- Valida la factura
+- Paga la factura usando metodo de pago Caja, (debe existir un diario 'Caja', y un formulario de recibos 'Recibos', los busca con un like)
 - Genera la factura y la baja en pdf, usa el documento por defecto
 """,
     'author': 'jeo software',
