@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#
+#####################################################################################
 #    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
 #    All Rights Reserved.
 #
@@ -22,7 +22,6 @@ from openerp.tests.common import TransactionCase
 
 
 class TestOne(TransactionCase):
-    """Test the computation of the quoted quantity"""
 
     def setUp(self):
         super(TestOne, self).setUp()
@@ -32,34 +31,6 @@ class TestOne(TransactionCase):
 
     def test1(self):
         print 'TestOne.test1 --------------------------------------------------------'
-
-    def test2(self):
-        print 'TestOne.test2 --------------------------------------------------------'
-
-    def test3(self):
-        print 'TestOne.test3 --------------------------------------------------------'
-
-    def test4(self):
-        print 'TestOne.test4 --------------------------------------------------------'
-
-
-class TestTwo(TransactionCase):
-    """Test the computation of the quoted quantity"""
-
-    def setUp(self):
-        super(TestTwo, self).setUp()
-
-    def test1(self):
-        print 'TestTwo.test1 --------------------------------------------------------'
-
-    def test2(self):
-        print 'TestTwo.test2 --------------------------------------------------------'
-
-    def test3(self):
-        print 'TestTwo.test3 --------------------------------------------------------'
-
-    def test4(self):
-        print 'TestTwo.test4 --------------------------------------------------------'
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
