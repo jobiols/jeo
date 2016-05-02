@@ -45,4 +45,5 @@ Fue creado para tener el nombre de pila disponible cuando se envia correo masivo
     'auto_install': False,
     'images': [],
 }
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
