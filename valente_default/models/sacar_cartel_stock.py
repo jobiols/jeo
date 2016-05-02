@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#
+########################################################################################
 #    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
 #    All Rights Reserved.
 #
@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#
+########################################################################################
 from datetime import datetime, timedelta
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, \
     DATETIME_FORMATS_MAP, float_compare

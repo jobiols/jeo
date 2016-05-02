@@ -25,10 +25,11 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
+
 Customización Herrajes Valente
 ================================
 """,
-    'author': 'jeo software',
+    'author': 'jeo Software',
     'depends': [
         'l10n_ar_base',  # modulo base para localización argentina
         'base_vat_unique',  # evita que duplique cuit

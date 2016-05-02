@@ -26,7 +26,7 @@ class Test(TransactionCase):
         self.partner = self.env['res.partner'].create({'name': 'juan perez'})
 
     def test_name(self):
-        self.assertEquals(self.partner.first_name, 'juan',
+        self.assertEquals(self.partner.first_name, 'juan1',
                           u'Falla el modulo, el nombre debe ser juan')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
