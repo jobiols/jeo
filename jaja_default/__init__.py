@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#####################################################################################
+#
 #    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
 #    All Rights Reserved.
 #
@@ -15,18 +15,8 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#####################################################################################
-from openerp.tests.common import TransactionCase
+#
 
-class Test(TransactionCase):
-    def setUp(self):
-        super(Test, self).setUp()
-        print 'hola --------------------------------------------------'
-        # cargar un cliente
-        self.partner = self.env['res.partner'].create({'name': 'juan perez'})
 
-    def test_name(self):
-        self.assertEquals(self.partner.first_name, 'juan',
-                          u'Falla el modulo, el nombre debe ser juan')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
