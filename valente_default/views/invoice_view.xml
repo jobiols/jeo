@@ -13,5 +13,21 @@
             </field>
         </record>
 
+        <!-- pone cantidad antes que descripción en el presupuesto y orden de venta -->
+
+        <record id="view_order_form_valente" model="ir.ui.view">
+            <field name="name">sale.order.form.valente</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='name']"
+                       position="replace"/>
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='product_uom_qty']"
+                       position="after">
+                    <field name="name"/>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>
