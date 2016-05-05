@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+
+        <!-- pone por defecto la vista de tree, (cambia la prioridad del kanban a 4) -->
+
         <record id="base.action_partner_form_view1" model="ir.actions.act_window.view">
             <field eval="4" name="sequence"/>
         </record>

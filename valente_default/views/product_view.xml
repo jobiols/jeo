@@ -16,9 +16,11 @@
 
         <!-- Poner predeterminado lista en los productos -->
 
-        <!--
+
+        <!-- Eliminar algunos campos del formulario de productos -->
+
         <record id="product_normal_form_import_view_valente" model="ir.ui.view">
-            <field name="name">product.normal.form.import.view</field>
+            <field name="name">product.normal.form.import.view.valente</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
@@ -32,6 +34,6 @@
                        position="replace"/>
             </field>
         </record>
--->
+
     </data>
 </openerp>

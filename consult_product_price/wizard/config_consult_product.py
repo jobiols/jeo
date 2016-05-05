@@ -21,7 +21,7 @@ from openerp import models, fields, api
 
 # Crea wizard para configurar consulta de precios
 
-class config_consult_product(models.TransientModel):
+class config_consult_product(models.Model):
     _name = "config.consult.product"
     _description = "Configuracion de la consulta de precios"
 
@@ -37,7 +37,7 @@ class config_consult_product(models.TransientModel):
 
     def get_data(self):
         return {
-            'pricelist': self.pricelist_id.id,
+            'pricelist_id': self.pricelist_id.id,
             'taxes': self.taxes
         }
 
