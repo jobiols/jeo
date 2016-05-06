@@ -113,7 +113,6 @@ class sale_order(models.Model):
         """ Hace el movimiento de stock, crea la factura, valida la factura, paga la
             factura, concilia la factura con el pago, imprime la factura.
         """
-        self._stock_move()
         invoice = self.button_fac_ent()
 
         # pagar la factura
