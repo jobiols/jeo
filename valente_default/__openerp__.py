@@ -49,6 +49,7 @@ Customización Herrajes Valente
         'l10n_ar_aeroo_sale',  # dependencia requerida
         'l10n_ar_aeroo_purchase',  # dependencia requerida
         'l10n_ar_aeroo_einvoice',  # dependencia requerida
+        'l10n_ar_aeroo_stock',  # dependencia requerida
     ],
     'data': [
         'security/security_groups.xml',
