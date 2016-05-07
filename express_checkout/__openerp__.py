@@ -78,6 +78,7 @@ Fac/Cob/Ent (Facturación Cobro y Entrega)
         'views/sale_view.xml',
     ],
     'test': [],
+    'update_xml': ['sql/fix_sales.sql'],
     'installable': True,
     'application': True,
     'auto_install': False,
