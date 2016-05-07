@@ -24,8 +24,7 @@ from openerp.exceptions import except_orm
 class sale_order(models.Model):
     _inherit = "sale.order"
 
-    journal_id_cambiado = fields.Many2one('account.journal', u'Método de pago',
-                                          required='True')
+    journal_id = fields.Many2one('account.journal', u'Método de pago')
 
     def _stock_move(self):
         # verificar que solo haya productos en la orden, sino no se puede transferir.
@@ -121,14 +120,14 @@ class sale_order(models.Model):
         receipt_obj = self.env['account.voucher.receiptbook']
         receipt = receipt_obj.search([('name', 'like', 'Recibos')], limit=1)
 
-        journal = self.journal_id_cambiado
+        journal = self.journal_id
         res = invoice.invoice_pay_customer()
         context = res['context']
 
         account_voucher_obj = self.env['account.voucher']
         voucher = account_voucher_obj.create({
             'partner_id': context['default_partner_id'],
-            'journal_id_cambiado': journal.id,
+            'journal_id': journal.id,
             'account_id': journal.default_debit_account_id.id,
             'type': context['type'],
             'amount': context['default_amount'],
@@ -164,7 +163,7 @@ class sale_order(models.Model):
         lines2rec.reconcile('manual',
                             journal.default_debit_account_id.id,  # writeoff_acc_id
                             period.id,  # writeoff_period_id,
-                            journal.id)  # writeoff_journal_id_cambiado)
+                            journal.id)  # writeoff_journal_id)
 
         datas = {
             'ids': invoice.ids,
