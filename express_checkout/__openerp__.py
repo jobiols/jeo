@@ -71,9 +71,11 @@ Fac/Cob/Ent (Facturación Cobro y Entrega)
 - Genera la factura y la baja en pdf, usa el documento por defecto.
 """,
     'author': 'jeo software',
-    'depends': ['sale'],
+    'depends': ['sale',
+                'stock',
+                ],
     'data': [
-        'views/sale_view.xml'
+        'views/sale_view.xml',
     ],
     'test': [],
     'installable': True,
