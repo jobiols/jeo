@@ -24,7 +24,8 @@ from openerp.exceptions import except_orm
 class sale_order(models.Model):
     _inherit = "sale.order"
 
-    journal_id = fields.Many2one('account.journal', u'Método de pago')
+    journal_id = fields.Many2one('account.journal', u'Método de pago',
+                                 required='True')
 
     def _stock_move(self):
         # verificar que solo haya productos en la orden, sino no se puede transferir.

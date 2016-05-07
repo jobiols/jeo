@@ -21,7 +21,7 @@ from openerp.tests.common import TransactionCase
 class Test(TransactionCase):
     def setUp(self):
         super(Test, self).setUp()
-        print 'hola --------------------------------------------------'
+        print 'test_first_name----------------------------------------------'
         # cargar un cliente
         self.partner = self.env['res.partner'].create({'name': 'juan perez'})
 

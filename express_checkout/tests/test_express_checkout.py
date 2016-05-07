@@ -19,16 +19,17 @@
 #####################################################################################
 from openerp.tests.common import TransactionCase
 
-class TestOne(TransactionCase):
+
+class TestExpressCheckout(TransactionCase):
 
     def setUp(self):
-        super(TestOne, self).setUp()
+        super(TestExpressCheckout, self).setUp()
         # cargar un cliente
         # cargar un producto
 
 
     def test1(self):
-        print 'TestOne.test1 --------------------------------------------------------'
+        print 'Test Express checkout --------------------------------------------------------'
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
