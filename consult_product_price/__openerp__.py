@@ -36,6 +36,7 @@ Consult product price
         'views/config_consult_product_view.xml',
         'views/product_view.xml',
         'wizard/config_prices.xml',
+        'security/ir.model.access.csv',
     ],
     'test': [
     ],
