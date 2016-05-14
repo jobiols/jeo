@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soap:Header/>
+    <soap:Body>
+        <FEParamGetTiposTributos xmlns="http://ar.gov.afip.dif.FEV1/">
+            <Auth>
+                <Token>
+                    PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8c3NvIHZlcnNpb249IjIuMCI+CiAgICA8aWQgdW5pcXVlX2lkPSIyNDM4NDY5OTk4IiBzcmM9IkNOPXdzYWFob21vLCBPPUFGSVAsIEM9QVIsIFNFUklBTE5VTUJFUj1DVUlUIDMzNjkzNDUwMjM5IiBnZW5fdGltZT0iMTQ2MzA3ODY2OSIgZXhwX3RpbWU9IjE0NjMxMjE5MjkiIGRzdD0iQ049d3NmZSwgTz1BRklQLCBDPUFSIi8+CiAgICA8b3BlcmF0aW9uIHZhbHVlPSJncmFudGVkIiB0eXBlPSJsb2dpbiI+CiAgICAgICAgPGxvZ2luIHVpZD0iQz1hciwgU1Q9YnVlbm9zIGFpcmVzLCBMPWJhaGlhIGJsYW5jYSwgTz1oZXJyYWplcyB2YWxlbnRlLCBPVT1pdCwgU0VSSUFMTlVNQkVSPUNVSVQgMjAwNTUxODM1MzksIENOPWFmaXAgd3MgaG9tb2xvZ2F0aW9uIC0gaGVycmFqZXMgdmFsZW50ZSIgc2VydmljZT0id3NmZSIgcmVnbWV0aG9kPSIyMiIgZW50aXR5PSIzMzY5MzQ1MDIzOSIgYXV0aG1ldGhvZD0iY21zIj4KICAgICAgICAgICAgPHJlbGF0aW9ucz4KICAgICAgICAgICAgICAgIDxyZWxhdGlvbiByZWx0eXBlPSI0IiBrZXk9IjIwMDU1MTgzNTM5Ii8+CiAgICAgICAgICAgIDwvcmVsYXRpb25zPgogICAgICAgIDwvbG9naW4+CiAgICA8L29wZXJhdGlvbj4KPC9zc28+Cgo=
+                </Token>
+                <Sign>
+                    HUBzYjIGQNOEs8nxwI8821+LZZxRPr/MlwoK1CUmSy0WavqPz3SyaMdf4mGD1P7faQSY9AeZO+7OaTXwPoZfaO0kuH7YYIXKb5M+2nHV/Og09FD27clYv7FJjf0Fed8NFZp3z/UiufWpUSki0N8Rn32m523jf5BSBYo3MxMhqlk=
+                </Sign>
+                <Cuit>20055183539</Cuit>
+            </Auth>
+        </FEParamGetTiposTributos>
+    </soap:Body>
+</soap:Envelope>
+
+        status: 200
+        content-length: 1042
+        x-aspnet-version: 2.0.50727
+        x-powered-by: ASP.NET
+        server: Microsoft-IIS/6.0
+        microsoftofficewebserver: 5.0_Pub
+        cache-control: private, max-age=0
+        date: Thu, 12 May 2016 21:23:35 GMT
+        content-type: text/xml; charset=utf-8
+        <?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<soap:Body>
+    <FEParamGetTiposTributosResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+        <FEParamGetTiposTributosResult>
+            <ResultGet>
+                <TributoTipo>
+                    <Id>1</Id>
+                    <Desc>Impuestos nacionales</Desc>
+                    <FchDesde>20100917</FchDesde>
+                    <FchHasta>NULL</FchHasta>
+                </TributoTipo>
+                <TributoTipo>
+                    <Id>2</Id>
+                    <Desc>Impuestos provinciales</Desc>
+                    <FchDesde>20100917</FchDesde>
+                    <FchHasta>NULL</FchHasta>
+                </TributoTipo>
+                <TributoTipo>
+                    <Id>3</Id>
+                    <Desc>Impuestos municipales</Desc>
+                    <FchDesde>20100917</FchDesde>
+                    <FchHasta>NULL</FchHasta>
+                </TributoTipo>
+                <TributoTipo>
+                    <Id>4</Id>
+                    <Desc>Impuestos Internos</Desc>
+                    <FchDesde>20100917</FchDesde>
+                    <FchHasta>NULL</FchHasta>
+                </TributoTipo>
+                <TributoTipo>
+                    <Id>99</Id>
+                    <Desc>Otro</Desc>
+                    <FchDesde>20100917</FchDesde>
+                    <FchHasta>NULL</FchHasta>
+                </TributoTipo>
+            </ResultGet>
+        </FEParamGetTiposTributosResult>
+    </FEParamGetTiposTributosResponse>
+</soap:Body>
+</soap:Envelope>

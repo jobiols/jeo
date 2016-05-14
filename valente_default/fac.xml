@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soap:Header/>
+    <soap:Body>
+        <FECAESolicitar xmlns="http://ar.gov.afip.dif.FEV1/">
+            <Auth>
+                <Token>
+                    PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8c3NvIHZlcnNpb249IjIuMCI+CiAgICA8aWQgdW5pcXVlX2lkPSIyNDM4NDY5OTk4IiBzcmM9IkNOPXdzYWFob21vLCBPPUFGSVAsIEM9QVIsIFNFUklBTE5VTUJFUj1DVUlUIDMzNjkzNDUwMjM5IiBnZW5fdGltZT0iMTQ2MzA3ODY2OSIgZXhwX3RpbWU9IjE0NjMxMjE5MjkiIGRzdD0iQ049d3NmZSwgTz1BRklQLCBDPUFSIi8+CiAgICA8b3BlcmF0aW9uIHZhbHVlPSJncmFudGVkIiB0eXBlPSJsb2dpbiI+CiAgICAgICAgPGxvZ2luIHVpZD0iQz1hciwgU1Q9YnVlbm9zIGFpcmVzLCBMPWJhaGlhIGJsYW5jYSwgTz1oZXJyYWplcyB2YWxlbnRlLCBPVT1pdCwgU0VSSUFMTlVNQkVSPUNVSVQgMjAwNTUxODM1MzksIENOPWFmaXAgd3MgaG9tb2xvZ2F0aW9uIC0gaGVycmFqZXMgdmFsZW50ZSIgc2VydmljZT0id3NmZSIgcmVnbWV0aG9kPSIyMiIgZW50aXR5PSIzMzY5MzQ1MDIzOSIgYXV0aG1ldGhvZD0iY21zIj4KICAgICAgICAgICAgPHJlbGF0aW9ucz4KICAgICAgICAgICAgICAgIDxyZWxhdGlvbiByZWx0eXBlPSI0IiBrZXk9IjIwMDU1MTgzNTM5Ii8+CiAgICAgICAgICAgIDwvcmVsYXRpb25zPgogICAgICAgIDwvbG9naW4+CiAgICA8L29wZXJhdGlvbj4KPC9zc28+Cgo=
+                </Token>
+                <Sign>
+                    HUBzYjIGQNOEs8nxwI8821+LZZxRPr/MlwoK1CUmSy0WavqPz3SyaMdf4mGD1P7faQSY9AeZO+7OaTXwPoZfaO0kuH7YYIXKb5M+2nHV/Og09FD27clYv7FJjf0Fed8NFZp3z/UiufWpUSki0N8Rn32m523jf5BSBYo3MxMhqlk=
+                </Sign>
+                <Cuit>20055183539</Cuit>
+            </Auth>
+            <FeCAEReq>
+                <FeCabReq>
+                    <CantReg>1</CantReg>
+                    <PtoVta>4</PtoVta>
+                    <CbteTipo>1</CbteTipo>
+                </FeCabReq>
+                <FeDetReq>
+                    <FECAEDetRequest>
+                        <Concepto>1</Concepto>
+                        <DocTipo>80</DocTipo>
+                        <DocNro>30709262080</DocNro>
+                        <CbteDesde>123</CbteDesde>
+                        <CbteHasta>123</CbteHasta>
+                        <CbteFch>20160512</CbteFch>
+                        <ImpTotal>1.21</ImpTotal>
+                        <ImpTotConc>0.00</ImpTotConc>
+                        <ImpNeto>1.00</ImpNeto>
+                        <ImpOpEx>0.00</ImpOpEx>
+                        <ImpTrib>0.00</ImpTrib>
+                        <ImpIVA>0.21</ImpIVA>
+                        <MonId>PES</MonId>
+                        <MonCotiz>1.0</MonCotiz>
+                        <Iva>
+                            <AlicIva>
+                                <Id>5</Id>
+                                <BaseImp>1.00</BaseImp>
+                                <Importe>0.21</Importe>
+                            </AlicIva>
+                        </Iva>
+                    </FECAEDetRequest>
+                </FeDetReq>
+            </FeCAEReq>
+        </FECAESolicitar>
+    </soap:Body>
+</soap:Envelope>
+
+        status: 200
+        content-length: 863
+        x-aspnet-version: 2.0.50727
+        x-powered-by: ASP.NET
+        server: Microsoft-IIS/6.0
+        microsoftofficewebserver: 5.0_Pub
+        cache-control: private, max-age=0
+        date: Thu, 12 May 2016 20:38:21 GMT
+        content-type: text/xml; charset=utf-8
+        <?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<soap:Body>
+    <FECAESolicitarResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+        <FECAESolicitarResult>
+            <FeCabResp>
+                <Cuit>20055183539</Cuit>
+                <PtoVta>4</PtoVta>
+                <CbteTipo>1</CbteTipo>
+                <FchProceso>20160512173200</FchProceso>
+                <CantReg>1</CantReg>
+                <Resultado>A</Resultado>
+                <Reproceso>N</Reproceso>
+            </FeCabResp>
+            <FeDetResp>
+                <FECAEDetResponse>
+                    <Concepto>1</Concepto>
+                    <DocTipo>80</DocTipo>
+                    <DocNro>30709262080</DocNro>
+                    <CbteDesde>123</CbteDesde>
+                    <CbteHasta>123</CbteHasta>
+                    <CbteFch>20160512</CbteFch>
+                    <Resultado>A</Resultado>
+                    <CAE>66199394623737</CAE>
+                    <CAEFchVto>20160522</CAEFchVto>
+                </FECAEDetResponse>
+            </FeDetResp>
+        </FECAESolicitarResult>
+    </FECAESolicitarResponse>
+</soap:Body>
+</soap:Envelope>
