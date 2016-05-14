@@ -22,6 +22,8 @@
                 context="{'no_key_lines':True}"
                 model="ir.actions.report.xml">
             <field name="report_rml">valente_default/einvoice.odt</field>
+            <field name="background_image" type="base64"
+                   file="valente_default/einvoice.png"/>
         </record>
 
         <!-- remito modificado, saca el odt de valente_default -->
