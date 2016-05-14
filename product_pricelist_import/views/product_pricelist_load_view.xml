@@ -8,7 +8,11 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="File Loads">
-                    <field name="name" />
+                    <field name="name" string="Nombre de archivo"/>
+                    <field name="process" string="Lineas totales"/>
+                    <field name="fails" string="Sin procesar"/>
+                    <field name="supplier"/>
+                    <field name="mode" string="Modo"/>
                     <field name="date" />
                 </tree>
             </field>
