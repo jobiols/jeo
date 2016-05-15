@@ -262,7 +262,7 @@ msgstr "Carga"
 #: model:ir.ui.menu,name:product_pricelist_import.menu_file_load
 #: view:product.pricelist.load:product_pricelist_import.product_pricelist_load_form_view
 msgid "Load File"
-msgstr "Importar lista precios"
+msgstr "Listas de precios"
 
 #. module: product_pricelist_import
 #: model:ir.actions.act_window,name:product_pricelist_import.action_file_price_load
@@ -444,3 +444,5 @@ msgstr "o"
 msgid "xlrd python lib  not installed"
 msgstr "No está instalada la librería python xlrd"
 
+msgid "Pricelist details"
+msgstr "Detalle de precios"

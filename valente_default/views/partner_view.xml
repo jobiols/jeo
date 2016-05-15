@@ -8,5 +8,24 @@
             <field eval="4" name="sequence"/>
         </record>
 
+        <!--  agregado de campos de busqueda en partner -->
+
+        <record id="inherited_view_res_partner_filter" model="ir.ui.view">
+            <field name="name">cliente busquedas</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <!-- agrego el filtro después de proveedore -->
+                <xpath expr="filter[@string='Customers']"
+                       position="after">
+                    <filter string="Profesoras" domain="[('teacher', '=', 1)]"/>
+                    <field name="document_number" string="CUIT"/>
+                    <field name="email"/>
+                    <field name="street"/>
+                    <field name="comment"/>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>

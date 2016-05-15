@@ -190,6 +190,7 @@ class ProductPricelistLoadLine(models.Model):
     fail_reason = fields.Char('Fail Reason')
     file_load = fields.Many2one('product.pricelist.load', 'Load', required=True)
     keys = fields.Char(related='file_load.keys')
+    supplier = fields.Char(related='file_load.supplier.name')
 
     def check(self):
         # check product, must exist code and name

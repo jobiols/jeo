@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-    <!-- ************* file_load Tree View  *************** -->
+
+    <!-- file_load Tree View (vista principal) -->
+
         <record id="product_pricelist_load_tree_view" model="ir.ui.view">
             <field name="name">product.pricelist.load.tree.view</field>
             <field name="model">product.pricelist.load</field>
@@ -18,7 +20,8 @@
             </field>
         </record>
 
-    <!-- ************* file_load form View  *************** -->
+    <!-- file_load form View (vista formulario incluye tree con las lineas) -->
+
         <record id="product_pricelist_load_form_view" model="ir.ui.view">
             <field name="name">product.pricelist.load.form.view</field>
             <field name="model">product.pricelist.load</field>
@@ -61,19 +64,22 @@
             </field>
         </record>
 
-            <!-- ************* file_load search View  *************** -->
+        <!-- file_load search View -->
+
         <record id="file_price_load_search_view" model="ir.ui.view">
             <field name="name">product.pricelist.load.search.view</field>
             <field name="model">product.pricelist.load</field>
             <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Search File load">
-                 <group>
-                        <field name="date" />
+                    <group>
                         <field name="file_name" />
-                </group>
+                        <field name="supplier"/>
+                        <field name="mode"/>
+                        <field name="date" />
+                    </group>
                 </search>
-                </field>
+            </field>
          </record>
 
        <record id="action_file_price_load" model="ir.actions.act_window">
@@ -84,14 +90,16 @@
        </record>
        
        <act_window name="Fail Lines"
-            domain="[('file_load', '=', active_id),
-                       ('fail', '=', True)]"
+            domain="[('file_load','=',active_id), ('fail','=',True)]"
             context="{'file_load':active_id}"
             res_model="product.pricelist.load.line"
             src_model="product.pricelist.load"
             id="act_fail_lines"/>
 
-    <menuitem action="action_file_price_load"
-        id="menu_file_load" name="Load File" parent="purchase.menu_purchase_config_purchase" sequence="30"/>
+        <menuitem action="action_file_price_load"
+                  id="menu_file_load" name="Pricelist load"
+                  parent="purchase.menu_purchase_config_purchase"
+                  sequence="30"/>
+
     </data>
 </openerp>

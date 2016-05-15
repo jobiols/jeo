@@ -22,6 +22,7 @@ from openerp import models, fields
 
 class product_discount(models.Model):
     _name = 'product.discount'
+    _description = "Descuentos para las categorias"
 
     name = fields.Char()
     discount = fields.Float()

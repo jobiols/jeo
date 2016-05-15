@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-    <!-- ************* file_line Tree View  *************** -->
+
+    <!-- tree view de la linea -->
+
         <record id="product_pricelist_load_line_tree_view" model="ir.ui.view">
             <field name="name">product.pricelist.load.line.tree.view</field>
             <field name="model">product.pricelist.load.line</field>
@@ -21,10 +23,13 @@
                     <field name="d6"/>
                     <field name="fail"/>
                     <field name="fail_reason" />
+                    <field name="supplier" string="Nombre proveedor"/>
                 </tree>
             </field>
         </record>
-    <!-- ************* file_load form View  *************** -->
+
+    <!-- form view de la linea -->
+
         <record id="product_pricelist_load_line_form_view" model="ir.ui.view">
             <field name="name">product.pricelist.load.line.form.view</field>
             <field name="model">product.pricelist.load.line</field>
@@ -43,11 +48,59 @@
                         <field name="d4"/>
                         <field name="d5"/>
                         <field name="d6"/>
-                        <field name="fail"/>
-                        <field name="fail_reason" />
+                        <field name="fail" string="Sin procesar"/>
+                        <field name="fail_reason" string="Estado"/>
+                        <field name="file_load" string="Nombre de archivo"/>
+                        <field name="keys" string="Aplicación de descuentos"/>
+                        <field name="supplier" string="Proveedor"/>
                     </group>
                 </form>
             </field>
         </record>
+
+    <!-- filtro de lineas -->
+
+       <record id="product_pricelist_load_line_filter" model="ir.ui.view">
+            <field name="name">product.pricelist.load.line.select</field>
+            <field name="model">product.pricelist.load.line</field>
+            <field name="arch" type="xml">
+                <search string="Search Pricelist Line">
+                    <!-- todos los campos por los que se puede buscar -->
+                    <field name="product_code"/>
+                    <field name="product_name"/>
+                    <field name="supplier" string="Proveedor"/>
+                   <separator/>
+                    <!--- todos los campos por los que se puede agrupar -->
+                   <group expand="0" string="Group By">
+                       <filter string="Estado" icon="terp-folder-orange" domain="[]" context="{'group_by' : 'fail_reason'}" />
+                       <filter string="Categoria" context="{'group_by': 'categ'}"/>
+                       <filter string="Sub categoria" context="{'group_by': 'sub_categ'}"/>
+                   </group>
+                    <!-- todos los campos por los que se puede filtrar -->
+                    <field name="fail"/>
+                    <filter help="Procesado" icon="terp-go-month" domain="[('fail','=',False)]"/>
+                    <filter help="No procesado" icon="terp-personal+" domain="[('fail','=',True)]"/>
+                   <separator/>
+                </search>
+           </field>
+       </record>
+
+
+    <!-- accion para mostrar las lineas -->
+
+        <record id="action_file_price_load_line" model="ir.actions.act_window">
+            <field name="name">Detalle de las lineas de importación de precios</field>
+            <field name="res_model">product.pricelist.load.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- menu para mostrar las lineas -->
+
+        <menuitem action="action_file_price_load_line"
+                  id="menu_file_load_line" name="Detalle de precios"
+                  parent="purchase.menu_purchase_config_purchase"
+                  sequence="31"/>
+
     </data>
 </openerp>
