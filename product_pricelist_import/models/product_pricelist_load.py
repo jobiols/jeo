@@ -23,6 +23,7 @@ from openerp import models, fields, exceptions, api, _
 class ProductPricelistLoad(models.Model):
     _name = 'product.pricelist.load'
     _description = 'Product Price List Load'
+    _order = 'id desc'
 
     def _discount_modes(self):
         if not self.keys:
