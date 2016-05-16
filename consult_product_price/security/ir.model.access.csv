@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_config_consult_product,access_config_consult_product,model_config_consult_product,,1,0,0,0
+access_config_consult_product,access_config_consult_product,model_config_consult_product,,1,1,0,0
