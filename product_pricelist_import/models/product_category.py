@@ -24,6 +24,12 @@ class product_category(models.Model):
 
     discounts = fields.One2many('product.discount', 'categ_id')
 
+    def search_child(self, name):
+        return self.child_id.search([('name', '=', name), ('parent_id', '=', self.id)])
+
+    def create_child(self, name):
+        return self.child_id.create({'name': name, 'parent_id': self.id})
+
     def get_discount(self):
         if self.parent_id:
             ret = self.parent_id.get_discount()

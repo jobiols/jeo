@@ -75,29 +75,40 @@ class ProductPricelistLoad(models.Model):
 
     @api.multi
     def check_category(self, line):
+        # obtener la categoria que identifica al proveedor, es la root del arbol
         supp_categ = self.supplier.categ_id
         if not supp_categ:
             raise exceptions.Warning(_("Supplier without category"))
 
+        # cargar los descuentos para el proveedor
+        supp_categ.update_discounts(line.get_discounts('dp'))
+        # preparar el return
         res = supp_categ
-        supp_categ.update_discounts(line.get_discounts('dp'))  # cargar los descuentos
 
+        # si hay una categoria en la linea procesar esto
         if line.categ:
-            cat = supp_categ.child_id.search([('name', '=', line.categ)])
+            # ver si existe la categoria bajo el root
+            cat = supp_categ.search_child(line.categ)
+            # si la categoria no existe, la creo
             if not cat:
-                cat = supp_categ.child_id.create(
-                    {'name': line.categ, 'parent_id': supp_categ.id})
+                cat = supp_categ.create_child(line.categ)
+            # cargo los descuentos para esta categoria
             cat.update_discounts(line.get_discounts('dc'))
+            # preparo el return
             res = cat
-
+            # veo si hay una subcategoria en la linea
             if line.sub_categ:
-                sub = cat.child_id.search([('name', '=', line.sub_categ)])
+                # verifico si existe en los hijos de la categoria
+                sub = cat.search_child(line.sub_categ)
+                # si no existe la agrego
                 if not sub:
-                    sub = cat.child_id.create(
-                        {'name': line.sub_categ, 'parent_id': cat.id})
+                    sub = cat.create_child(line.sub_categ)
+                # aplico los descuentos de la subcategoria
                 sub.update_discounts(line.get_discounts('ds'))
+                # preparo el return
                 res = sub
 
+        # devuelvo la ultima categoria que procesé
         return res
 
     @api.multi
@@ -136,7 +147,7 @@ class ProductPricelistLoad(models.Model):
             # crear o actualizar categorias
             cat = self.check_category(line)
 
-            # actualizar producto
+            # actualizar precio de lista del producto
             suppinfo.list_price = line.list_price
             line.write({'fail': False, 'fail_reason': 'Actualizado'})
         else:
