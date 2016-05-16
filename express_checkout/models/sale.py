@@ -29,12 +29,6 @@ class sale_order(models.Model):
 
     journal_id = fields.Many2one('account.journal', u'Método de pago')
 
-    def _module_initialization(self, cr, version):
-        _logger.info('Initialization module express_checkout version {}'.format(version))
-        print '-------------------------------------------------------------------------'
-        print 'to run on module install', cr, version
-
-
     def _stock_move(self):
         # verificar que solo haya productos en la orden, sino no se puede transferir.
         lines = self.order_line.search([('order_id', '=', self.id)])

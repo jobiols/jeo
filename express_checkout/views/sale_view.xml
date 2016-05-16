@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
-
-        <!-- esta funcion corre solo en la primera instalación del modulo-->
-
-        <function model="sale.order" name="_module_initialization"/>
-
-    </data>
-
     <data>
 
         <!--  Agregar botones para facturar y enviar -->
