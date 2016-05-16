@@ -136,7 +136,7 @@ class sale_order(models.Model):
             'amount': context['default_amount'],
             'net_amount': context['default_amount'],
             'receiptbook_id': receipt.id,
-            'company_id': self.env.user.id
+            'company_id': self.env.user.company_id.id
         })
         voucher.signal_workflow('proforma_voucher')
 
