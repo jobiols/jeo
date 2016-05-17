@@ -37,14 +37,14 @@ class TestPricelistImport(SingleTransactionCase):
         self.product_pricelist_load1 = self.env['product.pricelist.load'].create({
             'name': 'Archivo de prueba 1',
             'date': time.strftime('%Y-%m-%d'),
-            'file_name': '/mnt/extra-addons/jeo/product_pricelist_import/tests/test_pricelist_1.csv',
+            'file_name': 'product_pricelist_import/tests/test_pricelist_1.csv',
             'supplier': self.proveedor1.id,
             'mode': 'append'
         })
         self.product_pricelist_load2 = self.env['product.pricelist.load'].create({
             'name': 'Archivo de prueba 2',
             'date': time.strftime('%Y-%m-%d'),
-            'file_name': '/mnt/extra-addons/jeo/product_pricelist_import/tests/test_pricelist_2.csv',
+            'file_name': 'product_pricelist_import/tests/test_pricelist_2.csv',
             'supplier': self.proveedor1.id,
             'mode': 'no_append'
         })
