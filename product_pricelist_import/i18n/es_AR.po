@@ -444,5 +444,3 @@ msgstr "o"
 msgid "xlrd python lib  not installed"
 msgstr "No está instalada la librería python xlrd"
 
-msgid "Pricelist details"
-msgstr "Detalle de precios"
