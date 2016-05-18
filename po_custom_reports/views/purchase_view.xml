@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!-- hace que no desaparezca el boton de reimprimir la PC -->
+
+        <record id="purchase_order_form_custom" model="ir.ui.view">
+            <field name="name">purchase.order.form.custom</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@string='Re-Print RFQ']" position="replace">
+                    <button name="print_quotation" string="Re-Print RFQ" type="object"
+                            states="sent,bid" groups="base.group_user"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- eliminamos boton print drop down que saca los reportes originales de odoo -->
+        <report
+                string="Purchase Order"
+                id="purchase.action_report_purchase_order"
+                model="purchase.order"
+                report_type="qweb-pdf"
+                name="purchase.report_purchaseorder"
+                file="purchase.report_purchaseorder"
+                menu="False"
+                />
+
+        <report
+                string="Request for Quotation"
+                id="purchase.report_purchase_quotation"
+                model="purchase.order"
+                report_type="qweb-pdf"
+                name="purchase.report_purchasequotation"
+                file="purchase.report_purchasequotation"
+                menu="False"
+                />
+
+    </data>
+</openerp>
