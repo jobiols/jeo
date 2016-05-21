@@ -33,6 +33,7 @@ Groups registers by colour
     'depends': [
         'base',
         'account',
+        'web_environment_ribbon',
     ],
     'data': [
         'views/account_journal_view.xml',

@@ -32,4 +32,15 @@ class res_users(models.Model):
         print ' res_users >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ', vals
         return super(res_users, self).create(vals)
 
+    @api.one
+    def onchange_colour(self, colour_id):
+        parameter_obj = self.env['ir.config_parameter'].sudo()
+
+        self.env.user.colour_id = colour_id
+        if self.env.user.colour_id.name == 'black':
+            parameter_obj.set_param('ribbon.name', 'Negro')
+            parameter_obj.set_param('ribbon.background.color', 'rgba(0,0,0,0.6)')
+        else:
+            parameter_obj.set_param('ribbon.name', 'False')
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -2,6 +2,8 @@
 <openerp>
     <data>
 
+        <!-- agregar campo color en preferencias -->
+
         <record id="view_users_form_simple_colour_modif" model="ir.ui.view">
             <field name="name">res.users.preferences.form</field>
             <field name="model">res.users</field>
@@ -9,7 +11,7 @@
             <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='tz']" position="after">
-                    <field name="colour_id"/>
+                    <field name="colour_id" on_change="onchange_colour(colour_id)"/>
                 </xpath>
             </field>
         </record>

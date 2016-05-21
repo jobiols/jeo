@@ -2,13 +2,13 @@
 <openerp>
     <data>
         <record id="colour_black" model="colour">
-            <field name="name">Black</field>
+            <field name="name">black</field>
         </record>
         <record id="colour_white" model="colour">
-            <field name="name">White</field>
+            <field name="name">white</field>
         </record>
         <record id="colour_grey" model="colour">
-            <field name="name">Grey</field>
+            <field name="name">grey</field>
         </record>
     </data>
 </openerp>
