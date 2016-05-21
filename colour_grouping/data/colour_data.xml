@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="colour_black" model="colour">
+            <field name="name">Black</field>
+        </record>
+        <record id="colour_white" model="colour">
+            <field name="name">White</field>
+        </record>
+        <record id="colour_grey" model="colour">
+            <field name="name">Grey</field>
+        </record>
+    </data>
+</openerp>
