@@ -33,13 +33,15 @@ Groups registers by colour
     'depends': [
         'base',
         'account',
-        'web_environment_ribbon',
+        'web',
     ],
     'data': [
-        'views/account_journal_view.xml',
-        'views/res_partner_view.xml',
+#        'views/account_journal_view.xml',
+#        'views/res_partner_view.xml',
+        'views/ribbon_view.xml',
         'views/res_users_view.xml',
         'data/colour_data.xml',
+        'data/ribbon_data.xml',
         'security/ir.model.access.csv',
         'security/rules.xml'
     ],

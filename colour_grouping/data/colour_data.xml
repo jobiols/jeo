@@ -7,8 +7,5 @@
         <record id="colour_white" model="colour">
             <field name="name">white</field>
         </record>
-        <record id="colour_grey" model="colour">
-            <field name="name">grey</field>
-        </record>
     </data>
 </openerp>

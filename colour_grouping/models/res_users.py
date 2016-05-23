@@ -31,6 +31,9 @@ class res_users(models.Model):
 
     colour_id = fields.Many2one('colour', 'Color')
 
+    def dummy(self):
+        return True
+
     @api.model
     def create(self, vals):
         vals['colour_id'] = self.env.user.colour_id.id
@@ -49,25 +52,28 @@ class res_users(models.Model):
 
     @api.v7
     def authenticate(self, db, login, password, user_agent_env):
-
+        print 'autenticatte ----------------------------------------------------------'
         # obtengo el id del usuario
         uid = self._login(db, login, password)
         cr = self.pool.cursor()
         try:
             # busco el usuario por id
             usr_obj = self.pool['res.users']
-            usr_ids = usr_obj.search(cr, uid, [('id', '=', uid)])
-            usr = usr_obj.browse(cr, uid, usr_ids)
+            usr_ids = usr_obj.search(cr, SUPERUSER_ID, [('id', '=', uid)])
+            usr = usr_obj.browse(cr, SUPERUSER_ID, usr_ids)
 
             # creo el objeto params
             params_obj = self.pool['ir.config_parameter']
 
             # le pongo el color del usuario
             if not usr.colour_id.name or usr.colour_id.name == BLK:
+                print ' poner negro'
                 params_obj.set_param(cr, SUPERUSER_ID, 'ribbon.name', BLK)
             else:
+                print 'poner blanco'
                 params_obj.set_param(cr, SUPERUSER_ID, 'ribbon.name', 'False')
 
+            print 'color del usuario >>>', params_obj.get_param(cr, SUPERUSER_ID, 'ribbon.name')
             cr.commit()
         except Exception:
             _logger.exception("Failed to update ribbon.name configuration parameter")

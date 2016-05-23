@@ -12,7 +12,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='tz']" position="after">
                     <field name="colour_id" on_change="onchange_colour(colour_id)"
-                           required="1"/>
+                           required="0" readonly="0"/>
                 </xpath>
             </field>
         </record>
