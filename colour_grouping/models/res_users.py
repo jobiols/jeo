@@ -18,7 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # -----------------------------------------------------------------------------------
-from openerp import models, fields, api
+from openerp import models, fields, api, SUPERUSER_ID
+import logging
+
+_logger = logging.getLogger(__name__)
+
+BLK = 'black'
 
 
 class res_users(models.Model):
@@ -29,7 +34,6 @@ class res_users(models.Model):
     @api.model
     def create(self, vals):
         vals['colour_id'] = self.env.user.colour_id.id
-        print ' res_users >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ', vals
         return super(res_users, self).create(vals)
 
     @api.one
@@ -37,10 +41,40 @@ class res_users(models.Model):
         parameter_obj = self.env['ir.config_parameter'].sudo()
 
         self.env.user.colour_id = colour_id
-        if self.env.user.colour_id.name == 'black':
-            parameter_obj.set_param('ribbon.name', 'Negro')
+        if self.env.user.colour_id.name == BLK:
+            parameter_obj.set_param('ribbon.name', BLK)
             parameter_obj.set_param('ribbon.background.color', 'rgba(0,0,0,0.6)')
         else:
             parameter_obj.set_param('ribbon.name', 'False')
+
+    @api.v7
+    def authenticate(self, db, login, password, user_agent_env):
+
+        # obtengo el id del usuario
+        uid = self._login(db, login, password)
+        cr = self.pool.cursor()
+        try:
+            # busco el usuario por id
+            usr_obj = self.pool['res.users']
+            usr_ids = usr_obj.search(cr, uid, [('id', '=', uid)])
+            usr = usr_obj.browse(cr, uid, usr_ids)
+
+            # creo el objeto params
+            params_obj = self.pool['ir.config_parameter']
+
+            # le pongo el color del usuario
+            if not usr.colour_id.name or usr.colour_id.name == BLK:
+                params_obj.set_param(cr, SUPERUSER_ID, 'ribbon.name', BLK)
+            else:
+                params_obj.set_param(cr, SUPERUSER_ID, 'ribbon.name', 'False')
+
+            cr.commit()
+        except Exception:
+            _logger.exception("Failed to update ribbon.name configuration parameter")
+        finally:
+            cr.close()
+
+        return super(res_users, self).authenticate(db, login, password, user_agent_env)
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

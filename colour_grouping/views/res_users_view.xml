@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-        <!-- agregar campo color en preferencias -->
+        <!-- agregar campo color en preferencias del usuario -->
 
         <record id="view_users_form_simple_colour_modif" model="ir.ui.view">
             <field name="name">res.users.preferences.form</field>
@@ -11,12 +11,13 @@
             <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='tz']" position="after">
-                    <field name="colour_id" on_change="onchange_colour(colour_id)"/>
+                    <field name="colour_id" on_change="onchange_colour(colour_id)"
+                           required="1"/>
                 </xpath>
             </field>
         </record>
 
-        <!-- agregar el campo color -->
+        <!-- agregar el campo color en ficha del usuario -->
 
         <record id="view_users_colour_form" model="ir.ui.view">
             <field name="name">base.view.users.colour.form</field>
@@ -27,15 +28,6 @@
                     <field name="colour_id" groups="base.group_erp_manager"/>
                 </xpath>
             </field>
-        </record>
-
-        <!-- regla para que se armen grupos de colores -->
-
-        <record id="res_users_colour_rule" model="ir.rule">
-            <field name="name">user colour rule</field>
-            <field name="model_id" ref="model_res_users"/>
-            <field eval="True" name="global"/>
-            <field name="domain_force">[('colour_id','=',user.colour_id.id)]</field>
         </record>
 
     </data>

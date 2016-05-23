@@ -29,7 +29,6 @@ class res_partner(models.Model):
     @api.model
     def create(self, vals):
         vals['colour_id'] = self.env.user.colour_id.id
-        print ' res_partner >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ', vals
         return super(res_partner, self).create(vals)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

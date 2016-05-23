@@ -24,6 +24,7 @@ from openerp import fields, api, models
 class colour(models.Model):
     _name = "colour"
 
-    name = fields.Selection([('black', 'Black'), ('white', 'White'), ('grey', 'Grey')])
+    name = fields.Selection(
+        [('black', 'Black'), ('white', 'White'), ('grey', 'Grey')])
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

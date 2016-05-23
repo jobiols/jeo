@@ -39,7 +39,9 @@ Groups registers by colour
         'views/account_journal_view.xml',
         'views/res_partner_view.xml',
         'views/res_users_view.xml',
-        'data/colour_data.xml'
+        'data/colour_data.xml',
+        'security/ir.model.access.csv',
+        'security/rules.xml'
     ],
     'test': [
     ],

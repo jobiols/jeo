@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-        <!-- agregar el campo color -->
+        <!-- agregar el campo color en el la ficha del diario -->
 
         <record id="view_account_journal_colour_form" model="ir.ui.view">
             <field name="name">account.journal.colour.form</field>
@@ -10,18 +10,9 @@
             <field name="inherit_id" ref="account.view_account_journal_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='centralisation']" position="before">
-                    <field name="colour_id" groups="base.group_erp_manager"/>
+                    <field name="colour_id" groups="base.group_erp_manager" required='1'/>
                 </xpath>
             </field>
-        </record>
-
-        <!-- regla para que se armen grupos de colores -->
-
-        <record id="account_journal_colour_rule" model="ir.rule">
-            <field name="name">Journal colour rule</field>
-            <field name="model_id" ref="account.model_account_journal"/>
-            <field eval="True" name="global"/>
-            <field name="domain_force">[('colour_id','=',user.colour_id.id)]</field>
         </record>
 
     </data>

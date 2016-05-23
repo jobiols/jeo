@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-        <!-- agregar el campo color-->
+        <!-- agregar el campo color en la ficha de partner-->
 
         <record id="view_partner_colour_form" model="ir.ui.view">
             <field name="name">base.res.partner.colour.form</field>
@@ -10,19 +10,9 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='active']" position="after">
-                    <field name="colour_id" groups="base.group_erp_manager"/>
+                    <field name="colour_id" groups="base.group_erp_manager" required="1"/>
                 </xpath>
             </field>
-        </record>
-
-
-        <!-- regla para que se armen grupos de colores -->
-
-        <record id="res_partner_colour_rule" model="ir.rule">
-            <field name="name">partner colour rule</field>
-            <field name="model_id" ref="model_res_partner"/>
-            <field eval="True" name="global"/>
-            <field name="domain_force">[('colour_id','=',user.colour_id.id)]</field>
         </record>
 
     </data>
