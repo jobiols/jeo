@@ -19,7 +19,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-openerp.web_environment_ribbon = function (instance) {
+openerp.colour_grouping = function (instance) {
 
     var ribbon = $(document).find('.test-ribbon');
     ribbon.hide();
