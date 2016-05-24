@@ -36,8 +36,8 @@ Groups registers by colour
         'web',
     ],
     'data': [
-#        'views/account_journal_view.xml',
-#        'views/res_partner_view.xml',
+        'views/account_journal_view.xml',
+        'views/res_partner_view.xml',
         'views/ribbon_view.xml',
         'views/res_users_view.xml',
         'data/colour_data.xml',

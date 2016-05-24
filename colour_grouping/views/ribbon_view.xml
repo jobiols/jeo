@@ -18,6 +18,7 @@
             <xpath expr="//div[@class='openerp openerp_webclient_container']"
                    position="before">
                 <div class="test-ribbon"/>
+                <div class="colour-all"/>
             </xpath>
         </template>
 

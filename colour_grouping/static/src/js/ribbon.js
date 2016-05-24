@@ -22,19 +22,34 @@
 openerp.colour_grouping = function (instance) {
 
     var ribbon = $(document).find('.test-ribbon');
-    ribbon.hide();
+    var colour = $(document).find('.colour-all');
+    var users = new instance.web.Model('res.users');
 
-    var model = new instance.web.Model('ir.config_parameter');
-
-    var res = model.call('get_param', ['ribbon.name']).then(
+    var res = users.call('is_black').then(
         function (name) {
-            if (name && name != 'False') {
+            if (name == 'black') {
                 ribbon.html(name);
                 ribbon.show();
+            }
+            if (name == 'white') {
+                ribbon.hide();
             }
         }
     );
 
+    var model = new instance.web.Model('ir.config_parameter');
+    // Get ribbon TEST
+    var res = model.call('get_param', ['ribbon.test']).then(
+        function (test) {
+            if (test != false) {
+                colour.html('T');
+                colour.show();
+            }
+        }
+    );
+
+
+/*
     // Get ribbon color from system parameters
     var res = model.call('get_param', ['ribbon.color']).then(
         function (strColor) {
@@ -43,7 +58,8 @@ openerp.colour_grouping = function (instance) {
             }
         }
     );
-
+*/
+/*
     // Get ribbon background color from system parameters
     var res = model.call('get_param', ['ribbon.background.color']).then(
         function (strBackgroundColor) {
@@ -52,6 +68,7 @@ openerp.colour_grouping = function (instance) {
             }
         }
     );
+*/
     // Code from: http://jsfiddle.net/WK_of_Angmar/xgA5C/
     function validStrColour(strToTest) {
         if (strToTest === "") {

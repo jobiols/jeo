@@ -31,8 +31,9 @@ class res_users(models.Model):
 
     colour_id = fields.Many2one('colour', 'Color')
 
-    def dummy(self):
-        return True
+    @api.model
+    def is_black(self):
+        return self.env.user.colour_id.name
 
     @api.model
     def create(self, vals):

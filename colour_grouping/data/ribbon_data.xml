@@ -4,20 +4,8 @@
 
         <!-- Add ribbon name default configuration parameter -->
         <record id="default_ribbon_name" model="ir.config_parameter">
-            <field name="key">ribbon.name</field>
+            <field name="key">ribbon.test</field>
             <field name="value">negro</field>
-        </record>
-
-        <!-- Add ribbon color configuration parameter -->
-        <record id="set_ribbon_color" model="ir.config_parameter">
-            <field name="key">ribbon.color</field>
-            <field name="value">#f0f0f0</field>
-        </record>
-
-        <!-- Add ribbon background color configuration parameter -->
-        <record id="set_ribbon_background_color" model="ir.config_parameter">
-            <field name="key">ribbon.background.color</field>
-            <field name="value">rgba(0,0,0,.6)</field>
         </record>
 
     </data>
