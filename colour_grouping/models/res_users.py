@@ -32,8 +32,8 @@ class res_users(models.Model):
     colour_id = fields.Many2one('colour', 'Color')
 
     @api.model
-    def is_black(self):
-        return self.env.user.colour_id.name
+    def with_ribbon(self):
+        return self.env.user.colour_id.ribbon
 
     @api.model
     def create(self, vals):
@@ -53,7 +53,6 @@ class res_users(models.Model):
 
     @api.v7
     def authenticate(self, db, login, password, user_agent_env):
-        print 'autenticatte ----------------------------------------------------------'
         # obtengo el id del usuario
         uid = self._login(db, login, password)
         cr = self.pool.cursor()
@@ -68,13 +67,10 @@ class res_users(models.Model):
 
             # le pongo el color del usuario
             if not usr.colour_id.name or usr.colour_id.name == BLK:
-                print ' poner negro'
                 params_obj.set_param(cr, SUPERUSER_ID, 'ribbon.name', BLK)
             else:
-                print 'poner blanco'
                 params_obj.set_param(cr, SUPERUSER_ID, 'ribbon.name', 'False')
 
-            print 'color del usuario >>>', params_obj.get_param(cr, SUPERUSER_ID, 'ribbon.name')
             cr.commit()
         except Exception:
             _logger.exception("Failed to update ribbon.name configuration parameter")

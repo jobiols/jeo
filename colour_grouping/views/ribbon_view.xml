@@ -17,8 +17,8 @@
                   inherit_id="web.webclient_bootstrap">
             <xpath expr="//div[@class='openerp openerp_webclient_container']"
                    position="before">
-                <div class="test-ribbon"/>
-                <div class="colour-all"/>
+                <div class="test-colour"/>
+                <div class="test-env"/>
             </xpath>
         </template>
 

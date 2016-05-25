@@ -10,7 +10,7 @@
             <field name="inherit_id" ref="account.view_account_journal_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='centralisation']" position="before">
-                    <field name="colour_id" groups="base.group_erp_manager" required='1'/>
+                    <field name="colour_id" groups="base.group_erp_manager"/>
                 </xpath>
             </field>
         </record>

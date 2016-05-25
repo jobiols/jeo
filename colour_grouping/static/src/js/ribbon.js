@@ -21,33 +21,29 @@
 
 openerp.colour_grouping = function (instance) {
 
-    var ribbon = $(document).find('.test-ribbon');
-    var colour = $(document).find('.colour-all');
+    var ribbon = $(document).find('.test-colour');
     var users = new instance.web.Model('res.users');
-
-    var res = users.call('is_black').then(
-        function (name) {
-            if (name == 'black') {
-                ribbon.html(name);
+    var res = users.call('with_ribbon').then(
+        function (with_ribbon) {
+            if (with_ribbon) {
+                ribbon.html('Negro');
                 ribbon.show();
-            }
-            if (name == 'white') {
+            } else {
                 ribbon.hide();
             }
         }
     );
 
+    var test = $(document).find('.test-env');
     var model = new instance.web.Model('ir.config_parameter');
-    // Get ribbon TEST
     var res = model.call('get_param', ['ribbon.test']).then(
-        function (test) {
-            if (test != false) {
-                colour.html('T');
-                colour.show();
+        function (value) {
+            if (value != false) {
+                test.html('T');
+                test.show();
             }
         }
     );
-
 
 /*
     // Get ribbon color from system parameters

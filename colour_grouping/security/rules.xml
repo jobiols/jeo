@@ -2,13 +2,15 @@
 <openerp>
     <data>
 
-        <!-- regla global para que vean clientes del color propio -->
+        <!-- regla global para que vean partners del color propio -->
 
         <record id="see_same_colour_partners_rule" model="ir.rule">
-            <field name="name">Ver clientes del color propio</field>
+            <field name="name">Ver partners del color propio</field>
             <field name="model_id" ref="model_res_partner"/>
             <field eval="True" name="global"/>
-            <field name="domain_force">[('colour_id','=',user.colour_id.id)]</field>
+            <field name="domain_force">
+                ['|',('colour_id','=',3),('colour_id','=',user.colour_id.id)]
+            </field>
         </record>
 
         <!-- regla global para que vean usuarios del color propio -->
@@ -26,7 +28,9 @@
             <field name="name">Ver diarios del color propio</field>
             <field name="model_id" ref="account.model_account_journal"/>
             <field eval="True" name="global"/>
-            <field name="domain_force">[('colour_id','=',user.colour_id.id)]</field>
+            <field name="domain_force">
+                ['|',('colour_id','=',False),('colour_id','=',user.colour_id.id)]
+            </field>
         </record>
 
     </data>

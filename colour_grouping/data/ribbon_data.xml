@@ -2,10 +2,11 @@
 <openerp>
     <data noupdate="1">
 
-        <!-- Add ribbon name default configuration parameter -->
+        <!-- Add ribbon default configuration parameter -->
+
         <record id="default_ribbon_name" model="ir.config_parameter">
             <field name="key">ribbon.test</field>
-            <field name="value">negro</field>
+            <field name="value">True</field>
         </record>
 
     </data>
