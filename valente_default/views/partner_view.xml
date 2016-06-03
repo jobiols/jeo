@@ -18,7 +18,6 @@
                 <!-- agrego el filtro después de proveedore -->
                 <xpath expr="filter[@string='Customers']"
                        position="after">
-                    <filter string="Profesoras" domain="[('teacher', '=', 1)]"/>
                     <field name="document_number" string="CUIT"/>
                     <field name="email"/>
                     <field name="street"/>
