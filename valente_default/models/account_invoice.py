@@ -87,9 +87,6 @@ class account_invoice(models.Model):
         doc_code = doc_code.strip()
 
         for tax in self.printed_tax_ids:
-            print u'{} base={} amount={}'.format(tax.name, tax.base, tax.amount)
-            print tax.tax_code_id.name, tax.tax_code_id.code, tax
-
             if ('IVA Compras 10.5%' in tax.name or
                         'IVA Ventas 10.5%' in tax.name):
                 self.cc_tax_10 = tax.amount
