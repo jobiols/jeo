@@ -21,10 +21,7 @@ from datetime import datetime, timedelta
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, \
     DATETIME_FORMATS_MAP, float_compare
 from openerp.osv import fields, osv
-from openerp.tools.safe_eval import safe_eval as eval
 from openerp.tools.translate import _
-import pytz
-from openerp import SUPERUSER_ID
 
 
 class sale_order_line(osv.osv):

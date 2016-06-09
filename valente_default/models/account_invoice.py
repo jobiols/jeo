@@ -82,6 +82,10 @@ class account_invoice(models.Model):
 
     @api.one
     def _get_values(self):
+        _ = self.journal_document_class_id
+        doc_code = _.afip_document_class_id.doc_code_prefix
+        doc_code = doc_code.strip()
+
         for tax in self.printed_tax_ids:
             print u'{} base={} amount={}'.format(tax.name, tax.base, tax.amount)
             print tax.tax_code_id.name, tax.tax_code_id.code, tax
@@ -103,6 +107,9 @@ class account_invoice(models.Model):
                 if tax.amount != 0:
                     self.cc_base += tax.base
 
+        if doc_code not in ('FA-A', 'NC-A', 'ND-A'):
+            self.cc_base = self.cc_amount_total
+
         tax_exempt = self.cc_amount_total - \
                      self.cc_base - \
                      self.cc_perc_iva - \
@@ -111,7 +118,7 @@ class account_invoice(models.Model):
                      self.cc_tax_21 - \
                      self.cc_tax_10
 
-        if abs(tax_exempt) > 0.05:
+        if (abs(tax_exempt) > 0.05) and doc_code in ('FA-A', 'NC-A', 'ND-A'):
             self.cc_tax_exempt = tax_exempt
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
