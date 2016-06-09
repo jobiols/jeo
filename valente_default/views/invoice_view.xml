@@ -29,5 +29,16 @@
             </field>
         </record>
 
+        <!-- saca el boton cancelar factura en compras -->
+
+        <record id="invoice_form_valente" model="ir.ui.view">
+            <field name="name">account.invoice.form.valente</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='invoice_cancel']" position="replace"/>
+            </field>
+        </record>
+
     </data>
 </openerp>
