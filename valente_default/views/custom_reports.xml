@@ -33,5 +33,11 @@
             <field name="report_rml">valente_default/stock_picking.odt</field>
         </record>
 
+        <!-- libro de iva modificado, saca el ods de valente_default -->
+
+        <record id="l10n_ar_account_vat_ledger.report_account_vat_ledger" model="ir.actions.report.xml">
+            <field name="report_rml">valente_default/account_vat_ledger.ods</field>
+        </record>
+
     </data>
 </openerp>
