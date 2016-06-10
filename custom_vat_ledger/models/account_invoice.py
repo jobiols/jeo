@@ -18,12 +18,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # -----------------------------------------------------------------------------------
+from openerp import models, fields, api, _
+from openerp.exceptions import except_orm, Warning
+import openerp.addons.decimal_precision as dp
+from dateutil.relativedelta import relativedelta
+import re
+
 import logging
 
-from openerp import models, fields, api
-import openerp.addons.decimal_precision as dp
-
 _logger = logging.getLogger(__name__)
+
+"""
+Cálculo de impuestos para Valente
+    Base = suma de las tax.base de todos los ivas gravados
+    No Gravado = diferencia entre el total a pagar y el resto de los items.
+"""
 
 
 class account_invoice(models.Model):
@@ -73,61 +82,31 @@ class account_invoice(models.Model):
 
     @api.one
     def _get_values(self):
+        _ = self.journal_document_class_id
+        doc_code = _.afip_document_class_id.doc_code_prefix
+        doc_code = doc_code.strip()
 
-        if False:
-            print '------------------------------------------------------ ', doc_code
-            print 'printed_amount_untaxed={} ' \
-                  'printed_amount_tax={} ' \
-                  'vat_amount={} ' \
-                  'other_taxes_amount={} ' \
-                  'vat_exempt_amount={} ' \
-                  'vat_untaxed={} ' \
-                  'vat_base_amount={}'.format(
-                self.printed_amount_untaxed,
-                self.printed_amount_tax,
-                self.vat_amount,
-                self.other_taxes_amount,
-                self.vat_exempt_amount,
-                self.vat_untaxed,
-                self.vat_base_amount)
-            print 'printed_tax_ids --'
-            for tax in self.printed_tax_ids:
-                print tax.base, tax.amount, tax.name
-
-            print 'vat_tax_ids --'
-            for tax in self.vat_tax_ids:
-                print tax.base, tax.amount, tax.name
-
-            print 'not_vat_tax_ids --'
-            for tax in self.not_vat_tax_ids:
-                print tax.base, tax.amount, tax.name
-
-        # calcular el iva para las tres columnas 10.5 21 y 27
-        # y la base imponible gravada
-        for tax in self.vat_tax_ids:
-            if ('IVA Compras 10.5%' in tax.name or 'IVA Ventas 10.5%' in tax.name):
-                self.cc_tax_10 += tax.amount
-
-            if ('IVA Compras 21%' in tax.name or 'IVA Ventas 21%' in tax.name):
-                self.cc_tax_21 += tax.amount
-
-            if ('IVA Compras 27%' in tax.name or 'IVA Compras 27%' in tax.name):
-                self.cc_tax_27 += tax.amount
-
-            # Calcular la base imponible sumanto las bases de todos los iva gravados
+        for tax in self.printed_tax_ids:
+            if ('IVA Compras 10.5%' in tax.name or
+                        'IVA Ventas 10.5%' in tax.name):
+                self.cc_tax_10 = tax.amount
+            if ('IVA Compras 21%' in tax.name or
+                        'IVA Ventas 21%' in tax.name):
+                self.cc_tax_21 = tax.amount
+            if ('IVA Compras 27%' in tax.name or
+                        'IVA Compras 27%' in tax.name):
+                self.cc_tax_27 = tax.amount
+            if 'Perc IIBB' in tax.name:
+                self.cc_perc_IIBB = tax.amount
+            if 'Perc IVA' in tax.name:
+                self.cc_perc_iva = tax.amount
             if 'IVA' in tax.name:
                 if tax.amount != 0:
                     self.cc_base += tax.base
 
-        # calcular percepciones IIBB e Iva
-        for tax in self.not_vat_tax_ids:
-            if 'Perc IIBB' in tax.name:
-                self.cc_perc_IIBB += tax.amount
+        if doc_code not in ('FA-A', 'NC-A', 'ND-A'):
+            self.cc_base = self.cc_amount_total
 
-            if 'Perc IVA' in tax.name:
-                self.cc_perc_iva += tax.amount
-
-        # calcular exento por diferencia
         tax_exempt = self.cc_amount_total - \
                      self.cc_base - \
                      self.cc_perc_iva - \
@@ -136,8 +115,7 @@ class account_invoice(models.Model):
                      self.cc_tax_21 - \
                      self.cc_tax_10
 
-        # filtrar el error de redondeo
-        if (abs(tax_exempt) > 0.05):
+        if (abs(tax_exempt) > 0.05) and doc_code in ('FA-A', 'NC-A', 'ND-A'):
             self.cc_tax_exempt = tax_exempt
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

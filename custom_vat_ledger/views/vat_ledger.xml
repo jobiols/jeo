@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!-- libro de iva modificado, saca el ods de custom_vat_ledger -->
+
+        <record id="l10n_ar_account_vat_ledger.report_account_vat_ledger"
+                model="ir.actions.report.xml">
+            <field name="report_rml">custom_vat_ledger/account_vat_ledger.ods</field>
+        </record>
+
+    </data>
+</openerp>
