@@ -45,6 +45,7 @@ Customización Herrajes Valente
         'consult_product_price',  # consulta de precios
         #        'account_journal_sequence'         # agrega un campo de secuencia en el diario para elegirlos
         #        'account_statement_move_import'    # agrega boton de importar aputnes en extractos bancarios
+        'account_journal_sequence', #Adds sequence field on account journal and it is going to be considered when choosing journals in differents models.
         'l10n_ar_aeroo_sale',  # dependencia requerida
         'l10n_ar_aeroo_purchase',  # dependencia requerida
         'l10n_ar_aeroo_einvoice',  # dependencia requerida

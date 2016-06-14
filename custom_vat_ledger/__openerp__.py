@@ -29,7 +29,7 @@
    :alt: License: AGPL-3
 
 Customiza las columnas del libro de IVA
-======================================000000000000000=
+=======================================
 
 **Fecha**
 Fecha de la factura
