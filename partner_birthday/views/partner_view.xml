@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!-- Agrega el campo cumpleaños -->
+
+        <record id="view_partner_form_birthday" model="ir.ui.view">
+            <field name="name">res.partner.form.birthday</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <field name="email" position="after">
+                    <field name="birthday" string="Cumpleaños"
+                           attrs="{'readonly': True}"/>
+                </field>
+
+            </field>
+        </record>
+    </data>
+</openerp>
