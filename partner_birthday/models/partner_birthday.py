@@ -27,15 +27,42 @@ class res_partner(models.Model):
     _inherit = "res.partner"
 
     @api.one
+    @api.depends('date')
     def _get_birthday(self):
         if self.date:
-            dt = datetime.strptime(self.date, '%Y-%m-%d')
-            month = datetime.strftime(dt, '%m')
-            day = datetime.strftime(dt, '%d')
+            dob = datetime.strptime(self.date, '%Y-%m-%d').date()
+            month = dob.month
+            day = dob.day
             self.birthday = datetime(year=date.today().year,
-                                     month=int(month),
-                                     day=int(day)).strftime('%d/%m/%Y')
+                                     month=month,
+                                     day=day).strftime('%d/%m/%Y')
 
-    birthday = fields.Char(compute='_get_birthday', string=u'Cumpleaños')
+    @api.one
+    @api.depends('date')
+    def _get_birthday_month(self):
+        if self.date:
+            try:
+                dob = datetime.strptime(self.date, '%Y-%m-%d').date()
+                self.birthday_month = dob.strftime('%b').capitalize()
+            except:
+                self.birthday_month = 'Error'
+
+    @api.one
+    def _get_age(self):
+        if self.date:
+            try:
+                today = date.today()
+                dob = datetime.strptime(self.date, '%Y-%m-%d').date()
+                years = today.year - dob.year
+                if today.month < dob.month or (
+                                today.month == dob.month and today.day < dob.day):
+                    years -= 1
+                self.age = years
+            except:
+                self.age = 1
+
+    birthday = fields.Char(compute='_get_birthday', string=u'Cumpleaños', store=True)
+    birthday_month = fields.Char(compute='_get_birthday_month', string='Mes', store=True)
+    age = fields.Integer(compute='_get_age', string='Edad')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
