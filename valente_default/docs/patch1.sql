@@ -1,4 +1,4 @@
-/* borrar factura 40 y su nota de crédito*/
+/* borrar factura 40 y su nota de crédito */
 
 SELECT *
 FROM account_invoice
