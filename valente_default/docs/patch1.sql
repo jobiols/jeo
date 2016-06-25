@@ -1,4 +1,5 @@
 /* borrar factura 40 y su nota de crédito*/
+
 SELECT *
 FROM account_invoice
 WHERE afip_document_number = '0005-00000040';
