@@ -40,7 +40,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
         active_ids = self._context.get('active_ids', [])
         if active_ids:
             domain.append(('id', 'in', active_ids))
-        return self.env['res.partner'].search(domain)
+        return self.env['res.partner'].search(domain, limit=500)
 
     @api.model
     def default_get(self, fields):
