@@ -30,9 +30,12 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
 
     @api.model
     def get_partners(self):
+        #        print 'get partners ====================================================='
         domain = [
             ('document_number', '!=', False),
             ('document_type_id.afip_code', '=', 80),
+            '|', ('last_update_padron', '!=', datetime.date.today().strftime('%Y-%m-%d')),
+            ('last_update_padron', '=', False)
         ]
         active_ids = self._context.get('active_ids', [])
         if active_ids:
@@ -158,6 +161,8 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
     # @mute_logger('openerp.osv.expression', 'openerp.models')
     @api.multi
     def _update(self):
+        """ Aca escribe los datos del padron en el partner
+        """
         self.ensure_one()
         vals = {}
         for field in self.field_ids:
@@ -165,18 +170,31 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                 vals[field.field] = [(6, False, literal_eval(field.new_value))]
             else:
                 vals[field.field] = field.new_value
-        self.partner_id.write(vals)
+            #        print 'valores a escribir==========:',vals
+            #        print 'en el partner ==============:',self.partner_id.name
+        # no actualizar si AFIP manda un registro en blanco
+        write = True
+        if 'name' in vals:
+            if vals['name'] == False:
+                write = False
+
+        if write:
+            self.partner_id.write(vals)
         if self.update_constancia:
             self.partner_id.update_constancia_from_padron_afip()
 
     @api.multi
     def automatic_process_cb(self):
+        """
+        Start the automatic process
+        """
         self.start_process_cb()
         self.refresh()
 
         for partner in self.partner_ids:
             self._update()
-            partner = self.partner_ids[0]
+            #           si dejamos esta linea se trae siempre el mismo partner
+            #            partner = self.partner_ids[0]
             self.partner_id = partner.id
             self.change_partner()
 
@@ -245,7 +263,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
     @api.multi
     def start_process_cb(self):
         """
-        Start the process.
+        Start the process for manual update
         """
         self.ensure_one()
         return self._next_screen()
