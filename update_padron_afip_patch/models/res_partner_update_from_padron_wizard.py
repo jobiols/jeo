@@ -40,7 +40,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
         active_ids = self._context.get('active_ids', [])
         if active_ids:
             domain.append(('id', 'in', active_ids))
-        return self.env['res.partner'].search(domain, limit=500)
+        return self.env['res.partner'].search(domain, limit=2000)
 
     @api.model
     def default_get(self, fields):
@@ -162,12 +162,15 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
     @api.multi
     def _update(self):
         """ Aca escribe los datos del padron en el partner
+        hay veces que viene field.field == impuestos padron y field.new_value == False
+        entonces revienta, le hago un parche
         """
         self.ensure_one()
         vals = {}
         for field in self.field_ids:
             if field.field in ('impuestos_padron', 'actividades_padron'):
-                vals[field.field] = [(6, False, literal_eval(field.new_value))]
+                if field.new_value:
+                    vals[field.field] = [(6, False, literal_eval(field.new_value))]
             else:
                 vals[field.field] = field.new_value
             #        print 'valores a escribir==========:',vals
