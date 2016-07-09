@@ -77,27 +77,11 @@ class sale_order(models.Model):
             }
             pick['datas'] = datas
 
-            # imprrime el remito
+            # imprime el remito
             return pick
 
     @api.multi
-    def button_ent(self):
-        """
-        - Verifica que solo haya productos, no servicios ni consumibles
-        - Confirma orden de venta
-        - Fuerza la asignación de materiales, si no hay stock los mueve igual
-        - Hace la transferencia de stock
-        - Genera el remito y lo baja en pdf
-        """
-        return self._stock_move()
-
-    @api.multi
-    def button_fac_ent(self):
-        """
-        - hace button_ent (sin imprimir)
-        - Crea la factura
-        - Valida la factura
-        """
+    def _fac_ent(self):
         self._stock_move()
 
         # crear la factura
@@ -110,13 +94,34 @@ class sale_order(models.Model):
 
         return invoice
 
+    @api.multi
+    def button_fac_ent(self):
+        """
+        - hace button_ent (sin imprimir)
+        - Crea la factura
+        - Valida la factura
+        - Imprime factura
+        """
+        invoice = self._fac_ent()
+
+        # imprime factura
+        datas = {
+            'ids': invoice.ids,
+            'model': 'account.report_invoice',
+            'form': invoice.read()
+        }
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': 'aeroo_report_ar_einvoice',
+            'datas': datas,
+        }
 
     @api.multi
     def button_fac_cob_ent(self):
         """ Hace el movimiento de stock, crea la factura, valida la factura, paga la
             factura, concilia la factura con el pago, imprime la factura.
         """
-        invoice = self.button_fac_ent()
+        invoice = self._fac_ent()
 
         # pagar la factura
         # hacer configuracion para modificar esto
@@ -168,6 +173,7 @@ class sale_order(models.Model):
                             period.id,  # writeoff_period_id,
                             journal.id)  # writeoff_journal_id)
 
+        # imprime factura
         datas = {
             'ids': invoice.ids,
             'model': 'account.report_invoice',
@@ -178,6 +184,17 @@ class sale_order(models.Model):
             'report_name': 'aeroo_report_ar_einvoice',
             'datas': datas,
         }
+
+    @api.multi
+    def button_ent(self):
+        """
+        - Verifica que solo haya productos, no servicios ni consumibles
+        - Confirma orden de venta
+        - Fuerza la asignación de materiales, si no hay stock los mueve igual
+        - Hace la transferencia de stock
+        - Genera el remito y lo baja en pdf
+        """
+        return self._stock_move()
 
 
 
