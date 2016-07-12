@@ -28,8 +28,8 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-Customiza las columnas del libro de IVA
-=======================================
+Customiza las columnas del libro de IVA (valente)
+=================================================
 
 **Fecha**
 Fecha de la factura
@@ -74,6 +74,7 @@ Total a pagar
         'views/vat_ledger.xml'
     ],
     'test': [
+        'tests/test_ledger.py'
     ],
     'installable': True,
     'application': True,

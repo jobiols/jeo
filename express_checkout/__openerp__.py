@@ -53,6 +53,7 @@ Fac/Ent (Facturación y Entrega)
 
 - Crea la factura
 - Valida la factura
+- Genera la factura y la baja en pdf.
 
 Fac/Cob/Ent (Facturación Cobro y Entrega)
 -----------------------------------------
