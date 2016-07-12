@@ -74,7 +74,7 @@ class account_invoice(models.Model):
     @api.one
     def _get_values(self):
 
-        if True:
+        if False:
             print '------------------------------------------------------ '
             print 'printed_amount_untaxed={} ' \
                   'printed_amount_tax={} ' \
@@ -121,7 +121,6 @@ class account_invoice(models.Model):
 
         # calcular percepciones IIBB e Iva
         for tax in self.not_vat_tax_ids:
-            print '>>>>>>>>>>>>>>>>>', tax.name
             if 'n IIBB' in tax.name:
                 self.cc_perc_IIBB += tax.amount
 
