@@ -180,7 +180,8 @@ class account_invoice(models.Model):
                 " codes that are not configured. Tax codes ids: %s" % (
                     unconfigured_tax_codes.ids)))
 
-        # eliminamos el chequeo de invoice without amount
+        # eliminamos el chequeo de invoice without amount porque la controladora fiscal
+        # a veces le pasa ticket en 0 si no la cargo se saltea un número.
         # Check invoice with amount
         #       invoices_without_amount = self.search([
         #           ('id', 'in', argentinian_invoices.ids),
