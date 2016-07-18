@@ -22,6 +22,7 @@ import logging
 
 from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
+from openerp.exceptions import except_orm, Warning
 
 _logger = logging.getLogger(__name__)
 
@@ -224,13 +225,13 @@ class account_invoice(models.Model):
             # usamos una precision de 0.1 porque en algunos casos no pudimos
             # arreglar pbñe,as de redondedo
             if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
-                raise Warning(_(
+                raise Warning(
                     "Invoice ID: %i\n"
-                    "Invoice subtotal (%.2f) is different from invoice base"
-                    " vat amount (%.2f)" % (
+                    "El subtotal de la factura/nota de crédito (%.2f) difiere de la base "
+                    "imponible (%.2f), por favor actualice los impuestos." % (
                         invoice.id,
                         invoice.amount_untaxed,
-                        invoice.vat_base_amount)))
+                        invoice.vat_base_amount))
 
         # check purchase invoices that can't have vat. We check only the ones
         # with document letter because other documents may have or not vat tax
