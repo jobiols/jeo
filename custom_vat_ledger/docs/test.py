@@ -19,7 +19,7 @@
 #
 # -----------------------------------------------------------------------------------
 
-@api.multi
+@api.multi  # original
 def check_argentinian_invoice_taxes(self):
     """
     We make theis function to be used as a constraint but also to be called
