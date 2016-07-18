@@ -20,8 +20,6 @@
 # -----------------------------------------------------------------------------------
 
 @api.multi
-
-
 def check_argentinian_invoice_taxes(self):
     """
     We make theis function to be used as a constraint but also to be called
@@ -61,13 +59,14 @@ def check_argentinian_invoice_taxes(self):
             " codes that are not configured. Tax codes ids: %s" % (
                 unconfigured_tax_codes.ids)))
 
+    # eliminamos el chequeo de invoice without amount
     # Check invoice with amount
-    invoices_without_amount = self.search([
-        ('id', 'in', argentinian_invoices.ids),
-        ('amount_total', '=', 0.0)])
-    if invoices_without_amount:
-        raise Warning(_('Invoices ids %s amount is cero!') % (
-            invoices_without_amount.ids))
+    #       invoices_without_amount = self.search([
+    #           ('id', 'in', argentinian_invoices.ids),
+    #           ('amount_total', '=', 0.0)])
+    #       if invoices_without_amount:
+    #           raise Warning(_('Invoices ids %s amount is cero!') % (
+    #               invoices_without_amount.ids))
 
     # Check invoice requiring vat
 
@@ -85,9 +84,9 @@ def check_argentinian_invoice_taxes(self):
     purchase_invoices_without_sup_number = purchase_invoices.filtered(
         lambda r: (not r.supplier_invoice_number))
     if purchase_invoices_without_sup_number:
-        raise Warning(_(
-            "Some purchase invoices don't have supplier nunmber.\n"
-            "Invoices ids: %s" % purchase_invoices_without_sup_number.ids))
+            raise Warning(_(
+                "Some purchase invoices don't have supplier nunmber.\n"
+                "Invoices ids: %s" % purchase_invoices_without_sup_number.ids))
 
     # purchase invoice must have vat if document class letter has vat
     # discriminated
@@ -121,20 +120,3 @@ def check_argentinian_invoice_taxes(self):
         if invoice.vat_tax_ids:
             raise Warning(_(
                 "Invoice ID %i shouldn't have any vat tax" % invoice.id))
-
-            # Check except vat invoice  # afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
-#        for invoice in argentinian_invoices:
-#            special_vat_taxes = invoice.tax_line.filtered(
-#                lambda r: r.tax_code_id.afip_code in [1, 2, 3])
-#            if (
-#                    special_vat_taxes
-#                    and invoice.fiscal_position.afip_code
-#                    not in afip_exempt_codes):
-#                raise Warning(_(
-#                    "If there you have choose a tax with 0, exempt or untaxed,"
-#                    " you must choose a fiscal position with afip code in %s. "
-#                    "Invoice id %i" % (
-#                        afip_exempt_codes, invoice.id)))
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
