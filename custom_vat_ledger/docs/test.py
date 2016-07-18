@@ -19,104 +19,212 @@
 #
 # -----------------------------------------------------------------------------------
 
-@api.multi
-def check_argentinian_invoice_taxes(self):
-    """
-    We make theis function to be used as a constraint but also to be called
-    from other models like vat citi
-    """
-    # only check for argentinian localization companies
-    _logger.info('Running checks related to argentinian documents')
+class account_invoice(models.Model):
+    _inherit = "account.invoice"
 
-    # we consider argentinian invoices the ones from companies with
-    # use_argentinian_localization and that belongs to a journal with
-    # use_documents
-    argentinian_invoices = self.filtered(
-        lambda r: (
-            r.use_argentinian_localization and r.use_documents))
-    if not argentinian_invoices:
-        return True
-
-    # check invoice tax has code
-    without_tax_code = self.env['account.invoice.tax'].search([
-        ('invoice_id', 'in', argentinian_invoices.ids),
-        ('tax_code_id', '=', False),
-    ])
-    if without_tax_code:
-        raise Warning(_(
-            "You are using argentinian localization and there are some "
-            "invoices with taxes that don't have tax code, tax code is "
-            "required to generate this report. Invoies ids: %s" % (
-                without_tax_code.mapped('invoice_id.id'))))
-
-    # check codes has argentinian tax attributes configured
-    tax_codes = argentinian_invoices.mapped('tax_line.tax_code_id')
-    unconfigured_tax_codes = tax_codes.filtered(
-        lambda r: not r.type or not r.tax or not r.application)
-    if unconfigured_tax_codes:
-        raise Warning(_(
-            "You are using argentinian localization and there are some tax"
-            " codes that are not configured. Tax codes ids: %s" % (
-                unconfigured_tax_codes.ids)))
-
-    # eliminamos el chequeo de invoice without amount
-    # Check invoice with amount
-    #       invoices_without_amount = self.search([
-    #           ('id', 'in', argentinian_invoices.ids),
-    #           ('amount_total', '=', 0.0)])
-    #       if invoices_without_amount:
-    #           raise Warning(_('Invoices ids %s amount is cero!') % (
-    #               invoices_without_amount.ids))
-
-    # Check invoice requiring vat
-
-    # out invoice must have vat if are argentinian and from a company with
-    # responsability that requires vat
-    sale_invoices_with_vat = self.search([(
-        'id', 'in', argentinian_invoices.ids),
-        ('type', 'in', ['out_invoice', 'out_refund']),
-        ('company_id.partner_id.responsability_id.vat_tax_required_on_sales_invoices',
-         '=', True)])
-
-    # check purchase invoice has supplier invoice number
-    purchase_invoices = argentinian_invoices.filtered(
-        lambda r: r.type in ('in_invoice', 'in_refund'))
-    purchase_invoices_without_sup_number = purchase_invoices.filtered(
-        lambda r: (not r.supplier_invoice_number))
-    if purchase_invoices_without_sup_number:
-            raise Warning(_(
-                "Some purchase invoices don't have supplier nunmber.\n"
-                "Invoices ids: %s" % purchase_invoices_without_sup_number.ids))
-
-    # purchase invoice must have vat if document class letter has vat
-    # discriminated
-    purchase_invoices_with_vat = purchase_invoices.filtered(
-        lambda r: (
-            r.afip_document_class_id.document_letter_id.vat_discriminated))
-
-    invoices_with_vat = (
-        sale_invoices_with_vat + purchase_invoices_with_vat)
-
-    for invoice in invoices_with_vat:
-        # we check vat base amount is equal to amount untaxed
-        # usamos una precision de 0.1 porque en algunos casos no pudimos
-        # arreglar pbñe,as de redondedo
-        if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
-            raise Warning(_(
-                "Invoice ID: %i\n"
-                "Invoice subtotal (%.2f) is different from invoice base"
-                " vat amount (%.2f)" % (
-                    invoice.id,
-                    invoice.amount_untaxed,
-                    invoice.vat_base_amount)))
-
-    # check purchase invoices that can't have vat. We check only the ones
-    # with document letter because other documents may have or not vat tax
-    purchase_invoices_without = purchase_invoices.filtered(
-        lambda r: (
-            r.afip_document_class_id.document_letter_id and
-            not r.afip_document_class_id.document_letter_id.vat_discriminated))
-    for invoice in purchase_invoices_without:
-        if invoice.vat_tax_ids:
-            raise Warning(_(
-                "Invoice ID %i shouldn't have any vat tax" % invoice.id))
+    state_id = fields.Many2one(
+        related='commercial_partner_id.state_id',
+        store=True,
+    )
+    currency_rate = fields.Float(
+        string='Currency Rate',
+        compute='_get_currency_values',
+        help='Currency Rate for this currency on invoice date or today '
+             '(if not date)',
+        digits=(12, 6)
+        # Usamos muchos decimales por el citi (requiere) y para buen calculo
+        # TODO hacer editable en draft con funcion inverse que cree cotizacion
+        # set='_get_currency_rate',
+        # readonly=True,
+        # states={'draft': [('readonly', False)]}
+    )
+    invoice_number = fields.Integer(
+        compute='_get_invoice_number',
+        string=_("Invoice Number"),
+    )
+    point_of_sale = fields.Integer(
+        compute='_get_invoice_number',
+        string=_("Point Of Sale"),
+    )
+    printed_amount_tax = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits=dp.get_precision('Account'),
+        string=_('Tax')
+    )
+    printed_amount_untaxed = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits=dp.get_precision('Account'),
+        string=_('Subtotal')
+    )
+    # no gravado en iva
+    vat_untaxed = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits=dp.get_precision('Account'),
+        string=_('VAT Untaxed')
+    )
+    # no gravado en iva
+    cc_vat_untaxed = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. VAT Untaxed',
+    )
+    # company currency default odoo fields
+    cc_amount_total = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Total',
+    )
+    cc_amount_untaxed = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Untaxed',
+    )
+    cc_amount_tax = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Tax',
+    )
+    # exento en iva
+    vat_exempt_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits=dp.get_precision('Account'),
+        string=_('VAT Exempt Amount')
+    )
+    # von iva
+    vat_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits=dp.get_precision('Account'),
+        string='VAT Amount',
+    )
+    # von iva
+    cc_vat_amount = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. VAT Amount',
+    )
+    # von iva
+    vat_base_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits=dp.get_precision('Account'),
+        string=_('VAT Base Amount')
+    )
+    other_taxes_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits=dp.get_precision('Account'),
+        string='Other Taxes Amount',
+    )
+    cc_other_taxes_amount = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Other Taxes Amount'
+    )
+    printed_tax_ids = fields.One2many(
+        compute="_get_taxes_and_prices",
+        comodel_name='account.invoice.tax',
+        string=_('Tax')
+    )
+    vat_tax_ids = fields.One2many(
+        compute="_get_taxes_and_prices",
+        comodel_name='account.invoice.tax',
+        string=_('VAT Taxes')
+    )
+    not_vat_tax_ids = fields.One2many(
+        compute="_get_taxes_and_prices",
+        comodel_name='account.invoice.tax',
+        string=_('Not VAT Taxes')
+    )
+    vat_discriminated = fields.Boolean(
+        _('Discriminate VAT?'),
+        compute="get_vat_discriminated",
+        help=_("Discriminate VAT on Invoices?"),
+    )
+    available_journal_document_class_ids = fields.Many2many(
+        'account.journal.afip_document_class',
+        compute='_get_available_journal_document_class',
+        string=_('Available Journal Document Classes'),
+    )
+    supplier_invoice_number = fields.Char(
+        copy=False,
+    )
+    journal_document_class_id = fields.Many2one(
+        'account.journal.afip_document_class',
+        'Document Type',
+        readonly=True,
+        ondelete='restrict',
+        states={'draft': [('readonly', False)]}
+    )
+    afip_incoterm_id = fields.Many2one(
+        'afip.incoterm',
+        'Incoterm',
+        readonly=True,
+        states={'draft': [('readonly', False)]}
+    )
+    afip_document_class_id = fields.Many2one(
+        'afip.document_class',
+        related='journal_document_class_id.afip_document_class_id',
+        string='Document Type',
+        copy=False,
+        readonly=True,
+        store=True,
+    )
+    afip_document_number = fields.Char(
+        string='Document Number',
+        copy=False,
+        readonly=True,
+    )
+    responsability_id = fields.Many2one(
+        'afip.responsability',
+        string='Responsability',
+        readonly=True,
+        copy=False,
+    )
+    formated_vat = fields.Char(
+        string='Responsability',
+        related='commercial_partner_id.formated_vat',
+    )
+    document_number = fields.Char(
+        compute='_get_document_number',
+        # string=_('Document Number'),
+        # waiting for a PR 9081 to fix computed fields translations
+        string='Número de documento',
+        readonly=True,
+    )
+    next_invoice_number = fields.Integer(
+        compute='_get_next_invoice_number',
+        string='Next Document Number',
+        readonly=True
+    )
+    use_documents = fields.Boolean(
+        related='journal_id.use_documents',
+        string='Use Documents?',
+        readonly=True
+    )
+    use_argentinian_localization = fields.Boolean(
+        related='company_id.use_argentinian_localization',
+        string='Use Argentinian Localization?',
+        readonly=True,
+    )
+    point_of_sale_type = fields.Selection(
+        related='journal_id.point_of_sale_id.type',
+        readonly=True,
+    )
+    # estos campos los agregamos en este modulo pero en realidad los usa FE
+    # pero entendemos que podrian ser necesarios para otros tipos, por ahora
+    # solo lo vamos a hacer requerido si el punto de venta es del tipo
+    # electronico
+    afip_concept = fields.Selection(
+        compute='_get_concept',
+        # store=True,
+        selection=[('1', 'Producto / Exportación definitiva de bienes'),
+                   ('2', 'Servicios'),
+                   ('3', 'Productos y Servicios'),
+                   ('4', '4-Otros (exportación)'),
+                   ],
+        string="AFIP concept",
+    )
+    afip_service_start = fields.Date(
+        string='Service Start Date'
+    )
+    afip_service_end = fields.Date(
+        string='Service End Date'
+    )
