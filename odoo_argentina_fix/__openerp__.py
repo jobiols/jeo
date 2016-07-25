@@ -23,16 +23,18 @@
     "version": "8.0.0.1.0",
     "author": "jeo Software",
     'website': 'http://www.jeo-soft.com.ar',
-    "depends": ['l10n_ar_base', 'l10n_ar_padron_afip'],
+    "depends": ['l10n_ar_base', 'l10n_ar_padron_afip', 'account_cancel'],
     "category": "Generic Modules",
     "description": """
-Localización Argentina
-======================
+Localización Argentina Fix
+==========================
 Este módulo corrige algunos bugs encontrados en la localización
 
 - Cuando se hace un reintegro de nota de crédito crea una nota de
 crédito. Se ocultó el botón reintegrar en ese caso.
+
 - Quita el boton cancelar factura ya que las facturas electrónicas no se pueden cancelar
+
 - Cuando se actualizan muchos partners en automático siempre termina mal con algun
 error, con este patch no actualiza los partners que tienen fecha de actualización igual
 a la de hoy. De esa forma se puede correr varias veces y no vuelva a bajar lo mismo.
