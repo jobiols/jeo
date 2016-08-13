@@ -581,7 +581,6 @@ class MergeProductAutomatic(models.TransientModel):
             if field in ['name_template', 'default_code', ]:
                 filters.append((field, 'IS NOT', 'NULL'))
                 filters.append(('active', 'IS', 'true'))
-                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaa
 
         criteria = ' AND '.join('%s %s %s' % (field, operator, value)
                                 for field, operator, value in filters)
