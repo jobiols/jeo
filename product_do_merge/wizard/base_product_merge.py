@@ -404,7 +404,10 @@ class MergeProductAutomatic(models.TransientModel):
                                    context=context):
             proxy_model = self.pool[record.model]
 
-            field_type = proxy_model._fields.get(record.name).type
+            try:
+                field_type = proxy_model._fields.get(record.name).type
+            except:
+                continue
 
             if field_type == 'function':
                 continue
@@ -577,6 +580,8 @@ class MergeProductAutomatic(models.TransientModel):
         for field in lfields:
             if field in ['name_template', 'default_code', ]:
                 filters.append((field, 'IS NOT', 'NULL'))
+                filters.append(('active', 'IS', 'true'))
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaa
 
         criteria = ' AND '.join('%s %s %s' % (field, operator, value)
                                 for field, operator, value in filters)
