@@ -24,6 +24,8 @@ from openerp.exceptions import Warning
 
 import datetime
 
+####################################################
+#Este código está deshabilitado en el __init__.py
 
 class res_partner_update_from_padron_wizard(models.TransientModel):
     _name = 'res.partner.update.from.padron.wizard'

@@ -35,6 +35,8 @@ crédito. Se ocultó el botón reintegrar en ese caso.
 
 - Quita el boton cancelar factura ya que las facturas electrónicas no se pueden cancelar
 
+Deshabilitamos esta ultima opción porque algo cambió y revienta cuando quiero
+actualizar desde padron. Habrá que revisarlo.
 - Cuando se actualizan muchos partners en automático siempre termina mal con algun
 error, con este patch no actualiza los partners que tienen fecha de actualización igual
 a la de hoy. De esa forma se puede correr varias veces y no vuelva a bajar lo mismo.
