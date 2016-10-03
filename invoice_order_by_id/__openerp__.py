@@ -33,6 +33,7 @@ Es el orden natural
     'author': 'jeo software',
     'depends': ['sale'],
     'data': [
+        'views/account_invoice_view.xml'
     ],
     'test': [
     ],

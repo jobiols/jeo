@@ -45,7 +45,7 @@ a la de hoy. De esa forma se puede correr varias veces y no vuelva a bajar lo mi
 """,
     "demo_xml": [],
     "data": [
-        'views/invoice_view.xml'
+        'views/account_invoice_view.xml'
     ],
     'installable': True,
     'application': False,
