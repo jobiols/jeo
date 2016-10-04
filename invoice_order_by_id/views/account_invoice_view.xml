@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//tree" position="attributes">
-                        <attribute name="default_order">date_invoice desc</attribute>
+                        <attribute name="default_order">id desc</attribute>
                     </xpath>
                 </data>
             </field>
