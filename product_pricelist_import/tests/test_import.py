@@ -19,6 +19,7 @@
 ###################################################################################
 from openerp.tests.common import SingleTransactionCase
 import time
+import os
 
 
 class TestPricelistImport(SingleTransactionCase):
@@ -49,6 +50,11 @@ class TestPricelistImport(SingleTransactionCase):
             'mode': 'no_append'
         })
 
+        # el archivo a leer está en lugares distintos localmente y en travis
+        self.path = 'mnt/extra-addons/jeo/'  # local
+#       self.path = ''
+
+
     def test_01(self):
         """ Cargamos lista de precios 1
         """
@@ -60,7 +66,11 @@ class TestPricelistImport(SingleTransactionCase):
             self.product_pricelist_load1.id)
 
         # leer el archivo
-        CSVFILE = product_pricelist_load.file_name
+        # el archivo a leer está en lugares distintos localmente y en travis
+        cwd = os.getcwd()
+        print '.....................', cwd
+
+        CSVFILE = self.path+product_pricelist_load.file_name
         reader = csv.reader(open(CSVFILE, 'rb'), delimiter=',', lineterminator='\r\n')
 
         reader_info = []
@@ -116,7 +126,7 @@ class TestPricelistImport(SingleTransactionCase):
             self.product_pricelist_load2.id)
 
         # leer el archivo
-        CSVFILE = product_pricelist_load.file_name
+        CSVFILE = self.path+product_pricelist_load.file_name
         reader = csv.reader(open(CSVFILE, 'rb'), delimiter=',', lineterminator='\r\n')
 
         reader_info = []
