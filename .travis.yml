@@ -33,7 +33,6 @@ env:
 virtualenv:
   system_site_packages: true
 
-
 install:
   # repository requirements, we install them here because pyafipws must be installed in a second step
   - pip install -r requirements.txt
