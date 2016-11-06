@@ -58,7 +58,7 @@ class TestLedger(SingleTransactionCase):
             'price_unit': 100,
             'quantity': 1.0,
         }
-
+    """
         self.invoice_1 = self.invoice_obj.create(
             {
                 'partner_id': self.partner_1.id,
@@ -73,6 +73,7 @@ class TestLedger(SingleTransactionCase):
                 'user_id': 1
             }
         )
+    """
 
     def test_01(self):
         print 'test ledger 1 ----------------------------------'
