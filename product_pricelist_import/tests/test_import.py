@@ -51,8 +51,9 @@ class TestPricelistImport(SingleTransactionCase):
         })
 
         # el archivo a leer está en lugares distintos localmente y en travis
-        self.path = 'mnt/extra-addons/jeo/'  # local
-#       self.path = ''
+        # en local esta en / y en travis está en el dir donde está el repo
+#        self.path = 'mnt/extra-addons/jeo/'  # local
+        self.path = '' # travis
 
 
     def test_01(self):
