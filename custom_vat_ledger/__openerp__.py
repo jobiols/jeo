@@ -74,7 +74,7 @@ Total a pagar
         'views/vat_ledger.xml'
     ],
     'test': [
-        'tests/test_ledger.py'
+#        'tests/test_ledger.py'
     ],
     'installable': True,
     'application': True,
