@@ -34,12 +34,30 @@ Importar listas de precios
 Este módulo permite importar una lista de precios desde un archivo que puede ser csv
 o xls, el archivo tiene que tener las siguientes columnas:
 
-product_code, product_name, list_price, categ, sub_categ, dp, dc1, dc2, ds1, ds2, ds3
+product_code, product_name, list_price, package_qty, package_uom, categ, sub_categ,
+dp, dc1, dc2, ds1, ds2, ds3
 
-Las últimas seis lineas son los descuentos,
+**product_code** Es el código del producto, debe ser único y si no lo es odoo generará una
+excepción, Esto lo maneja el módulo product_unique_default_code que esta como dependencia.
+
+**product_name** Es el nombre del producto
+
+**list_price** Es el precio de lista del proveedor, el precio al que el proveedor nos sugiere
+vender al público, sobre este precio el proveedor nos hace una serie de descuentos.
+
+**package_qty** Indica la cantidad de producto que hay en una caja sirve para aclarar en
+la factura la cantidad total de producto que se vende dada la cantida de cajas vendidas.
+
+**package_uom** Indica la unidad de medida del producto que está en la caja.
+
+Las últimas seis lineas son los descuentos, los dos primeros caracteres del nombre de estas
+columnas indican donde va a aplicarse el descuento.
 - dp = descuento en el producto
 - dc = descuent en la categoría
 - ds = descuento en la sub categoría
+
+
+
 
 En el ejemplo se pusieron dos descuentos para la categoría y tres para la sub categoría
 pero se puede cambiar por ejemplo: dc1, ds1, ds2, ds3, ds4 en este caso tendríamos un
@@ -47,12 +65,17 @@ descuento para la categoría y cuatro para la sub categoría.
 
 Al importar se debe seleccionar el nombre del proveedor y definir si se agregan productos
 o solo se actualizan los que ya están. El proveedor tiene que tener cargada una categoría
-que lo representa.
+que lo represente usualmente con el mismo nombre o un nombre corto que lo identifique.
+
+A cada categoria asignada a los proveedores se le pueden agregar descuentos, en la forma
+de un número entre 0 y 100 y una descripción meramente informativa.
+La cantidad de descuentos es ilimitada
 
 """,
     'author': 'jeo Software',
     'website': 'http://www.jeo-soft.com.ar',
-    'depends': ['purchase'],
+    'depends': ['purchase',
+                'product_unique_default_code'],
     'data': ['wizard/import_price_file_view.xml',
              'views/product_pricelist_load_line_view.xml',
              'views/product_pricelist_load_view.xml',

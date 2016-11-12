@@ -13,8 +13,8 @@
                         <group string="Supplier discount" colspan="2" >
                             <field name = "discounts" nolabel="1">
                                 <tree editable="top">
-                                    <field name="name" string="Discount reason"/>
                                     <field name="discount" string="Discount %"/>
+                                    <field name="name" string="Discount reason"/>
                                 </tree>
                             </field>
                         </group>
