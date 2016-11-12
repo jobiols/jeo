@@ -65,6 +65,7 @@ Requiere una url donde mercadopago postea las notificaciones.
     ],
     'data': [
         'views/account_voucher_view.xml'
+#        'views/res_config_view.xml' // no lo pude hacer andar
     ],
     'test': [],
     'installable': True,

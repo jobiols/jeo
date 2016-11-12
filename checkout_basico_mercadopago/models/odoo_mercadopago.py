@@ -24,16 +24,24 @@ import mercadopago
 
 _logger = logging.getLogger(__name__)
 
-CLIENT = "6450916727730313"
-SECRET = "1thrONsI6GnDtoZDbZlejf86tpKFqpls"
 SHIPPING_METHODS = {'standard': 73328, 'priority': 73330}
 
-
 class omp():
-    def __init__(self):
+    def __init__(self, params):
         # https://www.mercadopago.com.ar/developers/en/api-docs/basics/authentication/
-        self._mp = mercadopago.MP(CLIENT, SECRET)
-        self._access_token = self._mp.get_access_token()
+        # traer el token de la configuración, si no existe lo creamos.
+        access_token = params.get_param('mercadopago_access_token', default=False)
+        if not access_token:
+            client_id = params.get_param('mercadopago_client_id', default=False)
+            client_secret = params.get_param('mercadopago_client_secret', default=False)
+            if not client_id:
+                params.set_param('mercadopago_client_id', 'your-client-id')
+            if not client_secret:
+                params.set_param('mercadopago_client_secret', 'your-client-secret')
+            self._mp = mercadopago.MP(client_id, client_secret)
+            params.set_param('mercadopago_access_token', self._mp.get_access_token())
+            return
+        self._mp = mercadopago.MP(access_token)
 
     def shipping_methods(self, methods):
         ret = []
@@ -50,10 +58,9 @@ class omp():
         ret['free_methods'] = self.shipping_methods(free_methods)  # [ {"id": 73328} ]
         ret['default_shipping_method'] = SHIPPING_METHODS.get(default_sm)
         ret['zip_code'] = zip
-        print ret
         return ret
 
-    def refund_pay(self,id):
+    def refund_pay(self, id):
         self._mp.refund_payment(':{}'.format(id))
 
     def pay_url(self, title, price):
@@ -66,16 +73,15 @@ class omp():
                     "title": title,
                     "quantity": 1,
                     "currency_id": "ARS",
-                    "unit_price": price
+                    "unit_price": price,
                 },
             ],
-            "shipments": self.shipments()
+            #            "shipments": self.shipments()
         }
 
         preferenceResult = self._mp.create_preference(preference)
         if preferenceResult['status'] <> 201:
             _logger.error('error')
-            print 'error ----------------------------------------------------------------'
         return preferenceResult["response"]
 
     def get_shipping_options(self):
@@ -90,7 +96,7 @@ class omp():
         u'shipments': {
             u'receiver_address': {
                 u'apartment': u'', u'street_name': u'', u'floor': u'',
-            u'street_number': None, u'zip_code': u''}
+                u'street_number': None, u'zip_code': u''}
         },
         u'auto_return': u'',
         u'marketplace': u'NONE',
@@ -129,8 +135,8 @@ class omp():
         },
         u'back_urls': {u'failure': u'', u'pending': u'', u'success': u''},
         u'init_point': u'https://www.mercadopago.com/mla/checkout/start?pref_id=142827273-7016ddce-8c5d-4077-9b5c-353f8a41f764',
-    u'collector_id': 142827273, u'client_id': u'963',
-    u'sandbox_init_point': u'https://sandbox.mercadopago.com/mla/checkout/pay?pref_id=142827273-7016ddce-8c5d-4077-9b5c-353f8a41f764',
+        u'collector_id': 142827273, u'client_id': u'963',
+        u'sandbox_init_point': u'https://sandbox.mercadopago.com/mla/checkout/pay?pref_id=142827273-7016ddce-8c5d-4077-9b5c-353f8a41f764',
         u'operation_type': u'regular_payment',
         u'date_created': u'2016-11-03T18:22:16.532-04:00',
         u'marketplace_fee': 0,

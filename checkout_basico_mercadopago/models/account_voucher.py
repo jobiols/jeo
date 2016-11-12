@@ -21,6 +21,7 @@
 from openerp import models, fields, api
 from odoo_mercadopago import omp
 import logging
+from openerp.exceptions import except_orm, Warning
 _logger = logging.getLogger(__name__)
 
 class account_voucher(models.Model):
@@ -29,18 +30,18 @@ class account_voucher(models.Model):
 
     @api.multi
     def button_refund_mercadopago(self):
-        print 'button refund-------------------'
         for rec in self:
             om = omp()
             _logger.info('vamos a devolverle el pago a {}'.format(rec.partner_id.name))
-            print 'refund--------------------> ',om.refund_pay(rec.mercadopago_id)
 
     @api.multi
     def button_pay_mercadopago(self):
+        if self.journal_id.code <> 'MP':
+            raise Warning('Cambie el metodo de pago a Mercadopago')
+
+        params = self.env['ir.config_parameter']
         for rec in self:
-            print rec.partner_id.name
-            print rec.amount
-            om = omp()
+            om = omp(params)
             _logger.info('{} va a pagar ${}'.format(rec.partner_id.name,rec.amount))
             resp = om.pay_url(rec.partner_id.name,rec.amount)
 #            url = resp["sandbox_init_point"]
