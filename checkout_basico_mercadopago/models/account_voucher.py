@@ -43,6 +43,9 @@ class account_voucher(models.Model):
         for rec in self:
             om = omp(params)
             _logger.info('{} va a pagar ${}'.format(rec.partner_id.name,rec.amount))
+            if rec.amount == 0:
+                raise Warning('Quiere cobrar CERO!!!')
+
             resp = om.pay_url(rec.partner_id.name,rec.amount)
 #            url = resp["sandbox_init_point"]
             url = resp["init_point"]
