@@ -49,6 +49,8 @@ class account_voucher(models.Model):
             resp = om.pay_url(rec.partner_id.name,rec.amount)
 #            url = resp["sandbox_init_point"]
             url = resp["init_point"]
+            _logger.info('lanzar sitio mp {}'.format(url))
+
             rec.mercadopago_id = resp['id']
             return {
                     'type': 'ir.actions.act_url',
