@@ -17,10 +17,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###################################################################################
-from openerp.tests.common import SingleTransactionCase
 import time
-import os
 
+from openerp.tests.common import SingleTransactionCase
+from file_location import PATH
+
+
+# Forma de correr el test
+# Crear un cliente test, una bd test_pricelist, el modulo test_pricelist_import cargado y
+# un usuario admin / admin
+# OJO cambiarle el path donde está el archivo a importar, esta en lugares distintos para travis o local
+# ./odooenv.py -Q jeo test_import.py -c test -d test_pricelist -m product_pricelist_import
 
 class TestPricelistImport(SingleTransactionCase):
     def setUp(self):
@@ -52,26 +59,16 @@ class TestPricelistImport(SingleTransactionCase):
 
         # el archivo a leer está en lugares distintos localmente y en travis
         # en local esta en / y en travis está en el dir donde está el repo
-#        self.path = 'mnt/extra-addons/jeo/'  # local
-        self.path = '' # travis
-
 
     def test_01(self):
         """ Cargamos lista de precios 1
         """
-        from datetime import datetime
-        import base64
         import csv
 
         product_pricelist_load = self.env['product.pricelist.load'].browse(
             self.product_pricelist_load1.id)
 
-        # leer el archivo
-        # el archivo a leer está en lugares distintos localmente y en travis
-        cwd = os.getcwd()
-        print '.....................', cwd
-
-        CSVFILE = self.path+product_pricelist_load.file_name
+        CSVFILE = PATH + product_pricelist_load.file_name
         reader = csv.reader(open(CSVFILE, 'rb'), delimiter=',', lineterminator='\r\n')
 
         reader_info = []
@@ -99,35 +96,39 @@ class TestPricelistImport(SingleTransactionCase):
         records = product_obj.search([('default_code', '=', 'P01')])
         assert len(records) > 0, 'no se encuentra producto P01'
         for rec in records:
-            print rec.standard_price
-            assert rec.standard_price == 9.0, "falla calculo de precio de compra debe ser 9.0"
+            assert rec.standard_price == 9.0, \
+                "error prod {} precio de compra es {} debe ser 9.0".format(
+                    rec.default_code,
+                    rec.standard_price)
 
         print 'P02',
         records = product_obj.search([('default_code', '=', 'P02')])
         assert len(records) > 0, 'no se encuentra producto P02'
         for rec in records:
-            print rec.standard_price
-            assert rec.standard_price == 17.29, "falla calculo de precio de compra debe ser 17.29"
+            assert rec.standard_price == 17.29, \
+                "error prod {} precio de compra es {} debe ser 17.29".format(
+                    rec.default_code,
+                    rec.standard_price)
 
         print 'P03',
         records = product_obj.search([('default_code', '=', 'P03')])
         assert len(records) > 0, 'no se encuentra producto P03'
         for rec in records:
-            print rec.standard_price
-            assert rec.standard_price == 24.16, "falla calculo de precio de compra debe ser 24.16"
+            assert rec.standard_price == 24.16, \
+                "error prod {} precio de compra es {} debe ser 24.16".format(
+                    rec.default_code,
+                    rec.standard_price)
 
     def test_03(self):
         """ Cargamos lista de precios 2
         """
-        from datetime import datetime
-        import base64
         import csv
 
         product_pricelist_load = self.env['product.pricelist.load'].browse(
             self.product_pricelist_load2.id)
 
         # leer el archivo
-        CSVFILE = self.path+product_pricelist_load.file_name
+        CSVFILE = PATH + product_pricelist_load.file_name
         reader = csv.reader(open(CSVFILE, 'rb'), delimiter=',', lineterminator='\r\n')
 
         reader_info = []

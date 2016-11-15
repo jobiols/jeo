@@ -1,4 +1,4 @@
-product_code,product_name,list-price,categ,sub_categ,dp,dc1,dc2,ds1,ds2,ds3
+product_code,product_name,list_price,categ,sub_categ,dp,dc1,dc2,ds1,ds2,ds3
 P01,"producto uno",10,,,-12,,,,,
 P02,"producto dos",20,tornillos,,-12,-2,-6,,,
 P03,"producto tres",30,tuercas,hierro,-12,-2,-3,-2,-7,-2

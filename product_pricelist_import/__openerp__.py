@@ -32,7 +32,8 @@ Importar listas de precios
 ==========================
 
 Este módulo permite importar una lista de precios desde un archivo que puede ser csv
-o xls, el archivo tiene que tener las siguientes columnas.
+o xls. Una lista de precios corresponde a un proveedor, no está soportado tener varios
+proveedores en la misma lista.
 
 Formato del archivo de importación
 ----------------------------------
@@ -55,11 +56,19 @@ la factura la cantidad total de producto que se vende dada la cantida de cajas v
 
 **package_uom** *Opcional* Indica la unidad de medida del producto que está en la caja.
 
+**categ** Nombre de la categoria de producto puede estar en blanco si la sub_cat esta en blanco
+
+**sub_categ** Nombre de la subcategoria de producto, puede estar en blanco
+
 Las últimas seis columnas son los descuentos, los dos primeros caracteres del nombre de estas
-columnas indican donde va a aplicarse el descuento.
-- dp = descuento en el producto
-- dc = descuent en la categoría
-- ds = descuento en la sub categoría
+columnas indican donde va a aplicarse el descuento. Los descuentos se pueden aplicar en tres
+lugares. La categoría que representa al proveedor, la categoria de producto y la subcategoría
+de producto, puede haber mas de un descuento aplicado en el mismo lugar. Los descuentos tienen
+signo negativo es un descuento positivo es un incremento.
+
+- dp = se aplica en la categoría que representa al proveedor
+- dc = se aplica en la categoria de producto
+- ds = se aplica en la subcategoria de producto
 
 En el ejemplo se pusieron dos descuentos para la categoría y tres para la sub categoría
 pero se puede cambiar por ejemplo: dc1, ds1, ds2, ds3, ds4 en este caso tendríamos un
@@ -72,18 +81,18 @@ Configuración
 una categoría, esa categoría representa todos los productos del proveedor. Se estila ponerle
 un nombre que tenga que ver con el nombre del proveedor en cuestion.
 
-
-
 Forma de Uso
 ------------
+- Ir a Compras / Listas de precio
+- Oprimir *Crear*
+- Definir el modo "Agregar productos nuevos" (si el producto existe lo agrega y si no existe lo crea) o "No agregar productos nuevos" (solo actualiza los productos existentes).
+- Seleccionar el proveedor (debe tener una categoria asociada).
+- Oprimir *Lista de precios*
+- Seleccionar el archivo xls o csv a cargar
+- Notar la linea "Descuentos sobre precio de lista" que indica donde van a parar los descuentos de cada columna.
+- Oprimir *Procesar*
+- Notar la cantidad de errores y revisarlos
 
-Al importar se debe seleccionar el nombre del proveedor y definir si se agregan productos
-o solo se actualizan los que ya están. El proveedor tiene que tener cargada una categoría
-que lo represente usualmente con el mismo nombre o un nombre corto que lo identifique.
-
-A cada categoria asignada a los proveedores se le pueden agregar descuentos, en la forma
-de un número entre 0 y 100 y una descripción meramente informativa.
-La cantidad de descuentos es ilimitada
 
 """,
     'author': 'jeo Software',

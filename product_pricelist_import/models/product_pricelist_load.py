@@ -122,13 +122,17 @@ class ProductPricelistLoad(models.Model):
             # crear o actualizar categorias
             cat = self.check_category(line)
 
-            # crear el producto
-            prod = self.product_obj.create({
+            # crear el producto, si tenemos prod in box agregarlo al values
+            values = {
                 'default_code': line.product_code,
                 'name': line.product_name,
                 'type': 'product',
                 'categ_id': cat.id
-            })
+            }
+            if line.prod_in_box:
+                values['prod_in_box'] = line.prod_in_box
+                values['prod_in_box_uom'] = line.prod_in_box_uom
+            prod = self.product_template_obj.create(values)
 
             # crear información del proveedor
             suppinfo = self.psupplinfo_obj.create({
@@ -159,7 +163,7 @@ class ProductPricelistLoad(models.Model):
         if not self.supplier:
             raise exceptions.Warning(_("You must select a Supplier"))
 
-        self.product_obj = self.env['product.template']
+        self.product_template_obj = self.env['product.template']
         self.psupplinfo_obj = self.env['product.supplierinfo']
         self.pricepinfo_obj = self.env['pricelist.partnerinfo']
         self.category_obj = self.env['product.category']
@@ -189,6 +193,8 @@ class ProductPricelistLoadLine(models.Model):
     product_code = fields.Char('Product Code', required=True)
     product_name = fields.Char('Product Name')
     list_price = fields.Float('List Price', required=True)
+    prod_in_box = fields.Float('Cant. producto por caja')
+    prod_in_box_uom = fields.Char()
     categ = fields.Char('Category')
     sub_categ = fields.Char('Sub Category')
     d1 = fields.Float('D1%')
@@ -203,39 +209,53 @@ class ProductPricelistLoadLine(models.Model):
     keys = fields.Char(related='file_load.keys')
     supplier = fields.Char(related='file_load.supplier.name')
 
+    @api.multi
+    def debug(self):
+        for rec in self:
+            res = '({:5})({:5})({:10})({:10})[{:5}][{:5}]({:5})({:5})({:5})({:5})({:5})({:5}) -- {}'.format(
+                rec.product_code, rec.list_price, rec.categ, rec.sub_categ, \
+                rec.prod_in_box, rec.prod_in_box_uom, \
+                rec.d1, rec.d2, rec.d3, rec.d4, rec.d5, rec.d6, rec.keys
+            )
+            return res
+
+    @api.multi
     def check(self):
-        # check product, must exist code and name
-        if self.product_code and not self.product_name:
-            self.fail_reason = _('Missing product name')
-            return False
-        if not self.product_code and self.product_name:
-            self.fail_reason = _('Missing product code')
-            return False
-        if self.product_code and not self.list_price:
-            self.fail_reason = _('Missing list price')
-            return False
-        if not self.product_code and self.list_price:
-            self.fail_reason = _('Missing product')
-            return False
-        if not self.categ and self.sub_categ:
-            self.fail_reason = _('Missing category')
-            return False
-        return True
+        for rec in self:
+            # check product, must exist code and name
+            if rec.product_code and not rec.product_name:
+                rec.fail_reason = _('Missing product name')
+                return False
+            if not rec.product_code and rec.product_name:
+                rec.fail_reason = _('Missing product code')
+                return False
+            if rec.product_code and not rec.list_price:
+                rec.fail_reason = _('Missing list price')
+                return False
+            if not rec.product_code and rec.list_price:
+                rec.fail_reason = _('Missing product')
+                return False
+            if not rec.categ and rec.sub_categ:
+                rec.fail_reason = _('Missing category')
+                return False
+            return True
 
     def get_discounts(self, categ):
+        # dado un categ, que es un nombre que puede ser 'dp' 'dc' o 'ds'
+        # devolver una lista de los descuentos que corresponden
         keys = self.keys.split(',')
         ret = []
-        if self.d1 <> 0 and keys[5][:2] == categ:
+        if self.d1 <> 0 and keys[0][:2] == categ:
             ret.append(self.d1)
-        if self.d2 <> 0 and keys[6][:2] == categ:
+        if self.d2 <> 0 and keys[1][:2] == categ:
             ret.append(self.d2)
-        if self.d3 <> 0 and keys[7][:2] == categ:
+        if self.d3 <> 0 and keys[2][:2] == categ:
             ret.append(self.d3)
-        if self.d4 <> 0 and keys[8][:2] == categ:
+        if self.d4 <> 0 and keys[3][:2] == categ:
             ret.append(self.d4)
-        if self.d5 <> 0 and keys[9][:2] == categ:
+        if self.d5 <> 0 and keys[4][:2] == categ:
             ret.append(self.d5)
-        if self.d6 <> 0 and keys[10][:2] == categ:
+        if self.d6 <> 0 and keys[5][:2] == categ:
             ret.append(self.d6)
 
         return ret

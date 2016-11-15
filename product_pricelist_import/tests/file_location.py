@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-######################################################################################
+#-----------------------------------------------------------------------------------
+#
 #    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
 #    All Rights Reserved.
 #
@@ -16,17 +17,10 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-######################################################################################
-from openerp import models, fields
-import openerp.addons.decimal_precision as dp
+#-----------------------------------------------------------------------------------
 
+#PATH = 'mnt/extra-addons/jeo/'  # local
+PATH = '' # travis
 
-class product_supplierinfo(models.Model):
-    _inherit = 'product.supplierinfo'
-
-    list_price = fields.Float(
-        'List price',
-        digits_compute=dp.get_precision('Product Price'),
-        help="List price from the supplier")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
