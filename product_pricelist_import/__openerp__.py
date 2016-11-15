@@ -80,6 +80,7 @@ Configuración
 **Proveedores** Cada proveedor que va a enviar una lista de precios debe tener cargada
 una categoría, esa categoría representa todos los productos del proveedor. Se estila ponerle
 un nombre que tenga que ver con el nombre del proveedor en cuestion.
+Hay ejemplos de planillas de importación en tests/test_calc*.xls
 
 Forma de Uso
 ------------
@@ -93,6 +94,11 @@ Forma de Uso
 - Oprimir *Procesar*
 - Notar la cantidad de errores y revisarlos
 
+Listas de precio
+----------------
+Para configurar las listas de precio basadas en costo al crear una lista de precios se
+debe seleccionar "Precio de costo" que es el precio que calcula este sistema basado en
+las planillas importadas.
 
 """,
     'author': 'jeo Software',
