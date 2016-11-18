@@ -147,7 +147,9 @@ class TestPricelistImport(SingleTransactionCase):
                                       'keys': keys})
 
         product_pricelist_load.process_lines()
-
+        description = product_pricelist_load.description
+        assert description == 'Descuentos sobre precio de lista: (Producto D1%)   (Categoria D2%, D3%)   (Sub categoria D4%, D5%, D6%)',\
+        'error en descripcion {}'.format(description)
 
 
 

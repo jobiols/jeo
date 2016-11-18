@@ -25,6 +25,8 @@ class ProductPricelistLoad(models.Model):
     _description = 'Product Price List Load'
     _order = 'id desc'
 
+    @api.one
+    @api.depends('keys')
     def _discount_modes(self):
         if not self.keys:
             return
@@ -34,17 +36,17 @@ class ProductPricelistLoad(models.Model):
         supplier_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'dp':
-                supplier_discounts.append('D' + str(i - 4) + '%')
+                supplier_discounts.append('D{}%'.format(i+1))
 
         categ_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'dc':
-                categ_discounts.append('D' + str(i - 4) + '%')
+                categ_discounts.append('D{}%'.format(i+1))
 
         subcateg_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'ds':
-                subcateg_discounts.append('D' + str(i - 4) + '%')
+                subcateg_discounts.append('D{}%'.format(i+1))
 
         self.description = 'Descuentos sobre precio de lista: (Producto {})   (Categoria {})   (Sub categoria {})'. \
             format(', '.join(supplier_discounts),
