@@ -262,7 +262,7 @@ msgstr "Carga"
 #: model:ir.ui.menu,name:product_pricelist_import.menu_file_load
 #: view:product.pricelist.load:product_pricelist_import.product_pricelist_load_form_view
 msgid "Load File"
-msgstr "Listas de precios"
+msgstr "Cargar Archivo"
 
 #. module: product_pricelist_import
 #: model:ir.actions.act_window,name:product_pricelist_import.action_file_price_load

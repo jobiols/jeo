@@ -105,7 +105,8 @@ las planillas importadas.
     'website': 'http://www.jeo-soft.com.ar',
     'depends': ['purchase',
                 'product_unique_default_code'],
-    'data': ['wizard/import_price_file_view.xml',
+    'data': ['security/security_groups.xml',
+             'wizard/import_price_file_view.xml',
              'views/product_pricelist_load_line_view.xml',
              'views/product_pricelist_load_view.xml',
              'views/product_category_view.xml',
@@ -113,7 +114,6 @@ las planillas importadas.
              'views/product_view.xml',
              'views/partner.xml',
              'security/ir.model.access.csv',
-             'security/security_groups.xml'
              ],
     'test': [
         'tests/test_import.yml'
