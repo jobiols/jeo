@@ -85,7 +85,7 @@ class ImportPriceFile(models.TransientModel):
             values['fail'] = True
             values['fail_reason'] = _('No Processed')
             values['file_load'] = load_id
-            file_line_obj.create(values)
+            file_line_obj.sudo().create(values)
             counter += 1
         return self.make_keystring(keys_xls), counter
 

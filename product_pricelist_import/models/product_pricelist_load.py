@@ -36,17 +36,17 @@ class ProductPricelistLoad(models.Model):
         supplier_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'dp':
-                supplier_discounts.append('D{}%'.format(i+1))
+                supplier_discounts.append('D{}%'.format(i + 1))
 
         categ_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'dc':
-                categ_discounts.append('D{}%'.format(i+1))
+                categ_discounts.append('D{}%'.format(i + 1))
 
         subcateg_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'ds':
-                subcateg_discounts.append('D{}%'.format(i+1))
+                subcateg_discounts.append('D{}%'.format(i + 1))
 
         self.description = 'Descuentos sobre precio de lista: (Producto {})   (Categoria {})   (Sub categoria {})'. \
             format(', '.join(supplier_discounts),
@@ -56,7 +56,8 @@ class ProductPricelistLoad(models.Model):
     name = fields.Char('Load')
     date = fields.Date('Date:', readonly=True, help='Fecha del archivo')
     file_name = fields.Char('File Name', readonly=True, help='nombre del archivo')
-    file_lines = fields.One2many('product.pricelist.load.line', 'file_load',
+    file_lines = fields.One2many('product.pricelist.load.line',
+                                 'file_load',
                                  'Product Pricelist Lines')
     fails = fields.Integer('Fail Lines:', readonly=True, help='Lineas sin procesar')
     process = fields.Integer('Lines to Process:', readonly=True,
@@ -207,7 +208,13 @@ class ProductPricelistLoadLine(models.Model):
     d6 = fields.Float('D6%')
     fail = fields.Boolean('Fail')
     fail_reason = fields.Char('Fail Reason')
-    file_load = fields.Many2one('product.pricelist.load', 'Load', required=True)
+    file_load = fields.Many2one(
+        'product.pricelist.load',
+        'Load',
+        ondelete='cascade',
+        required=True
+    )
+
     keys = fields.Char(related='file_load.keys')
     supplier = fields.Char(related='file_load.supplier.name')
 

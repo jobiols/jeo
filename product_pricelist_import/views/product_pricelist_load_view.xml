@@ -99,7 +99,6 @@
         <menuitem action="action_file_price_load"
                   id="menu_file_load" name="Pricelist load"
                   parent="purchase.menu_purchase_config_purchase"
-                  groups="adm_group"
                   sequence="30"/>
 
     </data>
