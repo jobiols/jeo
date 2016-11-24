@@ -69,7 +69,7 @@ Requiere una url donde mercadopago postea las notificaciones.
     ],
     'test': [],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
 }
 
 
