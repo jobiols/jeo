@@ -42,7 +42,7 @@ class product_template(models.Model):
         # la categoria trae el producto de todas las categorias de la rama
         factor_discount = 1.0
         for categ in self.categ_id:
-            factor_discount *= categ.get_discount()
+            factor_discount *= categ.sudo().get_discount()
 
         # calcular el precio de costo
         std_price = list_price * factor_discount
