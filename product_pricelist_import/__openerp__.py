@@ -88,7 +88,7 @@ Forma de Uso
 - Oprimir *Crear*
 - Definir el modo "Agregar productos nuevos" (si el producto existe lo agrega y si no existe lo crea) o "No agregar productos nuevos" (solo actualiza los productos existentes).
 - Seleccionar el proveedor (debe tener una categoria asociada).
-- Oprimir *Lista de precios*
+- Oprimir *Cargar archivo*
 - Seleccionar el archivo xls o csv a cargar
 - Notar la linea "Descuentos sobre precio de lista" que indica donde van a parar los descuentos de cada columna.
 - Oprimir *Procesar*
