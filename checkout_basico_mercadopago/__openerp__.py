@@ -21,7 +21,7 @@
 
 {
     'name': 'Checkout básico mercadopago',
-    'version': '8.0.1.0',
+    'version': '8.0.0.0',
     'category': 'Tools',
     'summary': 'gateway hacia mercadopago',
     'description': """
@@ -29,6 +29,7 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
+Este modulo está en desarrollo y todavia no ha sido liberado
 
 Checkout Básico Mercadopago
 ===========================
@@ -49,13 +50,12 @@ a mercadoenvios
 
 Devoluciones y cancelaciones
 ----------------------------
-permite devolver el pago, hacer cancelación parcial y cancelar el pago
+No implementado
 
 Recibir notificaciones de las operaciones
 -----------------------------------------
+No implementado
 Requiere una url donde mercadopago postea las notificaciones.
-
-
 
 """,
     'author': 'jeo Software',
