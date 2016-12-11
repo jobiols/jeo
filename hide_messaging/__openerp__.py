@@ -33,7 +33,7 @@ This module hides the "Messaging" menu from the mail module
     """,
     'author': 'jeo Software',
     'website': 'jeo-soft.com.ar',
-    "depends": [],
+    "depends": ['mail'],
     "data": ['views/mail_thread_view.xml'],
     "installable": True
 }
