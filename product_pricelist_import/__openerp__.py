@@ -118,6 +118,9 @@ las planillas importadas.
     'test': [
         'tests/test_import.yml'
     ],
+    'external_dependencies': {
+        'python': ['xlrd']
+    },
     'installable': True
 }
 
