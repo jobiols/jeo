@@ -62,11 +62,14 @@ class ImportPriceFile(models.TransientModel):
     def append_file_lines(self, reader_info, load_id):
         file_line_obj = self.env['product.pricelist.load.line']
         # columnas de la bd
-        keys_bd = ['product_code', 'product_name', 'list_price',
+        keys_bd = ['product_code',
+                   'product_name',
+                   'product_description',
+                   'list_price',
                    'prod_in_box',
                    'prod_in_box_uom',
-                   'categ', 'sub_categ', 'd1',
-                   'd2', 'd3', 'd4', 'd5', 'd6']
+                   'categ', 'sub_categ',
+                   'd1', 'd2', 'd3', 'd4', 'd5', 'd6']
 
         # headers de la planilla
         keys_xls = reader_info[0]

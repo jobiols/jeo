@@ -25,7 +25,7 @@ import xlrd
 from openerp.tests.common import SingleTransactionCase
 from openerp import fields
 
-
+# Este test verifica que funciona sin las columnas opcionales agregadas
 
 # Forma de correr el test
 # Crear un cliente test, una bd test_pricelist, el modulo test_pricelist_import cargado y

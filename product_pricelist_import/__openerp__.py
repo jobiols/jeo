@@ -37,8 +37,8 @@ proveedores en la misma lista.
 
 Formato del archivo de importación
 ----------------------------------
-**Columnas:** product_code, product_name, list_price, [package_qty,] [package_uom,] categ, sub_categ,
-dp, dc1, dc2, ds1, ds2, ds3
+**Columnas:** product_code, product_name, list_price, [product_description,] [package_qty,]
+[package_uom,] categ, sub_categ, dp, dc1, dc2, ds1, ds2, ds3
 
 Nota:las que estan entre corchetes son opcionales las seis últimas columnas definen su
 comportamiento con los dos primeros caracteres del nombre.
@@ -50,6 +50,9 @@ excepción, Esto lo maneja el módulo product_unique_default_code que esta como 
 
 **list_price** Es el precio de lista del proveedor, el precio al que el proveedor nos sugiere
 vender al público, sobre este precio el proveedor nos hace una serie de descuentos.
+
+**product_description** Es la descripción del producto, en este caso el texto no se muestra
+en la vista de importación de precios porque ocuparía demasiado espacio.
 
 **package_qty** *Opcional* Indica la cantidad de producto que hay en una caja sirve para aclarar en
 la factura la cantidad total de producto que se vende dada la cantida de cajas vendidas.

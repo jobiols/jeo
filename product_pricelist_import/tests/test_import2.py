@@ -26,11 +26,11 @@ from openerp.tests.common import SingleTransactionCase
 from openerp import fields
 from file_location import PATH
 
-
+# Este test verifica que funciona con las columnas opcionales agregadas
 
 # Forma de correr el test
-# Crear un cliente test, una bd test_pricelist, el modulo test_pricelist_import cargado y
-# un usuario admin / admin
+# Crear un cliente test, una bd test_pricelist, los modulos test_pricelist_import y
+# reves_default cargados y un usuario admin / admin
 # OJO cambiarle el path donde está el archivo a importar, esta en lugares distintos para travis o local
 # ./odooenv.py -Q jeo test_import2.py -c test -d test_pricelist -m product_pricelist_import
 #
@@ -116,22 +116,24 @@ class TestPricelistImport(SingleTransactionCase):
         product_obj = self.env['product.product']
         # chequear para cada fila de la tabla los costos calculados
         for row in range(1, sheet.nrows):
-            cost = sheet.cell_value(rowx=row, colx=14)
             prod = sheet.cell_value(rowx=row, colx=0)
-            m2 = sheet.cell_value(rowx=row, colx=3)
-            uom = sheet.cell_value(rowx=row, colx=4)
+            desc = sheet.cell_value(rowx=row, colx=2)
+            m2 = sheet.cell_value(rowx=row, colx=4)
+            uom = sheet.cell_value(rowx=row, colx=5)
+            cost = sheet.cell_value(rowx=row, colx=15)
             records = product_obj.search([('default_code', '=', prod)])
             assert len(records) > 0, 'No se encuentra producto ' + prod
             for rec in records:
                 diff = rec.standard_price - cost
                 assert abs(
-                    diff) < 0.01, "Mal precio costo producto {} precio {} deberia ser {}".format(
+                    diff) < 0.01, u"Mal precio costo producto {} precio {} deberia ser {}".format(
                     rec.default_code,
                     rec.standard_price,
                     cost)
+                assert desc == rec.description, u'Mal la descripción del producto'
                 assert m2 == rec.prod_in_box, u'Mal cantidad producto en caja {} debería ser {}'.format(
                     rec.prod_in_box, m2
                 )
-                assert uom == rec.prod_in_box_uom, 'falla unidad de medida {} debería ser {}'.format(
+                assert uom == rec.prod_in_box_uom, u'falla unidad de medida {} debería ser {}'.format(
                     rec.prod_in_box_uom, uom
                 )

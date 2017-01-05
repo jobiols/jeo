@@ -132,9 +132,16 @@ class ProductPricelistLoad(models.Model):
                 'type': 'product',
                 'categ_id': cat.id
             }
+            # si hay prod in box lo agregamos
             if line.prod_in_box:
                 values['prod_in_box'] = line.prod_in_box
                 values['prod_in_box_uom'] = line.prod_in_box_uom
+            # si hay descripción la agregamos
+            if line.product_description:
+                values['description'] = line.product_description
+#            # si hay stock inicial lo agregamos
+#            if line.stock:
+#                values[]
             prod = self.product_template_obj.create(values)
 
             # crear información del proveedor
@@ -195,6 +202,7 @@ class ProductPricelistLoadLine(models.Model):
 
     product_code = fields.Char('Product Code', required=True)
     product_name = fields.Char('Product Name')
+    product_description = fields.Text('Product Description')
     list_price = fields.Float('List Price', required=True)
     prod_in_box = fields.Float('Cant. producto por caja')
     prod_in_box_uom = fields.Char()
