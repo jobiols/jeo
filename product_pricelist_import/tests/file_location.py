@@ -19,8 +19,8 @@
 #
 #-----------------------------------------------------------------------------------
 
-PATH = 'mnt/extra-addons/jeo/'  # local
-#PATH = '' # travis
+#PATH = 'mnt/extra-addons/jeo/'  # local
+PATH = '' # travis
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

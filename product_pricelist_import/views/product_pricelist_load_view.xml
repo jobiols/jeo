@@ -31,6 +31,8 @@
                 <header>
                     <button name="%(action_import_file)d" string="Load File" class="oe_highlight" type="action"/>
                     <button class="oe_highlight" name="process_lines" string="Proccess" type="object"/>
+                    <button class="oe_highlight" name="make__draft_inventory" string="Crear inventario" type="object"
+                            help="Preparar productos para crear inventario en borrador"/>
                 </header>
                     <group col="6">
                         <field name="name"/>

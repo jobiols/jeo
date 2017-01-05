@@ -168,6 +168,43 @@ class ProductPricelistLoad(models.Model):
             line.fail_reaseon = 'No actualizado'
 
     @api.multi
+    def make__draft_inventory(self):
+        print '------------------------------------------'
+        # si no le puse proveedor abortar
+        if not self.supplier:
+            raise exceptions.Warning(_("You must select a Supplier"))
+
+        if not self.file_lines:
+            raise exceptions.Warning(_("There must be one line at least to process"))
+
+        inventory_obj = self.env['stock.inventory']
+        inventory_line_obj = self.env['stock.inventory.line']
+        product_obj = self.env['product.product']
+        warehouse_obj = self.env['stock.location']
+
+        # Crear un inventario en borrador
+        inventory_id = inventory_obj.create({'name':'INV '+self.name})
+
+        # para cada almacen inicializar los datos
+        for wh in warehouse_obj.search([('usage', '=', 'internal')]):
+            # procesar cada linea
+            for line in self.file_lines:
+                # procesar las lineas que NO estan en fail
+                if not line.fail:
+                    # Buscar el producto
+                    prod = product_obj.search([('default_code','=',line.product_code)])
+                    if prod:
+                        line_data =  {
+                           'inventory_id': inventory_id.id,
+                           'product_qty': 0,
+                           'location_id': wh.id,
+                           'product_id': prod.id,
+                           'product_uom_id': prod.uom_id.id,
+                           'theoretical_qty': 0,
+                        }
+                        inventory_line_obj.create(line_data)
+
+    @api.multi
     def process_lines(self):
         # si no le puse proveedor abortar
         if not self.supplier:
