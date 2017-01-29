@@ -11,3 +11,4 @@ dbf>=0.88.019
 Pillow>=2.0.0
 pycups
 mercadopago
+xlrd==1.0.0
