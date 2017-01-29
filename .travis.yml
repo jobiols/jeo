@@ -17,6 +17,7 @@ addons:
       - python-serial
       - python-yaml
       - libcups2-dev # for aeroo
+      # FE
       - python-dev
       - swig
       - libffi-dev
@@ -27,16 +28,14 @@ addons:
 env:
   global:
   - VERSION="8.0" LINT_CHECK="0"  # en algun momento poner lint = 1
-#  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
-#  - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
 
 virtualenv:
   system_site_packages: true
 
 install:
   # repository requirements, we install them here because pyafipws must be installed in a second step
-  - pip install -r requirements.txt
-  - pip install -r requirements2.txt
+#  - pip install -r requirements.txt
+#  - pip install -r requirements2.txt
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
