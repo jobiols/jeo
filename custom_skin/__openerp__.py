@@ -32,7 +32,7 @@ Permite cambiar el skin de todo el ERP
 ======================================
 
 """,
-    'author': 'jeo software',
+    'author': 'jeo Software',
     'depends': [],
     'data': [
         'views/backend.xml'
