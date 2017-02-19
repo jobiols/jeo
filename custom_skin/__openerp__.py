@@ -38,7 +38,7 @@ Permite cambiar el skin de todo el ERP
         'views/backend.xml'
     ],
     'test': [],
-    'installable': True,
+    'installable': False,
     'application': False,
     'auto_install': False,
     'images': [],

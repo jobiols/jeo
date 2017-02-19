@@ -19,6 +19,7 @@
 #
 # -----------------------------------------------------------------------------------
 import logging
+from openerp.exceptions import Warning
 
 import mercadopago
 
@@ -26,8 +27,12 @@ _logger = logging.getLogger(__name__)
 
 SHIPPING_METHODS = {'standard': 73328, 'priority': 73330}
 
+TODO: Si el access token está mal da una horrible excepción, revisar y borrar el access token
+TODO: Hacer que el boton de mercadopago aparezca solo cuando se pone el metodo de pago mercadopago.
+
 class omp():
     def __init__(self, params):
+        self._params = params
         # https://www.mercadopago.com.ar/developers/en/api-docs/basics/authentication/
         # traer el token de la configuración, si no existe lo creamos.
         access_token = params.get_param('mercadopago_access_token', default=False)
@@ -41,6 +46,8 @@ class omp():
             self._mp = mercadopago.MP(client_id, client_secret)
             params.set_param('mercadopago_access_token', self._mp.get_access_token())
             return
+        # intentar crear el objeto _mp, si no se puede borramos de nuevo el token y avisamos
+        # con una excepcion que hay que actualizar las credenciales.
         self._mp = mercadopago.MP(access_token)
 
     def shipping_methods(self, methods):
@@ -50,7 +57,7 @@ class omp():
         return ret
 
     def shipments(self, zip='5400', free_methods=[], dimensions="30x30x30,500",
-            default_sm='standard'):
+                  default_sm='standard'):
         ret = {}
         ret['mode'] = 'me2'
         ret['dimensions'] = dimensions
@@ -79,10 +86,11 @@ class omp():
             #            "shipments": self.shipments()
         }
 
-        preferenceResult = self._mp.create_preference(preference)
-        if preferenceResult['status'] <> 201:
+        preference_result = self._mp.create_preference(preference)
+        if preference_result['status'] != 201:
             _logger.error('error')
-        return preferenceResult["response"]
+
+        return preference_result["response"]
 
     def get_shipping_options(self):
         print self._mp.get('/shipping_options')

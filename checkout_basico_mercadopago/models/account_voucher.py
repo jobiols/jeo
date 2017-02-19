@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 #
 #    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
 #    All Rights Reserved.
@@ -17,12 +17,16 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#-----------------------------------------------------------------------------------
-from openerp import models, fields, api
-from odoo_mercadopago import omp
+# -----------------------------------------------------------------------------------
 import logging
-from openerp.exceptions import except_orm, Warning
+
+from openerp import models, fields, api
+from openerp.exceptions import Warning
+
+from odoo_mercadopago import omp
+
 _logger = logging.getLogger(__name__)
+
 
 class account_voucher(models.Model):
     _inherit = "account.voucher"
@@ -42,20 +46,20 @@ class account_voucher(models.Model):
         params = self.env['ir.config_parameter']
         for rec in self:
             om = omp(params)
-            _logger.info('{} va a pagar ${}'.format(rec.partner_id.name,rec.amount))
+            _logger.info('{} va a pagar ${} con Mercadopago'.format(rec.partner_id.name, rec.amount))
             if rec.amount == 0:
                 raise Warning('Quiere cobrar CERO!!!')
 
-            resp = om.pay_url(rec.partner_id.name,rec.amount)
-#            url = resp["sandbox_init_point"]
-            url = resp["init_point"]
+            resp = om.pay_url(rec.partner_id.name, rec.amount)
+            #            url = resp["sandbox_init_point"]
+            url = resp.get("init_point")
             _logger.info('lanzar sitio mp {}'.format(url))
 
             rec.mercadopago_id = resp['id']
             return {
-                    'type': 'ir.actions.act_url',
-                    'url': url,
-                    'target': 'new'
+                'type': 'ir.actions.act_url',
+                'url': url,
+                'target': 'new'
             }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
