@@ -23,7 +23,7 @@ import logging
 from openerp import models, fields, api
 from openerp.exceptions import Warning
 
-from odoo_mercadopago import omp
+from odoo_mercadopago import Omp
 
 _logger = logging.getLogger(__name__)
 
@@ -35,25 +35,26 @@ class account_voucher(models.Model):
     @api.multi
     def button_refund_mercadopago(self):
         for rec in self:
-            om = omp()
+            params = self.env['ir.config_parameter']
+            om = Omp(params)
             _logger.info('vamos a devolverle el pago a {}'.format(rec.partner_id.name))
 
     @api.multi
     def button_pay_mercadopago(self):
-        if self.journal_id.code <> 'MP':
-            raise Warning('Cambie el metodo de pago a Mercadopago')
+        if self.journal_id.code != 'MP':
+            raise Warning('Cambie el método de pago a Mercadopago (codigo MP)')
 
-        params = self.env['ir.config_parameter']
         for rec in self:
-            om = omp(params)
+            params = self.env['ir.config_parameter']
+            om = Omp(params)
             _logger.info('{} va a pagar ${} con Mercadopago'.format(rec.partner_id.name, rec.amount))
             if rec.amount == 0:
-                raise Warning('Quiere cobrar CERO!!!')
+                raise Warning('No podés cobrar cero en Mercadopago!!!')
 
             resp = om.pay_url(rec.partner_id.name, rec.amount)
-            #            url = resp["sandbox_init_point"]
-            url = resp.get("init_point")
-            _logger.info('lanzar sitio mp {}'.format(url))
+            # url = resp["sandbox_init_point"]
+            url = resp['init_point']
+            _logger.info('Navegando hacia sitio mp {}'.format(url))
 
             rec.mercadopago_id = resp['id']
             return {

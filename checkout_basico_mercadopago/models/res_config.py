@@ -45,13 +45,11 @@ class AccountPaymentConfig(models.TransientModel):
 
     @api.model
     def get_mercadopago_client_id(self, fields):
-        print ' ------------------------------------ get id',fields
         client_id = self.env['ir.config_parameter'].get_param('mercadopago_client_id', default=False)
         self.mercadopago_client_id = client_id
 
     @api.model
     def get_mercadopago_client_secret(self, fields):
-        print '------------------------------------- get sec',fields
         client_secret = self.env['ir.config_parameter'].get_param('mercadopago_client_secret', default=False)
         self.mercadopago_client_secret = client_secret
 

@@ -12,7 +12,6 @@
                         <button name="button_pay_mercadopago" colspan="4"
                                 type="object"
                                 string="Cobrar con Mercadopago"
-
                                 />
 <!--
                         <button name="button_refund_mercadopago" colspan="4"
