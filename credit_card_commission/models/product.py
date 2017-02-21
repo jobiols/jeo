@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
+# -*- coding: utf-8 -*-
+######################################################################################
+#    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
+#    All Rights Reserved.
 #
-#    Odoo, Open Source Management Solution
-#    This module copyright (C) 2017 jeo Software#    (www.jeosoft.com.ar).#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -16,7 +16,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
-import product
+######################################################################################
+from openerp import models, api, fields
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+class product_template(models.Model):
+    _inherit = 'product.product'
+
+    type = fields.Selection(selection_add=[('card', u'Tarjeta de crédito')])
+

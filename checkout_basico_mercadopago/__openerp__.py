@@ -68,7 +68,7 @@ Requiere una url donde mercadopago postea las notificaciones.
 #        'views/res_config_view.xml' // no lo pude hacer andar
     ],
     'test': [],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }
 
