@@ -23,5 +23,13 @@ from openerp import models, api, fields
 class product_template(models.Model):
     _inherit = 'product.product'
 
-    type = fields.Selection(selection_add=[('card', u'Tarjeta de crédito')])
+    type = fields.Selection([
+        ('product', 'Stockable Product'),
+        ('consu', 'Consumable'),
+        ('service', 'Service'),
+        ('card','Credit Card')],
+            'Product Type',
+            required=True,
+            help="Consumable: Will not imply stock management for this product. \n"
+                 "Stockable product: Will imply stock management for this product."),
 
