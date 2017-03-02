@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_tienda_nube_backend_form" model="ir.ui.view">
+            <field name="name">tienda_nube.backend.form</field>
+            <field name="model">tienda_nube.backend</field>
+            <field name="arch" type="xml">
+                <form string="Tienda Nube Backend" >
+
+                    <header>
+                        <button name="synchronize_metadata"
+                                type="object"
+                                class="oe_highlight"
+                                help="Sincronizar tienda y grupos"
+                                string="Sincronizar metadatos"/>
+                        <button name="synchronize_basedata"
+                                type="object"
+                                class="oe_highlight"
+                                help="Sincronizar datos como lenguaje, paises, moneda, impuestos"
+                                string="Sincronizar datos de base"/>
+                    </header>
+
+                    <sheet>
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                        <group>
+                            <field name="version"/>
+                        </group>
+                        <group col="4">
+                            <field name="location" colspan="4"/>
+                            <field name="username" colspan="4"/>
+                            <field name="password" colspan="4"/>
+                        </group>
+
+
+                        <group>
+                            <label string="Exportar productos" class="oe_inline"/>
+                            <button name="update_product_stock_qty"
+                                type="object"
+                                class="oe_highlight"
+                                string="Exportar en background"/>
+                        </group>
+
+                        <group>
+                            <div>
+                                <label string="Importar grupos y clientes desde" class="oe_inline"/>
+                                <field name="import_partners_since"
+                                       class="oe_inline"
+                                       nolabel="1"/>
+                            </div>
+                            <button name="import_customers_since"
+                                    type="object"
+                                    class="oe_highlight"
+                                    string="Importar en background"/>
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_tienda_nube_backend_tree" model="ir.ui.view">
+            <field name="name">tienda_nube.backend.tree</field>
+            <field name="model">tienda_nube.backend</field>
+            <field name="arch" type="xml">
+                <tree string="tienda_nube Backend" version="7.0">
+                    <field name="name"/>
+                    <field name="location"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_tienda_nube_backend" model="ir.actions.act_window">
+            <field name="name">tienda_nube Backends</field>
+            <field name="res_model">tienda_nube.backend</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--
+        <record id="view_tienda_nube_shop_group_form" model="ir.ui.view">
+            <field name="name">tienda_nube.shop.group.form</field>
+            <field name="model">tienda_nube.shop.group</field>
+            <field name="arch" type="xml">
+                <form string="tienda_nube Shop Group" version="7.0">
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <field name="backend_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        -->
+        <!--
+        <record id="view_tienda_nube_shop_group_tree" model="ir.ui.view">
+            <field name="name">tienda_nube.shop.group.tree</field>
+            <field name="model">tienda_nube.shop.group</field>
+            <field name="arch" type="xml">
+                <tree string="tienda_nube Shop Group" version="7.0">
+                    <field name="name"/>
+                    <field name="backend_id"/>
+                </tree>
+            </field>
+        </record>
+        -->
+        <!--
+        <record id="action_tienda_nube_shop_group" model="ir.actions.act_window">
+            <field name="name">tienda_nube Shop Groups</field>
+            <field name="res_model">tienda_nube.shop.group</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        -->
+        <!--
+        <record id="view_tienda_nube_shop_form" model="ir.ui.view">
+            <field name="name">tienda_nube.shop.form</field>
+            <field name="model">tienda_nube.shop</field>
+            <field name="arch" type="xml">
+                <form string="tienda_nube Shop" version="7.0">
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <field name="shop_group_id"/>
+                        <field name="odoo_id"/>
+                    </group>
+                    <group>
+                        <field name="default_url"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        -->
+        <!--
+        <record id="view_tienda_nube_shop_tree" model="ir.ui.view">
+            <field name="name">tienda_nube.shop.tree</field>
+            <field name="model">tienda_nube.shop</field>
+            <field name="arch" type="xml">
+                <tree string="tienda_nube Shop" version="7.0">
+                    <field name="name"/>
+                    <field name="shop_group_id"/>
+                    <field name="odoo_id"/>
+                </tree>
+            </field>
+        </record>
+        -->
+        <!--
+        <record id="action_tienda_nube_shop" model="ir.actions.act_window">
+            <field name="name">tienda_nube Shops</field>
+            <field name="res_model">tienda_nube.shop</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        -->
+
+
+    </data>
+</openerp>
