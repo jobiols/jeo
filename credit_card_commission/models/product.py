@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ######################################################################################
-from openerp import models, api, fields
+from openerp import models, fields
 
 
 class product_template(models.Model):
@@ -27,9 +27,8 @@ class product_template(models.Model):
         ('product', 'Stockable Product'),
         ('consu', 'Consumable'),
         ('service', 'Service'),
-        ('card','Credit Card')],
+        ('card', 'Credit Card')],
             'Product Type',
             required=True,
             help="Consumable: Will not imply stock management for this product. \n"
                  "Stockable product: Will imply stock management for this product."),
-
