@@ -31,4 +31,4 @@ class product_template(models.Model):
             'Product Type',
             required=True,
             help="Consumable: Will not imply stock management for this product. \n"
-                 "Stockable product: Will imply stock management for this product."),
+                 "Stockable product: Will imply stock management for this product.")
