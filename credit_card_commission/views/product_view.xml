@@ -2,10 +2,12 @@
 <openerp>
     <data>
 
-        <record id="product.product.form.card.commission" model="ir.ui.view">
+        <!-- modificamos el formulario de producto para el caso de la comision -->
+
+        <record id="product.product_form_card_commission" model="ir.ui.view">
             <field name="name">product.product.card.commission</field>
-            <field name="model">product.template</field>
-            <field name="inherit_id" ref="product.product.form"/>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
                 <field name="name" position="before">
                     <field name="calculated_price" string="Precio"/>

@@ -18,34 +18,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # -----------------------------------------------------------------------------------
+from openerp import models, fields
 
-{
-    'name': 'voucher payment check fix',
-    'version': '8.0.1.0',
-    'category': 'Tools',
-    'summary': 'evita cheques propios en medios de cobro',
-    'description': """
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   :alt: License: AGPL-3
 
-Voucher payment check fix
-=========================
+class Cards(models.Model):
+    _name = 'credit_card'
+    _description = 'Credit Cards'
 
-Este módulo evita que aparezca el diario de cheques propios cuando se le
-va a cobrar a un cliente
-""",
-    'author': 'jeo Software',
-    'website': 'http://www.jeo-soft.com.ar',
-    'depends': [
-        'account_check',
-    ],
-    'data': [
-        'views/voucher_payment_receipt_view.xml'
-    ],
-    'test': [],
-    'installable': True,
-    'auto_install': True,
-}
+    name = fields.Char('Tarjeta')
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+class CardCommission(models.Model):
+    _name = 'card_commission'
+    _description = 'Card Commission'
+
+    installment = fields.Integer('Cuotas')
+    TNA = fields.Float('TNA')
+    TEM = fields.Float('TEM')
+    coefficient = fields.Float('Coeficiente', digits=(4, 4))
+    card = fields.Many2one('credit_card')

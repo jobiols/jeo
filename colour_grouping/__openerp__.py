@@ -47,7 +47,7 @@ Groups registers by colour
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'application': True,
     'auto_install': False,
     'images': [],
