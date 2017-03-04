@@ -17,11 +17,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ######################################################################################
-from openerp import models, fields
+from openerp import models, api, fields
 
 
 class product_template(models.Model):
     _inherit = 'product.product'
+
+    """ TODO: Revisar en la bd como se crea este type, porque los productos aparecen sin
+    tipo cuando se instala esto.
+    Parecería que crea un nuevo campo. Si es así habría que hacer una migración
+    """
 
     type = fields.Selection([
         ('product', 'Stockable Product'),

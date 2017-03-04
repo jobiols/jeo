@@ -68,6 +68,7 @@ Cuando se salva trae al presupuesto o a la factura con el recargo.
 
     # any module necessary for this one to work correctly
     'depends': [
+        'product',
     ],
     'external_dependencies': {
         'python': [],
@@ -75,8 +76,8 @@ Cuando se salva trae al presupuesto o a la factura con el recargo.
 
     # always loaded
     'data': [
+        'views/card_view.xml',
         'views/card_commission_view.xml',
-        'views/card_view.xml'
         #        'views/product_view.xml',
     ],
     # only loaded in demonstration mode

@@ -6,7 +6,7 @@
         <!-- Card Commission Form View -->
 
         <record model="ir.ui.view" id="view_card_commission_form">
-            <field name="name">Comision de Tarjetas</field>
+            <field name="name">Comision Tarjetas</field>
             <field name="model">card_commission</field>
             <field name="arch" type="xml">
                 <form string="Comisiones de tarjetas">
@@ -23,7 +23,7 @@
 
         <!-- Card Commission Tree view -->
         <record model="ir.ui.view" id="view_card_commission_tree">
-            <field name="name">Comision de tarjetas</field>
+            <field name="name">Comision tarjetas</field>
             <field name="model">card_commission</field>
             <field name="arch" type="xml">
                 <tree string="Comisiones de tarjetas">
@@ -38,16 +38,15 @@
 
         <!--  Card Commission Action -->
         <record id="action_card_commission" model="ir.actions.act_window">
-            <field name="name">Comision Tarjetas</field>
+            <field name="name">Comisiones Tarjetas</field>
             <field name="res_model">card_commission</field>
             <field name="view_type">form</field>
         </record>
 
         <!--  Card Commission Menu -->
-        <menuitem name="Comision Tarjetas"
-                  id="menu_comission_tarjetas" parent="base.menu_curso_main"
-                  action="action_card_commission" groups="curso.group_curso_manager,curso.group_curso_user"/>
-
+        <menuitem name="Comisiones Tarjetas"
+                  id="menu_comission_tarjetas" parent="menu_card_config"
+                  action="action_card_commission" groups=""/>
 
     </data>
 </openerp>

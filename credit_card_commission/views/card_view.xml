@@ -44,10 +44,14 @@
             <field name="view_type">form</field>
         </record>
 
+        <!--  Card Menu Technical menu -->
+        <menuitem name="Configuración Tarjetas"
+                  id="menu_card_config" parent="base.menu_custom"/>
+
         <!--  Card Menu -->
         <menuitem name="Tarjetas"
-                  id="menu_tarjetas" parent="base.menu_curso_main"
-                  action="action_card" groups="curso.group_curso_manager,curso.group_curso_user"/>
+                  id="menu_tarjetas" parent="menu_card_config"
+                  action="action_card" groups=""/>
 
     </data>
 </openerp>
