@@ -8,12 +8,34 @@
             <field name="name">product.product.card.commission</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <field name="name" position="before">
-                    <field name="calculated_price" string="Precio"/>
+
+                <field name="description" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="description" position="before">
+                    <div attrs="{'invisible':[('type','!=','card')]}">
+
+                        <h1>Tarjetas de crédito</h1>
+                        <p>
+                            Aquí vamos a calcular las comisiones de las tarjetas
+                        </p>
+
+                        <group col="6">
+                            <field name="credit_card"/>
+                            <field name="coupon_value"/>
+                            <button name="button_calc_plan"
+                                    string="Calcular"
+                                    class="oe_highlight"
+                                    type="object"/>
+                        </group>
+                        <field name="plan"/>
+                    </div>
+
                 </field>
             </field>
         </record>
-
     </data>
 </openerp>

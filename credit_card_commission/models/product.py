@@ -37,3 +37,32 @@ class product_template(models.Model):
             required=True,
             help="Consumable: Will not imply stock management for this product. \n"
                  "Stockable product: Will imply stock management for this product.")
+
+    credit_card = fields.Many2one('credit_card')
+    coupon_value = fields.Float('Valor del cupon')
+    plan = fields.Many2one('credit_plan')
+
+    @api.one
+    def button_calc_plan(self):
+        credit_plan_obj = self.env['credit_plan'].search([])
+
+        # limpiar tabla
+        for item in credit_plan_obj:
+            print 'limpiando >', item.name
+            item.unlink()
+
+        # calcular y cargar los datos
+        card_commission = self.env['card_commission'].search([('card', '=', self.credit_card.id)])
+        for comm in card_commission:
+            surcharge_coef = (comm.card.surcharge / 100 + 1) * comm.coefficient
+            surcharge_coef = (surcharge_coef - 1)
+
+            credit_plan_obj.create({
+                'installments': comm.installment,
+                'surcharge': surcharge_coef * self.coupon_value,
+                'total': (1 + surcharge_coef) * self.coupon_value,
+            })
+
+    @api.onchange('plan')
+    def _onchange_plan(self):
+        self.lst_price = self.plan.total

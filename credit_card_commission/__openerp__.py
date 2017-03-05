@@ -29,7 +29,7 @@
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/openerp/addons/base/module/module_data.xml # noqa
     # for the full list
-    'category': 'Tools',    'summary': 'Computes credit card commissions',
+    'category': 'Tools', 'summary': 'Computes credit card commissions',
     'description': """
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -78,7 +78,8 @@ Cuando se salva trae al presupuesto o a la factura con el recargo.
     'data': [
         'views/card_view.xml',
         'views/card_commission_view.xml',
-        #        'views/product_view.xml',
+        'views/product_view.xml',
+        'data/card_data.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

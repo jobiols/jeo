@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # -----------------------------------------------------------------------------------
-from openerp import models, fields
+from openerp import models, fields, api
 
 
 class Cards(models.Model):
@@ -26,6 +26,7 @@ class Cards(models.Model):
     _description = 'Credit Cards'
 
     name = fields.Char('Tarjeta')
+    surcharge = fields.Float('Recargo %')
 
 
 class CardCommission(models.Model):
@@ -37,3 +38,26 @@ class CardCommission(models.Model):
     TEM = fields.Float('TEM')
     coefficient = fields.Float('Coeficiente', digits=(4, 4))
     card = fields.Many2one('credit_card')
+
+
+class CreditPlan(models.Model):
+    _name = 'credit_plan'
+    _description = 'Credit Plan'
+    _order = 'installments'
+
+    name = fields.Char(compute="_compute_name")
+    installments = fields.Integer('Cuotas')
+    quota = fields.Float('Cuota', compute='_compute_quota')
+    surcharge = fields.Float('Recargo')
+    total = fields.Float('Total')
+
+    @api.one
+    @api.depends('installments', 'surcharge', 'total')
+    def _compute_name(self):
+        self.name = '{} cuotas de ${:.2f}       total ${:.2f}       (recargo ${:.2f})'.format(
+                self.installments, self.quota, self.total, self.surcharge)
+
+    @api.one
+    @api.depends('installments', 'total')
+    def _compute_quota(self):
+        self.quota = self.total / self.installments
