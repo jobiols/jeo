@@ -18,23 +18,31 @@
 #
 ######################################################################################
 from openerp import models, api, fields
+from openerp.exceptions import Warning
 
 
 class product_template(models.Model):
     _inherit = 'product.template'
 
     type = fields.Selection(selection_add=[('card', 'Credit Card')])
+
+
+class product_product(models.Model):
+    _inherit = 'product.product'
+
     credit_card = fields.Many2one('credit_card')
     coupon_value = fields.Float('Valor del cupon')
     plan = fields.Many2one('credit_plan')
 
     @api.one
     def button_calc_plan(self):
+        if not self.credit_card:
+            raise Warning(u'No se definió tarjeta de crédito')
+
         credit_plan_obj = self.env['credit_plan'].search([])
 
         # limpiar tabla
         for item in credit_plan_obj:
-            print 'limpiando >', item.name
             item.unlink()
 
         # calcular y cargar los datos

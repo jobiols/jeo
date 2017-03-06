@@ -23,7 +23,7 @@ from openerp import models, fields, api
 
 class Cards(models.Model):
     _name = 'credit_card'
-    _description = 'Tarjetas de crédito con sus recargos'
+    _description = u'Tarjetas de crédito con sus recargos'
 
     name = fields.Char('Tarjeta')
     surcharge = fields.Float('Recargo %')
@@ -31,7 +31,7 @@ class Cards(models.Model):
 
 class CardCommission(models.Model):
     _name = 'card_commission'
-    _description = 'Comisiones de las tarjetas según cantidad de cuotas'
+    _description = u'Comisiones de las tarjetas según cantidad de cuotas'
 
     installment = fields.Integer('Cuotas')
     TNA = fields.Float('TNA')
@@ -42,22 +42,29 @@ class CardCommission(models.Model):
 
 class CreditPlan(models.Model):
     _name = 'credit_plan'
-    _description = 'Plan que el cliente elije segun las cuotas que quiere pagar'
+    _description = u'Plan que el cliente elije segun las cuotas que quiere pagar'
     _order = 'installments'
 
-    name = fields.Char(compute="_compute_name")
     installments = fields.Integer('Cuotas')
     quota = fields.Float('Cuota', compute='_compute_quota')
     surcharge = fields.Float('Recargo')
     total = fields.Float('Total')
 
     @api.one
-    @api.depends('installments', 'surcharge', 'total')
-    def _compute_name(self):
-        self.name = '{} cuotas de ${:.2f}       total ${:.2f}       (recargo ${:.2f})'.format(
-                self.installments, self.quota, self.total, self.surcharge)
-
-    @api.one
     @api.depends('installments', 'total')
     def _compute_quota(self):
         self.quota = self.total / self.installments
+
+    @api.multi
+    def name_get(self):
+        res = []
+        for line in self:
+            res.append(
+                    (line.id,
+                     '{} cuotas de ${:9.2f} ------ total ${:9.2f} ------ (recargo ${:9.2f})'.format(
+                             line.installments,
+                             line.quota,
+                             line.total,
+                             line.surcharge))
+            )
+        return res

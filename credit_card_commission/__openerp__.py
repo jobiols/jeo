@@ -80,6 +80,7 @@ Cuando se salva trae al presupuesto o a la factura con el recargo.
         'views/card_commission_view.xml',
         'views/product_view.xml',
         'data/card_data.xml',
+        'views/credit_plan_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
