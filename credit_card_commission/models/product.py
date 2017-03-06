@@ -21,23 +21,9 @@ from openerp import models, api, fields
 
 
 class product_template(models.Model):
-    _inherit = 'product.product'
+    _inherit = 'product.template'
 
-    """ TODO: Revisar en la bd como se crea este type, porque los productos aparecen sin
-    tipo cuando se instala esto.
-    Parecería que crea un nuevo campo. Si es así habría que hacer una migración
-    """
-
-    type = fields.Selection([
-        ('product', 'Stockable Product'),
-        ('consu', 'Consumable'),
-        ('service', 'Service'),
-        ('card', 'Credit Card')],
-            'Product Type',
-            required=True,
-            help="Consumable: Will not imply stock management for this product. \n"
-                 "Stockable product: Will imply stock management for this product.")
-
+    type = fields.Selection(selection_add=[('card', 'Credit Card')])
     credit_card = fields.Many2one('credit_card')
     coupon_value = fields.Float('Valor del cupon')
     plan = fields.Many2one('credit_plan')

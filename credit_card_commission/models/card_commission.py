@@ -23,7 +23,7 @@ from openerp import models, fields, api
 
 class Cards(models.Model):
     _name = 'credit_card'
-    _description = 'Credit Cards'
+    _description = 'Tarjetas de crédito con sus recargos'
 
     name = fields.Char('Tarjeta')
     surcharge = fields.Float('Recargo %')
@@ -31,7 +31,7 @@ class Cards(models.Model):
 
 class CardCommission(models.Model):
     _name = 'card_commission'
-    _description = 'Card Commission'
+    _description = 'Comisiones de las tarjetas según cantidad de cuotas'
 
     installment = fields.Integer('Cuotas')
     TNA = fields.Float('TNA')
@@ -42,7 +42,7 @@ class CardCommission(models.Model):
 
 class CreditPlan(models.Model):
     _name = 'credit_plan'
-    _description = 'Credit Plan'
+    _description = 'Plan que el cliente elije segun las cuotas que quiere pagar'
     _order = 'installments'
 
     name = fields.Char(compute="_compute_name")
