@@ -81,6 +81,7 @@ Cuando se salva trae al presupuesto o a la factura con el recargo.
         'views/product_view.xml',
         'data/card_data.xml',
         'views/credit_plan_view.xml',
+        'security/ir.model.access.csv',
     ],
     # only loaded in demonstration mode
     'demo': [
