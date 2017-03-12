@@ -44,7 +44,7 @@ def add_checkpoint(session, model_name, record_id, backend_id):
 
 def get_environment(session, model_name, backend_id):
     """ Create an environment to work with. """
-    print 'revisar get environment =========================================================='
+    print 'connector.get_environment =============================================='
     backend_record = session.env['tienda_nube.backend'].browse(backend_id)
     env = Environment(backend_record, session, model_name)
     lang = backend_record.default_lang_id

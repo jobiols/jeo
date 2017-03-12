@@ -59,6 +59,7 @@ class TiendaNubeBackend(models.Model):
 
     @api.multi
     def synchronize_metadata(self):
+        print 'tienda_nube_backend.common.synchronize_metadata --------------------'
         session = ConnectorSession(
                 self.env.cr, self.env.uid, context=self.env.context)
         for backend in self:
@@ -93,7 +94,7 @@ class TiendaNubeBackend(models.Model):
 
     @api.multi
     def update_product_stock_qty(self):
-        print 'exportar -------------------------------------'
+        print 'tienda_nube_backend.update_product_stock_qty -------------------------------------'
         session = ConnectorSession(
                 self.env.cr, self.env.uid, context=self.env.context)
         for backend_record in self:
@@ -102,7 +103,7 @@ class TiendaNubeBackend(models.Model):
 
     @api.multi
     def import_customers_since(self):
-        print 'import customers since -------------------------------'
+        print 'tienda_nube_backend.import_customers_since -------------------------------'
         session = ConnectorSession(
                 self.env.cr, self.env.uid, context=self.env.context)
         for backend_record in self:
@@ -127,8 +128,10 @@ class TiendaNubeBackend(models.Model):
 
     @api.multi
     def get_environment(self, model_name, session=None):
-        print 'tienda_nube_backend.get environment --------------------', model_name, session
+        print 'tienda_nube_backend.get_environment --------------------', model_name, '||', session
         self.ensure_one()
         if not session:
+            print 'not session'
             session = ConnectorSession.from_env(self.env)
+
         return ConnectorEnvironment(self, session, model_name)

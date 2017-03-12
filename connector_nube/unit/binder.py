@@ -1,20 +1,45 @@
 # -*- coding: utf-8 -*-
-# -----------------------------------------------------------------------------------
-#
-#    Copyright (C) 2017  jeo Software  (http://www.jeosoft.com.ar)
-#    All Rights Reserved.
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# -----------------------------------------------------------------------------------
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from openerp.addons.connector.connector import Binder
+from ..backend import tienda_nube
+
+
+@tienda_nube
+class TiendaNubeBinder(Binder):
+    """
+    Bindings are done directly on the model
+    """
+    _external_field = 'tienda_nube_id'
+    _openerp_field = 'odoo_id'
+
+    _model_name = [
+        'tienda_nube.shop.group',
+        'tienda_nube.shop',
+        'tienda_nube.res.partner',
+        'tienda_nube.address',
+        'tienda_nube.res.partner.category',
+        'tienda_nube.res.lang',
+        'tienda_nube.res.country',
+        'tienda_nube.res.currency',
+        'tienda_nube.account.tax',
+        'tienda_nube.account.tax.group',
+        'tienda_nube.product.category',
+        'tienda_nube.product.image',
+        'tienda_nube.product.template',
+        'tienda_nube.product.combination',
+        'tienda_nube.product.combination.option',
+        'tienda_nube.product.combination.option.value',
+        'tienda_nube.sale.order',
+        'tienda_nube.sale.order.state',
+        'tienda_nube.delivery.carrier',
+        'tienda_nube.refund',
+        'tienda_nube.supplier',
+        'tienda_nube.product.supplierinfo',
+        'tienda_nube.mail.message',
+        'tienda_nube.groups.pricelist',
+    ]
+
+    def to_odoo(self, external_id, unwrap=False):
+        # Make alias to to_openep, remove in v10
+        return self.to_openerp(external_id, unwrap)

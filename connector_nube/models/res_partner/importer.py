@@ -30,7 +30,7 @@ from ...unit.importer import import_batch
 def import_customers_since(session, backend_id, since_date=None):
     """ Prepare the import of partners modified on TiendaNube """
 
-    print 'import_customers_since', session, backend_id, since_date
+    print 'res_partner.importer.import_customer_since  --------->>> ', session, backend_id, since_date
 
     filters = None
     if since_date:

@@ -39,7 +39,7 @@ Conecta Odoo con tienda nube
         'views/connector_tienda_nube_menu.xml',
     ],
     'test': [],
-    'installable': False,
+    'installable': True,
     'application': True,
     'auto_install': False,
     'images': [],
