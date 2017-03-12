@@ -1,24 +1,7 @@
 # -*- coding: utf-8 -*-
-# #######################################################################
-#    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
-#    All Rights Reserved.
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# #######################################################################
-from openerp import models, fields
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from openerp.addons.connector.checkpoint import checkpoint
-from openerp.addons.connector.connector import Environment
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -43,30 +26,6 @@ def add_checkpoint(session, model_name, record_id, backend_id):
 
 
 def get_environment(session, model_name, backend_id):
-    """ Create an environment to work with. """
-    print 'connector.get_environment =============================================='
-    backend_record = session.env['tienda_nube.backend'].browse(backend_id)
-    env = Environment(backend_record, session, model_name)
-    lang = backend_record.default_lang_id
-    lang_code = lang.code if lang else 'es_ES'
-    if lang_code == session.context.get('lang'):
-        return env
-    else:
-        with env.session.change_context(lang=lang_code):
-            return env
-
-
-class TiendaNubeBinding(models.AbstractModel):
-    _name = 'tienda_nube.binding'
-    _inherit = 'external.binding'
-    _description = 'Tienda Nube Binding (abstract)'
-
-    # 'openerp_id': openerp-side id must be declared in concrete model
-    backend_id = fields.Many2one(
-            comodel_name='tienda_nube.backend',
-            string='Tienda Nube Backend',
-            required=True,
-            ondelete='restrict',
-    )
-    # fields.char because 0 is a valid tienda nube ID
-    tienda_nube_id = fields.Char(string='ID in Tienda Nube', select=True)
+    _logger.warn('deprecated: please use TiendaNubeBackend.get_environment')
+    backend = session.env['tienda_nube.backend'].browse(backend_id)
+    return backend.get_environment(model_name, session=session)

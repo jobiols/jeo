@@ -33,7 +33,10 @@ Conecta Odoo con tienda nube
 
 """,
     'author': 'jeo software',
-    'depends': ['connector_ecommerce'],
+    'depends': [
+        'connector_ecommerce',
+        'product_multi_image'
+    ],
     'data': [
         'views/tienda_nube_backend_view.xml',
         'views/connector_tienda_nube_menu.xml',

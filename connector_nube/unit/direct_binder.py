@@ -22,6 +22,7 @@ class DirectBinder(ConnectorUnit):
         raise NotImplementedError
 
     def run(self):
+        print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
         _logger.debug(
                 "[%s] Starting synchro between OERP and PS"
                 % self.model._description

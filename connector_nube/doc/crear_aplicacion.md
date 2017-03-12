@@ -69,3 +69,8 @@ Ese post http te retorna esto, que se muestra en la página (no me anduvo con ch
 donde el access_token es el token OAUTH que debés utilizar en los 
 request subsiguientes y el user_id es el ID de la tienda
 
+#configuracion conector
+**Location**    jeoshops.mitiendanube.com
+**username**    424577
+**password**    494b5e0f1e26f549b2e25d1a00d9fafa7e93f420
+

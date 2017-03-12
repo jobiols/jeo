@@ -12,7 +12,9 @@ import logging
 
 _logger = logging.getLogger(__name__)
 try:
-    from prestapyt import TiendaNubeWebServiceDict, TiendaNubeWebServiceError
+    # TODO bajo nivel
+    # from prestapyt import TiendaNubeWebServiceDict, TiendaNubeWebServiceError
+    a = 1
 except:
     _logger.debug('Cannot import from `prestapyt`')
 
@@ -49,7 +51,9 @@ def api_handle_errors(message=''):
         )
 
 
-class TiendaNubeWebServiceImage(TiendaNubeWebServiceDict):
+# TODO bajo nivel
+# class TiendaNubeWebServiceImage(TiendaNubeWebServiceDict):
+class TiendaNubeWebServiceImage(object):
     def get_image(self, resource, resource_id=None, image_id=None,
                   options=None):
         full_url = self._api_url + 'images/' + resource
