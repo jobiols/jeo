@@ -21,10 +21,9 @@ from openerp import models, api, fields
 from openerp.exceptions import Warning
 
 
-class product_template(models.Model):
-    _inherit = 'product.template'
-
-    type = fields.Selection(selection_add=[('card', 'Credit Card')])
+# class product_template(models.Model):
+#    _inherit = 'product.template'
+#    type = fields.Selection(selection_add=[('card', 'Credit Card')])
 
 
 class product_product(models.Model):
