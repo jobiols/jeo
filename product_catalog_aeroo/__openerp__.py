@@ -19,18 +19,24 @@
 #
 ##############################################################################
 {
-    'name': 'Product Catalog Aeroo Report',
-    'version': '8.0.1.2.0',
+    'name': 'Product Catalog Aeroo',
+    'version': '8.0.1.0.0',
     'category': 'Aeroo Reporting',
     'sequence': 14,
     'summary': '',
     'description': """
 Product Catalog Aeroo Report
 ============================
-# TODO add check on report if stock module is installed
+Lo mismo que el product_catalog_aeroo_report de ADHOC, pero con la diferencia
+de que este no reporta los productos que:
+
+- Tienen estado obsoleto
+- No tienen el tilde de puede ser vendido
+
+
     """,
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
+    'author': 'ADHOC SA, jeo Software',
+    'website': 'www.jeosoft.com.ar',
     'license': 'AGPL-3',
     'images': [
     ],
@@ -52,6 +58,6 @@ Product Catalog Aeroo Report
     ],
     'installable': True,
     'auto_install': False,
-    'application': True,
+    'application': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
