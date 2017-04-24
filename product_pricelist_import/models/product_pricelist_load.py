@@ -160,6 +160,8 @@ class ProductPricelistLoad(models.Model):
 
             # actualizar precio de lista del producto
             suppinfo.list_price = line.list_price
+            # actualizar descripción del producto
+            suppinfo.product_tmpl_id.name = line.product_name
             line.write({'fail': False, 'fail_reason': 'Actualizado'})
         else:
             line.fail_reaseon = 'No actualizado'
