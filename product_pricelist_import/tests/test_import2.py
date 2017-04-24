@@ -18,13 +18,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # -----------------------------------------------------------------------------------
-import time
 import base64
+import time
 
 import xlrd
-from openerp.tests.common import SingleTransactionCase
 from openerp import fields
+from openerp.tests.common import SingleTransactionCase
+
 from file_location import PATH
+
 
 # Este test verifica que funciona con las columnas opcionales agregadas
 
@@ -80,12 +82,12 @@ class TestPricelistImport(SingleTransactionCase):
         keys, counter = self.wizard._import_xls(self.product_pricelist_load2.id,
                                                 file_data_encoded)
         self.product_pricelist_load2.write(
-            {'name': 'nombre de la carga',
-             'date': fields.datetime.now(),
-             'fails': counter,
-             'file_name': self.product_pricelist_load2.file_name,
-             'process': counter,
-             'keys': keys}
+                {'name': 'nombre de la carga',
+                 'date': fields.datetime.now(),
+                 'fails': counter,
+                 'file_name': self.product_pricelist_load2.file_name,
+                 'process': counter,
+                 'keys': keys}
         )
 
         # procesar las lineas
@@ -126,14 +128,15 @@ class TestPricelistImport(SingleTransactionCase):
             for rec in records:
                 diff = rec.standard_price - cost
                 assert abs(
-                    diff) < 0.01, u"Mal precio costo producto {} precio {} deberia ser {}".format(
-                    rec.default_code,
-                    rec.standard_price,
-                    cost)
+                        diff) < 0.01, u"Mal precio costo producto {} precio {} deberia ser {}".format(
+                        rec.default_code,
+                        rec.standard_price,
+                        cost)
                 assert desc == rec.description, u'Mal la descripción del producto'
                 assert m2 == rec.prod_in_box, u'Mal cantidad producto en caja {} debería ser {}'.format(
-                    rec.prod_in_box, m2
+                        rec.prod_in_box, m2
                 )
                 assert uom == rec.prod_in_box_uom, u'falla unidad de medida {} debería ser {}'.format(
-                    rec.prod_in_box_uom, uom
+                        rec.prod_in_box_uom, uom
                 )
+

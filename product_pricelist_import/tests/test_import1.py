@@ -18,12 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # -----------------------------------------------------------------------------------
-import time
 import base64
+import time
 
 import xlrd
-from openerp.tests.common import SingleTransactionCase
 from openerp import fields
+from openerp.tests.common import SingleTransactionCase
 
 # Este test verifica que funciona sin las columnas opcionales agregadas
 
@@ -81,12 +81,12 @@ class TestPricelistImport(SingleTransactionCase):
         keys, counter = self.wizard._import_xls(self.product_pricelist_load1.id,
                                                 file_data_encoded)
         self.product_pricelist_load1.write(
-            {'name': 'nombre de la carga',
-             'date': fields.datetime.now(),
-             'fails': counter,
-             'file_name': self.product_pricelist_load1.file_name,
-             'process': counter,
-             'keys': keys}
+                {'name': 'nombre de la carga',
+                 'date': fields.datetime.now(),
+                 'fails': counter,
+                 'file_name': self.product_pricelist_load1.file_name,
+                 'process': counter,
+                 'keys': keys}
         )
 
         # procesar las lineas
@@ -110,6 +110,6 @@ class TestPricelistImport(SingleTransactionCase):
             for rec in records:
                 diff = rec.standard_price - cost
                 assert abs(
-                    diff) < 0.01, "falla precio de compra, es {} debe ser {}".format(
-                    rec.standard_price,
-                    cost)
+                        diff) < 0.01, "falla precio de compra, es {} debe ser {}".format(
+                        rec.standard_price,
+                        cost)
