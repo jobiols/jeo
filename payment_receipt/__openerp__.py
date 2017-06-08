@@ -30,8 +30,8 @@ Imprime un recibo con las lineas de factura, el pago parcial (seña) y el total 
 """,
     "demo_xml": [],
     "data": [
-        'views/report_invoice.xml',
-        'views/invoice.xml'
+        'views/report_invoice_receipt.xml',
+        'payment_receipt_report.xml'
     ],
     'depends': ['account'],
     'installable': True,
