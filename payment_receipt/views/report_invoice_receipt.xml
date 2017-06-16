@@ -4,7 +4,7 @@
 <template id="report_receipt_document">
         <div class="page">
             <h2>
-                Presupuesto <span t-field="o.reference"/>
+                Presupuesto <span t-field="o.origin"/>
             </h2>
 
             <div class="row">
