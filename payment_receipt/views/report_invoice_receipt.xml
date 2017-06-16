@@ -4,7 +4,7 @@
 <template id="report_receipt_document">
         <div class="page">
             <h2>
-                Comprobante <span t-field="o.number"/>
+                Presupuesto <span t-field="o.reference"/>
             </h2>
 
             <div class="row">
