@@ -20,11 +20,17 @@
 # -----------------------------------------------------------------------------------
 from openerp import fields, models, api, _
 from openerp.exceptions import Warning
+from cStringIO import StringIO as StringIO
+import logging
 import sys
 import traceback
-import logging
-
 _logger = logging.getLogger(__name__)
+
+try:
+    from pysimplesoap.client import SoapFault
+except ImportError:
+    _logger.debug('Can not `from pyafipws.soap import SoapFault`.')
+
 
 class invoice(models.Model):
     _inherit = "account.invoice"
@@ -131,6 +137,10 @@ class invoice(models.Model):
                 # tomado de la v9
                 imp_neto = str("%.2f" % abs(inv.amount_untaxed))
 
+            _logger.info("===================================================")
+            _logger.info('doc afip code %s' % doc_afip_code)
+            _logger.info('imp tot conc (0) %s' % imp_tot_conc)
+            _logger.info('imp neto         %s' % imp_neto)
             ## wsfe_monotributo_fix
 
             imp_iva = str("%.2f" % abs(inv.vat_amount))
