@@ -32,7 +32,7 @@ class ResPartner(models.Model):
             if partner.responsability_id.code == '1' or \
                partner.responsability_id.code == '6':       # responsable inscripto o monotributo
                 if partner.document_type_id.name != 'CUIT':
-                    raise ValidationError(u'Para ingresar un {} Se requiere CUIT'.
+                    raise ValidationError(u'Para ingresar un cliente "{}" Se requiere CUIT'.
                                           format(partner.responsability_id.name))
 
     @api.multi
