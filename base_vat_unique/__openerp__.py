@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 ##################################################################################
-#    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
+#    Copyright (C) 2016  jeo Software  (http://www.jeosoft.com.ar)
 #    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,7 @@ Dependencies
     'author': 'Cubic ERP, jeo Software',
     'depends': ['base_vat'],
     "data": [],
-    'website': 'http://jeo-soft.com.ar',
+    'website': 'http://jeosoft.com.ar',
     'auto_install': False,
     'installable': True,
 }

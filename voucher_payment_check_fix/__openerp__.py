@@ -36,7 +36,7 @@ Este módulo evita que aparezca el diario de cheques propios cuando se le
 va a cobrar a un cliente
 """,
     'author': 'jeo Software',
-    'website': 'http://www.jeo-soft.com.ar',
+    'website': 'http://www.jeosoft.com.ar',
     'depends': [
         'account_check',
     ],

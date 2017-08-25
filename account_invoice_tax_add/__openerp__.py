@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'author': 'ADHOC SA, jeo Software',
-    'website': 'www.jeo-soft.com.ar',
+    'website': 'www.jeosoft.com.ar',
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
     'data': [

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #-----------------------------------------------------------------------------------
 #
-#    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
+#    Copyright (C) 2016  jeo Software  (http://www.jeosoft.com.ar)
 #    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -59,7 +59,7 @@ Requiere una url donde mercadopago postea las notificaciones.
 
 """,
     'author': 'jeo Software',
-    'website': 'http://www.jeo-soft.com.ar',
+    'website': 'http://www.jeosoft.com.ar',
     'depends': [
         'sale'
     ],

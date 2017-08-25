@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #-----------------------------------------------------------------------------------
 #
-#    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
+#    Copyright (C) 2016  jeo Software  (http://www.jeosoft.com.ar)
 #    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ This module hides the "Messaging" menu from the mail module
 
     """,
     'author': 'jeo Software',
-    'website': 'jeo-soft.com.ar',
+    'website': 'jeosoft.com.ar',
     "depends": ['mail'],
     "data": ['views/mail_thread_view.xml'],
     "installable": True

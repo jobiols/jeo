@@ -31,7 +31,7 @@
 Hide by default product variants menu
     """,
     'author': 'Comunitea, jeo Software',
-    'website': 'jeo-soft.com.ar',
+    'website': 'jeosoft.com.ar',
     "depends": ['stock', 'product', 'purchase'],
     "data": ['security/hide_variants_groups.xml',
              'product_view.xml'],

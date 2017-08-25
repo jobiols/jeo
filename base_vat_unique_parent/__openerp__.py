@@ -50,7 +50,7 @@ base_vat_unique.py para que valide de la manera que se detalla en la descripció
 
     """,
     'author': 'jeo Software',
-    'website': 'http://jeo-soft.com.ar',
+    'website': 'http://jeosoft.com.ar',
     'depends': ['base', 'base_vat'],
     'init_xml': [],
     'update_xml': [],
