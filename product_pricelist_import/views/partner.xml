@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <!--  Partners inherited form
-              Agrega la categoría en la ficha de partner -->
+        <!--  Partners inherited form -->
 
         <record id="view_curso_partner_info_form" model="ir.ui.view">
             <field name="name">res.partner.import.inherit</field>

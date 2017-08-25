@@ -24,9 +24,7 @@ import openerp.addons.decimal_precision as dp
 class product_supplierinfo(models.Model):
     _inherit = 'product.supplierinfo'
 
-    list_price = fields.Float(
-        'List price',
-        digits_compute=dp.get_precision('Product Price'),
-        help="List price from the supplier")
+    list_price = fields.Float('List price',digits_compute=dp.get_precision('Product Price'),
+                              help="List price from the supplier")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

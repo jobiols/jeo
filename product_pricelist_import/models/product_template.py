@@ -42,7 +42,7 @@ class product_template(models.Model):
         # la categoria trae el producto de todas las categorias de la rama
         factor_discount = 1.0
         for categ in self.categ_id:
-            factor_discount *= categ.sudo().get_discount()
+            factor_discount *= categ.get_discount()
 
         # calcular el precio de costo
         std_price = list_price * factor_discount
@@ -51,7 +51,7 @@ class product_template(models.Model):
         if std_price <> self.standard_price_fake:
             self.standard_price_fake = std_price
             self.standard_price = std_price
-            self.sudo()._set_standard_price(self._ids, std_price)
+            self._set_standard_price(self._ids, std_price)
 
     @api.one
     def _get_supplier_categ(self):

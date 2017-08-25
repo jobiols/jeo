@@ -98,7 +98,7 @@
         <!-- menu para mostrar las lineas -->
 
         <menuitem action="action_file_price_load_line"
-                  id="menu_file_load_line" name="Lineas de importación de precios"
+                  id="menu_file_load_line" name="Detalle de precios"
                   parent="purchase.menu_purchase_config_purchase"
                   sequence="31"/>
 

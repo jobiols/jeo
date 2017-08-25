@@ -22,9 +22,8 @@ import base64
 import cStringIO
 import tempfile
 import csv
-
-from openerp import fields, exceptions, models, api, _
-
+from openerp import fields, models, api, _
+from openerp.exceptions import Warning
 
 class ImportPriceFile(models.TransientModel):
     _name = 'import.price.file'
@@ -37,70 +36,23 @@ class ImportPriceFile(models.TransientModel):
                                   ('xls', 'XLS')],
                                  'File Type', required=True, default='xls')
 
-    def get_indirection(self, kbd, kxl):
-        """
-        :param kbd: parametros de la base de datos
-        :param kxl: parametros de la planilla de calculo
-        :return: indice de indireccion que relaciona ambos
-        """
-        res = []
-        for name in kbd:
-            # para generar el indice uso dos criterios, uno que mapea nombres al principio
-            # y otro posicional que relaciona los d1, d2 ... d6 con dp1, dp2, dc3 etc.
-            positional = True if name[0] == 'd' else False
-            if positional:
-                # si estamos en modo posicional el indice es el numero siguiente.
-                res.append(res[-1] + 1)
-            else:
-                # si estamos mapeando, el indice es la ubicación en kxl
-                try:
-                    res.append(kxl.index(name))
-                except:
-                    res.append('none')
-        return res
-
     def append_file_lines(self, reader_info, load_id):
         file_line_obj = self.env['product.pricelist.load.line']
-        # columnas de la bd
-        keys_bd = ['product_code',
-                   'product_name',
-                   'product_description',
-                   'list_price',
-                   'prod_in_box',
-                   'prod_in_box_uom',
-                   'categ', 'sub_categ',
-                   'd1', 'd2', 'd3', 'd4', 'd5', 'd6']
-
-        # headers de la planilla
-        keys_xls = reader_info[0]
-        # calcula la indirección entre las dos claves
-        indi = self.get_indirection(keys_bd, keys_xls)
-        # elimina la fila de headers
+        keys1 = ['product_code', 'product_name', 'list_price', 'categ', 'sub_categ', 'd1',
+                 'd2', 'd3', 'd4', 'd5', 'd6']
+        keys = reader_info[0]
         del reader_info[0]
+
         counter = 0
-        for j in range(len(reader_info)):
-            values = {}
-            # arma un diccionario con los values y lo inserta en line
-            for i in range(len(keys_bd)):
-                # uso una indirección para conectar los datos
-                if indi[i] <> 'none':
-                    values[keys_bd[i]] = reader_info[j][indi[i]]
+        for i in range(len(reader_info)):
+            values = dict(zip(keys1, reader_info[i]))
             values['fail'] = True
             values['fail_reason'] = _('No Processed')
             values['file_load'] = load_id
-            file_line_obj.sudo().create(values)
+            file_line_obj.create(values)
             counter += 1
-        return self.make_keystring(keys_xls), counter
-
-    def make_keystring(self, keys_xls):
-        # devuelve un keystring con los campos de los descuentos de la plantilla
-        # son todos los que empiezan con dp dc o ds en el orden en el que aparecen
-        res = []
-        for key in keys_xls:
-            s = key[:2]
-            if s == 'dp' or s == 'dc' or s == 'ds':
-                res.append(key)
-        return ','.join(res)
+        kstring = ','.join(keys)
+        return kstring, counter
 
     def _import_csv(self, load_id, file_data, delimiter=';'):
         """ Imports data from a CSV file in defined object.

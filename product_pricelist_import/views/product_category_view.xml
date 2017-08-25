@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <!--  Category inherited form agregar edicion para descuentos en la categoria  -->
+        <!--  Category inherited form agregar edicion para descuentos  -->
 
         <record id="view_category_discounts" model="ir.ui.view">
             <field name="name">product.category.discount.inherit</field>
@@ -13,8 +13,8 @@
                         <group string="Supplier discount" colspan="2" >
                             <field name = "discounts" nolabel="1">
                                 <tree editable="top">
-                                    <field name="discount" string="Discount %"/>
                                     <field name="name" string="Discount reason"/>
+                                    <field name="discount" string="Discount %"/>
                                 </tree>
                             </field>
                         </group>

@@ -25,8 +25,6 @@ class ProductPricelistLoad(models.Model):
     _description = 'Product Price List Load'
     _order = 'id desc'
 
-    @api.one
-    @api.depends('keys')
     def _discount_modes(self):
         if not self.keys:
             return
@@ -36,17 +34,17 @@ class ProductPricelistLoad(models.Model):
         supplier_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'dp':
-                supplier_discounts.append('D{}%'.format(i + 1))
+                supplier_discounts.append('D' + str(i - 4) + '%')
 
         categ_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'dc':
-                categ_discounts.append('D{}%'.format(i + 1))
+                categ_discounts.append('D' + str(i - 4) + '%')
 
         subcateg_discounts = []
         for i, disc in enumerate(keys):
             if disc[0:2] == 'ds':
-                subcateg_discounts.append('D{}%'.format(i + 1))
+                subcateg_discounts.append('D' + str(i - 4) + '%')
 
         self.description = 'Descuentos sobre precio de lista: (Producto {})   (Categoria {})   (Sub categoria {})'. \
             format(', '.join(supplier_discounts),
@@ -56,8 +54,7 @@ class ProductPricelistLoad(models.Model):
     name = fields.Char('Load')
     date = fields.Date('Date:', readonly=True, help='Fecha del archivo')
     file_name = fields.Char('File Name', readonly=True, help='nombre del archivo')
-    file_lines = fields.One2many('product.pricelist.load.line',
-                                 'file_load',
+    file_lines = fields.One2many('product.pricelist.load.line', 'file_load',
                                  'Product Pricelist Lines')
     fails = fields.Integer('Fail Lines:', readonly=True, help='Lineas sin procesar')
     process = fields.Integer('Lines to Process:', readonly=True,
@@ -125,21 +122,13 @@ class ProductPricelistLoad(models.Model):
             # crear o actualizar categorias
             cat = self.check_category(line)
 
-            # crear el producto, si tenemos prod in box agregarlo al values
-            values = {
+            # crear el producto
+            prod = self.product_obj.create({
                 'default_code': line.product_code,
                 'name': line.product_name,
                 'type': 'product',
                 'categ_id': cat.id
-            }
-            # si hay prod in box lo agregamos
-            if line.prod_in_box:
-                values['prod_in_box'] = line.prod_in_box
-                values['prod_in_box_uom'] = line.prod_in_box_uom
-            # si hay descripción la agregamos
-            if line.product_description:
-                values['description'] = line.product_description
-            prod = self.product_template_obj.create(values)
+            })
 
             # crear información del proveedor
             suppinfo = self.psupplinfo_obj.create({
@@ -160,8 +149,6 @@ class ProductPricelistLoad(models.Model):
 
             # actualizar precio de lista del producto
             suppinfo.list_price = line.list_price
-            # actualizar descripción del producto
-            suppinfo.product_tmpl_id.name = line.product_name
             line.write({'fail': False, 'fail_reason': 'Actualizado'})
         else:
             line.fail_reaseon = 'No actualizado'
@@ -172,7 +159,7 @@ class ProductPricelistLoad(models.Model):
         if not self.supplier:
             raise exceptions.Warning(_("You must select a Supplier"))
 
-        self.product_template_obj = self.env['product.template']
+        self.product_obj = self.env['product.template']
         self.psupplinfo_obj = self.env['product.supplierinfo']
         self.pricepinfo_obj = self.env['pricelist.partnerinfo']
         self.category_obj = self.env['product.category']
@@ -201,10 +188,7 @@ class ProductPricelistLoadLine(models.Model):
 
     product_code = fields.Char('Product Code', required=True)
     product_name = fields.Char('Product Name')
-    product_description = fields.Text('Product Description')
     list_price = fields.Float('List Price', required=True)
-    prod_in_box = fields.Float('Cant. producto por caja')
-    prod_in_box_uom = fields.Char()
     categ = fields.Char('Category')
     sub_categ = fields.Char('Sub Category')
     d1 = fields.Float('D1%')
@@ -215,63 +199,43 @@ class ProductPricelistLoadLine(models.Model):
     d6 = fields.Float('D6%')
     fail = fields.Boolean('Fail')
     fail_reason = fields.Char('Fail Reason')
-    file_load = fields.Many2one(
-        'product.pricelist.load',
-        'Load',
-        ondelete='cascade',
-        required=True
-    )
-
+    file_load = fields.Many2one('product.pricelist.load', 'Load', required=True)
     keys = fields.Char(related='file_load.keys')
     supplier = fields.Char(related='file_load.supplier.name')
 
-    @api.multi
-    def debug(self):
-        for rec in self:
-            res = '({:5})({:5})({:10})({:10})[{:5}][{:5}]({:5})({:5})({:5})({:5})({:5})({:5}) -- {}'.format(
-                rec.product_code, rec.list_price, rec.categ, rec.sub_categ, \
-                rec.prod_in_box, rec.prod_in_box_uom, \
-                rec.d1, rec.d2, rec.d3, rec.d4, rec.d5, rec.d6, rec.keys
-            )
-            return res
-
-    @api.multi
     def check(self):
-        for rec in self:
-            # check product, must exist code and name
-            if rec.product_code and not rec.product_name:
-                rec.fail_reason = _('Missing product name')
-                return False
-            if not rec.product_code and rec.product_name:
-                rec.fail_reason = _('Missing product code')
-                return False
-            if rec.product_code and not rec.list_price:
-                rec.fail_reason = _('Missing list price')
-                return False
-            if not rec.product_code and rec.list_price:
-                rec.fail_reason = _('Missing product')
-                return False
-            if not rec.categ and rec.sub_categ:
-                rec.fail_reason = _('Missing category')
-                return False
-            return True
+        # check product, must exist code and name
+        if self.product_code and not self.product_name:
+            self.fail_reason = _('Missing product name')
+            return False
+        if not self.product_code and self.product_name:
+            self.fail_reason = _('Missing product code')
+            return False
+        if self.product_code and not self.list_price:
+            self.fail_reason = _('Missing list price')
+            return False
+        if not self.product_code and self.list_price:
+            self.fail_reason = _('Missing product')
+            return False
+        if not self.categ and self.sub_categ:
+            self.fail_reason = _('Missing category')
+            return False
+        return True
 
     def get_discounts(self, categ):
-        # dado un categ, que es un nombre que puede ser 'dp' 'dc' o 'ds'
-        # devolver una lista de los descuentos que corresponden
         keys = self.keys.split(',')
         ret = []
-        if self.d1 <> 0 and keys[0][:2] == categ:
+        if self.d1 <> 0 and keys[5][:2] == categ:
             ret.append(self.d1)
-        if self.d2 <> 0 and keys[1][:2] == categ:
+        if self.d2 <> 0 and keys[6][:2] == categ:
             ret.append(self.d2)
-        if self.d3 <> 0 and keys[2][:2] == categ:
+        if self.d3 <> 0 and keys[7][:2] == categ:
             ret.append(self.d3)
-        if self.d4 <> 0 and keys[3][:2] == categ:
+        if self.d4 <> 0 and keys[8][:2] == categ:
             ret.append(self.d4)
-        if self.d5 <> 0 and keys[4][:2] == categ:
+        if self.d5 <> 0 and keys[9][:2] == categ:
             ret.append(self.d5)
-        if self.d6 <> 0 and keys[5][:2] == categ:
+        if self.d6 <> 0 and keys[10][:2] == categ:
             ret.append(self.d6)
 
         return ret

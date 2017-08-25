@@ -42,10 +42,10 @@ class product_category(models.Model):
 
     def update_discounts(self, vals):
         for disc in self.discounts:
-            disc.sudo().unlink()
+            disc.unlink()
 
         for val in vals:
-            self.discounts.sudo().create(
+            self.discounts.create(
                 {'discount': val,
                  'categ_id': self.id})
 
