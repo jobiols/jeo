@@ -26,7 +26,7 @@
     'summary': 'Customización mayorista de ceramicas',
     'description': """
 
-Customización Mayorista de ceramicas
+Customización mayorista de ceramicas
 ====================================
 """,
     'author': 'jeo Software',

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-<!--
-   (4, ref('base.group_user')) - base minimo acceso
-   (4, ref('base.group_sale_salesman')), - ver iniciativas propias
-   (4, ref('account.group_account_invoice')), - datos de facturacion
--->
+
         <data noupdate="0">
             <record model="ir.module.category" id="module_reves">
-                <field name="name">Ramos Revestimientos</field>
+                <field name="name">Vertical Ceramicas</field>
                 <field name="sequence">0</field>
                 <field name="visible" eval="0" />
             </record>
