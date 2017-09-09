@@ -42,6 +42,6 @@ class ResPartner(models.Model):
             # verifica que el DNI sea numerico
             if partner.document_type_id.name == 'DNI':
                 try:
-                    partner.document_number + 1
+                    int(partner.document_number) + 1
                 except:
                     raise ValidationError(u'El DNI debe contener solo numeros')
