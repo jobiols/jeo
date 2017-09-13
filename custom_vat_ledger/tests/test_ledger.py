@@ -36,6 +36,7 @@ class TestLedger(SingleTransactionCase):
         self.partner_1 = self.partner_obj.create(
             {'name': 'cliente 1',
              'responsability_id': 1,
+             'document_number': 30698426612,
              'customer': True
              }
         )
