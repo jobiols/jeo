@@ -57,9 +57,15 @@
                     <field name="price_2"/>
                     <field name="price_3"/>
                 </field>
-                <field name="ean13" position="replace"/>
-                <field name="lst_price" position="replace"/>
-                <field name="attribute_value_ids" position="replace"/>
+                <field name="ean13" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="lst_price" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="attribute_value_ids" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
             </field>
         </record>
 
