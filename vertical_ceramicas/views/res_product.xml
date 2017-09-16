@@ -46,7 +46,7 @@
         </record>
 
         <!--  product inherited tree view  agrega los tres precios en la lista de productos -->
-
+<!--
         <record id="view_product_tree_curso" model="ir.ui.view">
             <field name="name">res.product.tree</field>
             <field name="model">product.product</field>
@@ -68,6 +68,6 @@
                 </field>
             </field>
         </record>
-
+-->
     </data>
 </openerp>
