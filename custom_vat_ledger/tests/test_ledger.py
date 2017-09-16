@@ -35,7 +35,8 @@ class TestLedger(SingleTransactionCase):
         print 'cargando datos ---'
         self.partner_1 = self.partner_obj.create(
             {'name': 'cliente 1',
-             'responsability_id': 1,
+             'responsability_id': 1,    # responsable inscripto
+             'document_type_id': 25,    # CUIT
              'document_number': 30698426612,
              'customer': True
              }
