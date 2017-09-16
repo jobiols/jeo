@@ -20,12 +20,13 @@
 # -----------------------------------------------------------------------------------
 from openerp.tests.common import SingleTransactionCase
 
+
 # testear con
 # ./odooenv.py -T jeo test_ledger.py -c valente -d valente_test -m custom_vat_ledger
-#
+
 
 class TestLedger(SingleTransactionCase):
-    def setUp(self):
+    def setup(self):
         super(TestLedger, self).setUp()
         self.partner_obj = self.env['res.partner']
         self.product_obj = self.env['product.product']
@@ -34,21 +35,21 @@ class TestLedger(SingleTransactionCase):
 
         print 'cargando datos ---'
         self.partner_1 = self.partner_obj.create(
-            {'name': 'cliente 1',
-             'responsability_id': 1,    # responsable inscripto
-             'document_type_id': 25,    # CUIT
-             'document_number': 30698426612,
-             'customer': True
-             }
+                {'name': 'cliente 1',
+                 'responsability_id': 1,  # responsable inscripto
+                 'document_type_id': 25,  # CUIT
+                 'document_number': 30698426612,
+                 'customer': True
+                 }
         )
 
         self.product_1 = self.product_obj.create(
-            {
-                'name': 'producto 1',
-                'type': 'product',
-                'lst_price': 100
+                {
+                    'name': 'producto 1',
+                    'type': 'product',
+                    'lst_price': 100
 
-            }
+                }
         )
 
         invoice_lines = {
@@ -60,6 +61,7 @@ class TestLedger(SingleTransactionCase):
             'price_unit': 100,
             'quantity': 1.0,
         }
+
     """
         self.invoice_1 = self.invoice_obj.create(
             {
