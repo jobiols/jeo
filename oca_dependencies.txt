@@ -5,3 +5,4 @@ server-tools https://github.com/jobiols/server-tools.git  8.0
 adhoc-account-invoicing https://github.com/jobiols/adhoc-account-invoicing.git
 odoomrp-wip https://github.com/jobiols/odoomrp-wip.git
 adhoc-product https://github.com/jobiols/adhoc-product.git
+journal-constraint https://github.com/jobiols/journal-constraint.git
