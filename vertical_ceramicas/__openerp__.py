@@ -48,7 +48,8 @@ Customización mayorista de ceramicas
         'stock_report.xml',
         'views/report_stockpicking.xml',
         'views/res_company.xml',
-        'views/account_invoice.xml'
+        'views/account_invoice.xml',
+        'views/res_config_view.xml',
     ],
     'test': [
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 #
 #    Copyright (C) 2016  jeo Software  (http://www.jeo-soft.com.ar)
 #    All Rights Reserved.
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#-----------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 from openerp import models, fields, api
 
 
@@ -33,11 +33,11 @@ class account_invoice_line(models.Model):
             cambia la cantidad entre otras cosas el name agregando el total de metros o
             metros cuadrados de producto que hay en al caja.
         """
-        super(account_invoice_line,self)._compute_price()
-        if self.product_id.prod_in_box <> 0:
-            self.name = u'{} Total {} {}'.format(self.product_id.name,
-                                             self.product_id.prod_in_box*self.quantity,
-                                             self.product_id.prod_in_box_uom)
-
+        super(account_invoice_line, self)._compute_price()
+        if self.product_id.prod_in_box != 0:
+            self.name = u'{} Total {} {}'.format(
+                    self.product_id.name,
+                    self.product_id.prod_in_box * self.quantity,
+                    self.product_id.prod_in_box_uom)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
