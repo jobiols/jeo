@@ -37,6 +37,7 @@ Customización mayorista de ceramicas
         'account',
         'stock',
         'purchase',
+        'product',
     ],
     'data': [
         'security/security_groups.xml',
