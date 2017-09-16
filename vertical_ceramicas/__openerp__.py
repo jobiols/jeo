@@ -31,18 +31,17 @@ Customización mayorista de ceramicas
 """,
     'author': 'jeo Software',
     'depends': [
+        'product',
         'base',
         'base_multi_store',
         'stock_multi_store',
         'account',
         'stock',
         'purchase',
-        'product',
     ],
     'data': [
         'security/security_groups.xml',
         'security/ir.model.access.csv',
-        'views/res_product.xml',
         'views/account_tax_view.xml',
         'views/sale_view.xml',
         'views/pricelist_view.xml',
@@ -51,6 +50,7 @@ Customización mayorista de ceramicas
         'views/res_company.xml',
         'views/account_invoice.xml',
         'views/res_config_view.xml',
+        'views/res_product.xml',
     ],
     'test': [
 
