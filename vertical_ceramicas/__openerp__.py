@@ -33,6 +33,7 @@ Customización mayorista de ceramicas
     'depends': [
         'base',
         'base_multi_store',
+        'stock_multi_store',
         'account',
         'stock',
         'purchase',
