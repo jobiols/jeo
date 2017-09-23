@@ -4,7 +4,7 @@
 # directory
 ##############################################################################
 from openerp import fields, models, api
-
+from openerp.exceptions import ValidationError
 
 class sale_order_line(models.Model):
     _inherit = 'sale.order.line'
@@ -41,5 +41,15 @@ class sale_order_line(models.Model):
                         prod.prod_in_box * qty,
                         prod.prod_in_box_uom)
         return res
+
+    @api.one
+    @api.constrains('discount')
+    def _check_discount(self):
+        """ No dejar a los vendedores poner un descuento mayor que el 10%
+        """
+        manager = self.env['res.users'].has_group('vertical_ceramicas.group_reves_manager_users')
+
+        if self.discount > 10 and not manager:
+            raise ValidationError("No puede poner un descuento mayor que 10%")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
