@@ -13,19 +13,16 @@ class PricelistConfiguration(models.TransientModel):
     pricelist_1 = fields.Many2one(
             'product.pricelist',
             'Precio 1',
-            default_model='prices.config.settings',
             help='Permite seleccionar la lista de precios para el precio 1'
     )
     pricelist_2 = fields.Many2one(
             'product.pricelist',
             'Precio 2',
-            default_model='prices.config.settings',
             help='Permite seleccionar la lista de precios para el precio 2'
     )
     pricelist_3 = fields.Many2one(
             'product.pricelist',
             'Precio 3',
-            default_model='prices.config.settings',
             help='Permite seleccionar la lista de precios para el precio 3'
     )
 
