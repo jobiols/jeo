@@ -35,13 +35,13 @@ Customización mayorista de ceramicas
 - Comercial
 - Almacen
 
-- parametro adicional m2 o m por caja en producto
+- Parametro adicional m2 o m por caja en producto
 - Si se usan descuentos, el Comercial solo pueden poner descuentos hasta 10%
-- listas de precios restringidas, solo las ven Administrador y Encargado
+- Listas de precios restringidas, solo las ven Administrador y Encargado
 - Definicion de rutas para envios desde cualquier sucursal
 - Definicion de remitos para envios o para retiro en sucursal
 - Definicion de tres columnas configurables en listado de productos para mostrar listas de precio
-
+- Rutas para definir envios o retiros
 
 """,
     'author': 'jeo Software',

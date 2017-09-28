@@ -230,17 +230,21 @@
                             -->
 
                             <!-- esto escribe el texto que se pone en el comentario de la ubicacion -->
-                            <dif t-if="mode!='Envío'">
+                            <div t-if="mode!='Envío'">
                                 <center>
                                     <h2><span t-field="o.pick_from"/></h2>
                                 </center>
-                            </dif>
+                            </div>
 
                             <!-- esto escribe el texto que se pone en el comentario de la empresa -->
                             <div t-if="mode=='Envío'">
+                                <p>Controlado por:</p>
+                                <br/>
+                                <br/>
                                 <center>
                                     <span t-raw="o.company_id.report_send_comment"/>
                                 </center>
+
                             </div>
 
                         </div>
