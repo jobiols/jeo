@@ -112,9 +112,10 @@
                                         <p t-if="o.partner_id.vat">IVA: <span t-field="o.partner_id.document_number"/></p>
                                     </div>
                                 </div>
+                                <!--
                                 <div class="col-xs-3">
 
-                                    <!-- Direccion del cliente ENTREGA -->
+                                    <!- - Direccion del cliente ENTREGA - ->
                                     <div t-if="o.move_lines and o.move_lines[0].partner_shipping_id and o.move_lines[0].partner_shipping_id.id">
                                         <span><strong>Dirección de entrega:</strong></span>
                                             <div t-field="o.move_lines[0].partner_shipping_id"
@@ -127,6 +128,7 @@
                                             t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
                                     </div>
                                 </div>
+                                -->
                                 <div class="col-xs-6">
                                     <p>Vendedor: <span t-field="o.create_uid.name"/></p>
                                     <div t-if="o.observations">
@@ -162,11 +164,17 @@
                             <br/>
                             <br/>
 
+                            <!-- obtener si es envio de la primera linea -->
+                            <t t-set="mode" t-value="o.picking_type_id.default_location_src_id.name" />
+
                             <!-- Datos de los productos -->
                             <table class="table table-condensed" t-if="not o.pack_operation_ids">
                               <thead>
                                 <tr>
-                                    <th><strong>Productos a retirar</strong></th>
+                                    <th t-if="mode=='Envío'"><strong>Productos a enviar</strong></th>
+
+                                    <th t-if="mode!='Envío'"><strong>Productos a retirar</strong></th>
+
                                     <th class="text-right"><strong>Cantidad</strong></th>
                                     <t t-if="o.picking_type_id.code != 'incoming'"><th><strong>Origen</strong></th></t>
                                     <t t-if="o.picking_type_id.code != 'outgoing'"><th><strong>Destino</strong></th></t>
@@ -222,8 +230,6 @@
                             </table>
                             <br/><br/>
 
-                            <!-- obtener si es envio de la primera linea -->
-                            <t t-set="mode" t-value="o.picking_type_id.default_location_src_id.name" />
 
                             <!--  para ver que tipo de ubicacion es
                             <h1>esto es un <span t-field="o.picking_type_id.default_location_src_id.name"/></h1>

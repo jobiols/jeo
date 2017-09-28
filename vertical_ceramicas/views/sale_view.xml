@@ -2,6 +2,19 @@
 <openerp>
     <data>
 
+        <!-- ocultamos el campo deposito ya que lo manejamos con las rutas
+        <record id="sale_form_hidden_warehouse_reves" model="ir.ui.view">
+            <field name="name">sale.order.form.hidden.warehouse.reves</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='warehouse_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+-->
+
         <!-- le damos permiso para que modifiquen el precio -->
         <record id="sale_form_readonly_price_reves" model="ir.ui.view">
             <field name="name">sale.order.form.readonly.reves</field>
