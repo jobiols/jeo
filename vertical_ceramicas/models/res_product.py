@@ -66,22 +66,28 @@ class ProductProduct(models.Model):
         # traer las pricelist configuradas
         pl_ids = self._get_pricelists()
 
+#        import wdb;wdb.set_trace()
+
+
         # actualizar los precios de los campos solo si las listas de precio no son False
         # no logre hacer esto con la api 8, queda con la api 7
         if pl_ids[0]:
             self.price_1 = self.pool.get('product.pricelist').price_get(
                     self.env.cr, SUPERUSER_ID, [pl_ids[0].id], self.id, 1.0,
-                    context=None)[pl_ids[0].id]
+                    context=None)[1]
+#                    context=None)[pl_ids[0].id]
 
         if pl_ids[1]:
             self.price_2 = self.pool.get('product.pricelist').price_get(
                     self.env.cr, SUPERUSER_ID, [pl_ids[1].id], self.id, 1.0,
-                    context=None)[pl_ids[1].id]
+                    context=None)[3]
+#                    context=None)[pl_ids[1].id]
 
         if pl_ids[2]:
             self.price_3 = self.pool.get('product.pricelist').price_get(
                     self.env.cr, SUPERUSER_ID, [pl_ids[2].id], self.id, 1.0,
-                    context=None)[pl_ids[2].id]
+                    context=None)[False]
+#                    context=None)[pl_ids[2].id]
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='tree', context=None, toolbar=False, submenu=False):
