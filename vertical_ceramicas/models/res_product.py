@@ -66,8 +66,13 @@ class ProductProduct(models.Model):
         # traer las pricelist configuradas
         pl_ids = self._get_pricelists()
 
-#        import wdb;wdb.set_trace()
+        #import wdb;wdb.set_trace()
 
+        # TODO arreglar esto, estamos forzando las listas de precio
+        price = self.env['product.pricelist']
+        pl_ids[0] = price.search([('id', '=', 1)])
+        pl_ids[1] = price.search([('id', '=', 3)])
+        pl_ids[2] = price.search([('id', '=', 0)])
 
         # actualizar los precios de los campos solo si las listas de precio no son False
         # no logre hacer esto con la api 8, queda con la api 7
