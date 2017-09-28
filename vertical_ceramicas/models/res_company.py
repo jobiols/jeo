@@ -13,3 +13,8 @@ class res_company(models.Model):
             'Comentario para envios a domicilio se muestra en los remitos',
             required=False
     )
+
+    store_addresses = fields.Text(
+            'Direcciones de las sucursales',
+            required=False
+    )

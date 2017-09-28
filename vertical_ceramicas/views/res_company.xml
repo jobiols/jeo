@@ -13,6 +13,7 @@
 
                 <xpath expr="//field[@name='rml_header3']" position="after">
                     <field name="report_send_comment"/>
+                    <field name="store_addresses"/>
                 </xpath>
 
             </field>

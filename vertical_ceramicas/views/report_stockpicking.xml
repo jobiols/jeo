@@ -20,11 +20,7 @@
                             <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
                         </center>
                         <div>
-                            <small>Av. de Mayo 1298 - CP 1704 Ramos Mejia Tel. 011-4654-5889 / 8000 <br/>
-                            Av. Gaona 1702 - CP 1704 - Ramos Mejía - Tel. 011-4469-0419<br/>
-                            Av. San Martin 1485 - CP 1704 - Ramos Mejía - Tel 011-4469 / 0053<br/>
-                            Av. Pedro Palacios 691</small>
-                            <p>Mail: central@ramosrevestimientos.com</p>
+                             <span t-raw="o.company_id.store_addresses"/>
                         </div>
                     </td>
                     <td style="border-style: solid;">
