@@ -53,6 +53,7 @@ Customización mayorista de ceramicas
         'account',
         'stock',
         'purchase',
+        'account_multi_store', 'base_multi_store', 'stock_multi_store',  # capacidad de limitar los diarios segun los stores (repo journal-constraint)
     ],
     'data': [
         'security/security_groups.xml',
