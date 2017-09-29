@@ -4,13 +4,17 @@
 # directory
 ##############################################################################
 from openerp import api
-from openerp.osv import osv
 from openerp.tools import float_compare
 from openerp.tools.translate import _
+from openerp.osv import fields, osv
 
 
 class sale_order_line(osv.osv):
     _inherit = 'sale.order.line'
+
+    _columns = {
+        'route_id': fields.many2one('stock.location.route', required=True)
+    }
 
     def product_id_change_with_wh(self, cr, uid, ids, pricelist, product, qty=0,
                                   uom=False, qty_uos=0, uos=False, name='', partner_id=False,
