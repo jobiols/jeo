@@ -29,7 +29,7 @@
 Customización mayorista de ceramicas
 ====================================
 
-# Definicion de cuatro grupos de usuarios
+#Definicion de cuatro grupos de usuarios
 - Administrador
 - Encargado
 - Comercial
@@ -42,6 +42,12 @@ Customización mayorista de ceramicas
 - Definicion de remitos para envios o para retiro en sucursal
 - Definicion de tres columnas configurables en listado de productos para mostrar listas de precio
 - Rutas para definir envios o retiros
+
+#Se usan las restricciones de los stores
+- Los usuarios de almacen tienen restrignidos los almacenes y diarios.
+- Los usuarios comerciales tienen restringidos diarios.
+
+
 
 """,
     'author': 'jeo Software',

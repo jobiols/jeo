@@ -21,13 +21,20 @@
             </record>
 
             <!-- GRUPO VENTAS -->
+
+            <!-- el siguiente grupo no puede heredar del grupo almacen porque mas abajo necesito
+                 poner unas reglas globales solo para el grupo almacen y no veo como hacer que no
+                 las hereden todos los demas -->
+
+            <!-- le saque esto     (4, ref('group_reves_stock_users')), -->
             <record id="group_reves_sales_users" model="res.groups">
                 <field name="name">Comercial</field>
                 <field name="category_id" ref="module_reves"/>
                 <field name="comment">Grupo para todos los usuarios comerciales</field>
                 <field name="implied_ids"
                        eval="[
-                                (4, ref('group_reves_stock_users')),
+                                (4, ref('base.group_user')),
+                                (4, ref('stock.group_stock_user')),
                                 (4, ref('account.group_account_invoice')),
                                 (4, ref('base.group_sale_salesman_all_leads')),
                                 ]"/>
@@ -93,8 +100,9 @@ pero pueden acceder a las listas de precio restringidas</field>
                       sequence="770"/>
 
 
-            <!-- le ponemos estas regalas al usuario de stock sacandoselas a los demas usuarios -->
-
+            <!-- le ponemos estas regalas al usuario de stock con lo que se las
+                 estamos sacando ademas a los otros usuarios
+                 -->
 
             <record id="stock_multi_store.stock_warehouse_store_rule" model="ir.rule">
                 <field name="groups" eval="[(4, ref('vertical_ceramicas.group_reves_stock_users'))]"/>
