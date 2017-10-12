@@ -20,7 +20,7 @@
 
 {
     'name': 'Base VAT Unique - To check Unique VAT number',
-    'version': '8.0.1.0',
+    'version': '8.0.1.1',
     'category': 'Base',
     'description': """
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
