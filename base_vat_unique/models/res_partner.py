@@ -23,7 +23,10 @@ from openerp.exceptions import ValidationError
 
 
 class res_partner(models.Model):
-    @api.one
+
+    _inherit = 'res.partner'
+
+    @api.multi
     @api.constrains('vat')
     def _check_unique_vat(self):
         for partner in self:
@@ -33,4 +36,3 @@ class res_partner(models.Model):
                     raise ValidationError('El CUIT {}-{}-{} ya está ingresado'.format(
                         partner.vat[2:4], partner.vat[4:12], partner.vat[12:13]))
 
-    _inherit = 'res.partner'

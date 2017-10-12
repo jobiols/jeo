@@ -20,7 +20,7 @@
 
 {
     'name': 'Base VAT DNI - Some usefull vat / DNI validations',
-    'version': '8.0.1.0',
+    'version': '8.0.2.0',
     'category': 'Base',
     'description': """
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
@@ -33,6 +33,7 @@ Este modulo hace las siguientes validaciones en el numero de documento
 
 - Si es responsable inscripto o monotributo requiere CUIT
 - verifica que el DNI sea numerico
+- verifica que el DNI sea unico
 
 depende de la localizacion adhoc
 

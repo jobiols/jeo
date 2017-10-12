@@ -45,3 +45,13 @@ class ResPartner(models.Model):
                     int(partner.document_number) + 1
                 except:
                     raise ValidationError(u'El DNI debe contener solo numeros')
+
+    @api.multi
+    @api.constrains('document_number')
+    def _check_unique_dni(self):
+        for partner in self:
+            if partner.document_type_id.name == 'DNI':
+                recordset = self.search([('document_number', '=', partner.document_number)])
+                if len(recordset) > 1:
+                    raise ValidationError('El DNI {} ya está ingresado'.format(partner.document_number))
+
