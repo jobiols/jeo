@@ -71,17 +71,16 @@ class sale_order_line(osv.osv):
                 # verificar si en algun lado hay, si no hay damos el warning aunque lo dejamos vender igual
                 compare_qty = float_compare(product_obj.virtual_available, qty, precision_rounding=uom_record.rounding)
                 if compare_qty == -1:
-                    warn_msg = _(
-                            'You plan to sell %.2f %s but you only have %.2f %s available !\nThe real stock is %.2f %s. (without reservations)') % \
-                               (qty, uom_record.name,
-                                max(0, product_obj.virtual_available), uom_record.name,
-                                max(0, product_obj.qty_available), uom_record.name)
-                    warning_msgs += _("Not enough stock ! : ") + warn_msg + "\n\n"
+                    warn_msg = _('Intenta vender {} Un pero solo tiene {} Un disponibles !\n'
+                                 'El stock real es {} Un. (sin reservas)').format(
+                            int(qty),
+                            int(max(0, product_obj.virtual_available)),
+                            int(max(0, product_obj.qty_available)))
+                    warning_msgs += _("No hay suficiente stock !\n\n") + warn_msg + "\n\n"
 
                 # verificar donde está el producto y si está en otro local sacamos otro warning
-                locations = self.calc_virtual_stock(cr, uid, ids, product_obj, context)
+                locations = self.calc_formated_stock(cr, uid, ids, product_obj, context)
                 if locations:
-#                   warning_msgs += u"El producto no se encuentra en este local\n\n"
                     warning_msgs += locations
 
         # update of warning messages
@@ -112,16 +111,20 @@ class sale_order_line(osv.osv):
         for quant in quants:
             loc_id = quant.location_id.location_id.name
             if loc_id not in data:
-                data[loc_id] = quant.qty
+                data[loc_id] = int(quant.qty)
             else:
-                data[loc_id] += quant.qty
-            print quant.name, quant.qty, loc_id
+                data[loc_id] += int(quant.qty)
 
-        if not data:
-            return False
+        return data
 
-        ret = 'Sucursal --- Cantidad\n'
+    @api.multi
+    def calc_formated_stock(self, product_id):
+        """
+            formatear la informacion de sucursales y cantidades
+        """
+        data = self.calc_virtual_stock(product_id)
+        ret = 'Sucursal --- Cantidad\n' if data else ''
         for loc in data:
-            ret += u'{} -> {} Un\n'.format(loc, data[loc])
+            ret += u'{} ---> {} Un\n'.format(loc, data[loc])
 
         return ret
