@@ -6,7 +6,7 @@
 from openerp import models, fields, api, _
 import base64
 from datetime import datetime
-
+from round_5 import round_5
 
 class AccountVaLedger(models.Model):
 
@@ -14,7 +14,7 @@ class AccountVaLedger(models.Model):
 
     sircar_file = fields.Binary(
         'Sircar File',
-        compute='get_files',
+        compute='get_sircar_files',
         readonly=True
         )
     sircar_filename = fields.Char(
@@ -34,6 +34,7 @@ class AccountVaLedger(models.Model):
     @api.one
     @api.depends('period_id.name', 'REGINFO_SIRCAR')
     def get_sircar_files(self):
+        #import wdb;wdb.set_trace()
         self.sircar_filename = 'SIRCAR-{}.txt'.format(self.period_id.name.replace('/', '-'))
         if self.REGINFO_SIRCAR:
             self.sircar_file = base64.encodestring(
@@ -41,7 +42,6 @@ class AccountVaLedger(models.Model):
 
     @api.one
     def do_compute_sircar_data(self):
-        #import wdb;wdb.set_trace()
         invoices = self.get_sircar_invoices()
         rec_no = 0
         res = []
@@ -75,7 +75,8 @@ class AccountVaLedger(models.Model):
             row += ['{:.2f}'.format(alic)]
 
             # Campo 09 -- Monto Percibido (campo 7 por el campo 8 y dividirlo por 100)
-            row += ['{:.2f}'.format(round(untaxed * alic / 100, 2))]
+            # hay que sumarle 0.0000000001 para que el redondeo de igual que el de la AFIP
+            row += ['{:.2f}'.format(round(untaxed * alic / 100 + 0.0000000001, 2))]
 
             # Campo 10 -- Tipo de Régimen de Retención
             row += ['70']
