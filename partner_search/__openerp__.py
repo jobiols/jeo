@@ -32,7 +32,7 @@ Allows searching form multiple fields
     "data": [
         'views/partner_view.xml'
     ],
-    'installable': True,
+    'installable': False,
     'application': True,
     'auto_install': False,
     'images': [],
