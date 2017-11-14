@@ -34,7 +34,8 @@ class AccountVaLedger(models.Model):
     @api.depends('period_id.name', 'REGINFO_SIRCAR')
     def get_sircar_files(self):
         #import wdb;wdb.set_trace()
-        self.sircar_filename = 'SIRCAR-{}.txt'.format(self.period_id.name.replace('/', '-'))
+        fname = self.period_id.name.replace('/', '-') if self.period_id else 'unknown'
+        self.sircar_filename = 'SIRCAR-{}.txt'.format(fname)
         if self.REGINFO_SIRCAR:
             self.sircar_file = base64.encodestring(
                     self.REGINFO_SIRCAR.encode('ISO-8859-1'))
