@@ -7,6 +7,7 @@ from openerp import models, fields, api, _
 import base64
 from datetime import datetime
 
+
 class AccountVaLedger(models.Model):
 
     _inherit = "account.vat.ledger"
@@ -33,7 +34,6 @@ class AccountVaLedger(models.Model):
     @api.one
     @api.depends('period_id.name', 'REGINFO_SIRCAR')
     def get_sircar_files(self):
-        #import wdb;wdb.set_trace()
         fname = self.period_id.name.replace('/', '-') if self.period_id else 'unknown'
         self.sircar_filename = 'SIRCAR-{}.txt'.format(fname)
         if self.REGINFO_SIRCAR:
