@@ -18,15 +18,17 @@
 #####################################################################################
 from openerp.tests.common import TransactionCase
 
+
 class Test(TransactionCase):
     def setUp(self):
         super(Test, self).setUp()
+
         print 'test_first_name----------------------------------------------'
         # cargar un cliente
         self.partner = self.env['res.partner'].create({'name': 'juan perez'})
 
     def test_name(self):
-        self.assertEquals(self.partner.first_name, 'juan',
+        self.assertEquals(self.partner.first_name, 'juan1',
                           u'Falla el modulo, el nombre debe ser juan')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
