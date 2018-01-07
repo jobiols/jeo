@@ -23,20 +23,7 @@
     'name': 'ticket citi fix',
     'version': '8.0.1.0',
     'category': 'Tools',
-    'summary': 'corrige problema con pv controlador fiscal',
-    'description': """
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   :alt: License: AGPL-3
-
-Ticket CITI Fix
-===============
-
-Agrega un tipo de punto de venta Controlador Fiscal
-Si el punto de venta es Controlador Fiscal en el citi exporta ceros en lugar de la
-fecha de vencimiento
-
-""",
+    'summary': 'Corrige problema con pv controlador fiscal',
     'author': 'jeo Software',
     'website': 'http://www.jeosoft.com.ar',
     'depends': [
