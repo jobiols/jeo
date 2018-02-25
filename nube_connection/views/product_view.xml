@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+
+    <data>
+        <record id='product_normal_form_view_nube' model='ir.ui.view' >
+            <field name='name'>Nube Connection: extensiones</field>
+            <field name='model'>product.product</field>
+            <field name='inherit_id' ref='product.product_normal_form_view'/>
+            <field name='type'>form</field>
+            <field name='arch' type='xml'>
+                <xpath expr="//div[@class='oe_left']" position="after">
+                    <group colspan="4" col="4" string="Tienda nube">
+                        <field name="woo_categ"/>
+                        <field name="published" />
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='description']" position="after">
+                    <field name="description_short_wc" readonly="True"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</openerp>
