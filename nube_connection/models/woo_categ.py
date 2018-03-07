@@ -3,7 +3,7 @@
 from openerp import models, fields, api
 
 
-class curso_woo_categ(models.Model):
+class CursoWooCateg(models.Model):
     _name = 'curso.woo.categ'
     # esto hace que el name del registro sea path
     _rec_name = 'path'

@@ -3,23 +3,23 @@
 <openerp>
 
     <data>
-        <record id='product_normal_form_view_nube' model='ir.ui.view' >
+        <record id='product_normal_form_view_nube' model='ir.ui.view'>
             <field name='name'>Nube Connection: extensiones</field>
             <field name='model'>product.product</field>
             <field name='inherit_id' ref='product.product_normal_form_view'/>
             <field name='type'>form</field>
             <field name='arch' type='xml'>
                 <xpath expr="//div[@class='oe_left']" position="after">
-                    <group colspan="4" col="4" string="Tienda nube">
+                    <group colspan="4" col="4">
+                        <field name="published"/>
                         <field name="woo_categ"/>
-                        <field name="published" />
                     </group>
                 </xpath>
-
-                <xpath expr="//field[@name='description']" position="after">
-                    <field name="description_short_wc" readonly="True"/>
+<!--
+                <xpath expr="//field[@name'description']" position="replace">
+                        <field name="description" class="oe_edit_only" widget="html" />
                 </xpath>
-
+-->
             </field>
         </record>
 
