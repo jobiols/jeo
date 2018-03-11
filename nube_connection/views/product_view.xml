@@ -15,11 +15,12 @@
                         <field name="woo_categ"/>
                     </group>
                 </xpath>
-<!--
-                <xpath expr="//field[@name'description']" position="replace">
-                        <field name="description" class="oe_edit_only" widget="html" />
+
+                <xpath expr="//field[@name='description']" position="attributes">
+                    <attribute name="widget">html</attribute>
+                    <attribute name="safe">True</attribute>
                 </xpath>
--->
+
             </field>
         </record>
 
