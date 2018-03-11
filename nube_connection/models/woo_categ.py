@@ -35,6 +35,11 @@ class CursoWooCateg(models.Model):
             'curso.woo.categ',
             string="Parent"
     )
+    published = fields.Boolean(
+        'Publicado en tienda nube',
+        help=u'Indica si se publica en tienda nube'
+    )
+
 
     @api.multi
     def _path(self):
