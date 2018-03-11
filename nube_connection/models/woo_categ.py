@@ -7,6 +7,8 @@ class CursoWooCateg(models.Model):
     _name = 'curso.woo.categ'
     # esto hace que el name del registro sea path
     _rec_name = 'path'
+    _order = 'woo_idx,slug'
+
 
     path = fields.Char(
             compute="get_path",
