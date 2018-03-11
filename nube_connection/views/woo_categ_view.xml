@@ -15,6 +15,7 @@
                     <field name="path"/>
                     <field name="name"/>
                     <field name="slug"/>
+                    <field name="published"/>
                 </tree>
             </field>
         </record>
