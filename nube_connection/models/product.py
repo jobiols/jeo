@@ -25,3 +25,7 @@ class ProductProduct(models.Model):
         'Publicado en tienda nube',
         help=u'Indica si se publica en tienda nube'
     )
+    promotional_price = fields.Float(
+        digits=(16, 2),
+        help=u'Promotional price for Tienda Nube'
+    )

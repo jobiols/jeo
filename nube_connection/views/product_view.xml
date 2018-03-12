@@ -21,6 +21,10 @@
                     <attribute name="safe">True</attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='lst_price']" position="after">
+                    <field name="promotional_price"/>
+                </xpath>
+
             </field>
         </record>
 
