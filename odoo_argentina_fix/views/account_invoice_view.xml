@@ -2,7 +2,9 @@
 <openerp>
     <data>
 
-        <!-- saca el boton cancelar factura en compras -->
+        <!-- saca el boton cancelar factura en compras
+
+         Esto lo saco porque en Suelos necesitan cancelar factura,
 
         <record id="invoice_form_fix" model="ir.ui.view">
             <field name="name">account.invoice.form.valente</field>
@@ -12,7 +14,7 @@
                 <xpath expr="//button[@name='invoice_cancel']" position="replace"/>
             </field>
         </record>
-
+-->
         <!-- saca el boton de reintegrar factura cuando es una nota de crédito
         esto hasta que logre hacer funcionar bien el reintegro -->
 
